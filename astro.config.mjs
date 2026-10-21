@@ -11,8 +11,16 @@ const site =
   process.env.SITE_URL ||
   (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://george-website-seven.vercel.app');
 
+// Astro only trusts the forwarded host header for domains listed here. Without this, OAuth redirects on Vercel point at localhost.
+const siteHost = new URL(site).hostname;
+const allowedDomains = [
+  { protocol: 'https', hostname: siteHost },
+  { protocol: 'https', hostname: '**.vercel.app' },
+];
+
 export default defineConfig({
   site,
+  security: { allowedDomains },
   // Pages are pre-rendered (static). Only the /keystatic editor and its API run on demand.
   adapter: vercel(),
   integrations: [mdx(), react(), keystatic(), sitemap({ filter: (page) => !page.includes('/keystatic') })],
