@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import { SITE } from '../config';
+import george from '../assets/george.png';
 ---
 <section class="relative isolate overflow-hidden pt-36 pb-24 md:pt-44 md:pb-32">
   <div class="hero-glow"></div>
@@ -8,9 +10,12 @@ import { SITE } from '../config';
 
   <div class="container-x grid lg:grid-cols-[1.15fr_.85fr] gap-12 items-center">
     <div>
-      <p class="reveal inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-3 py-1.5 text-xs font-mono text-muted">
-        <span class="dot-live"></span> Available for new projects
-      </p>
+      <div class="reveal flex items-center gap-3">
+        <Image src={george} alt="George Melody" width={96} height={96} densities={[1, 2]} loading="eager" class="h-12 w-12 rounded-full object-cover ring-2 ring-brand/70" />
+        <p class="inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-3 py-1.5 text-xs font-mono text-muted">
+          <span class="dot-live"></span> Available for new projects
+        </p>
+      </div>
       <h1 class="reveal mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05]" style="--d:80ms">
         I build AI automation that <span class="grad-text">runs your business</span> while you sleep.
       </h1>

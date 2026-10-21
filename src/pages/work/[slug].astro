@@ -2,6 +2,8 @@
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { SITE } from '../../config';
+import Gallery from '../../components/Gallery.astro';
+import { loomEmbed } from '../../lib/work-images';
 
 export async function getStaticPaths() {
   const work = await getCollection('work');
@@ -28,7 +30,27 @@ const jsonLd = [{ '@context': 'https://schema.org', '@type': 'BreadcrumbList', i
       </div>
     )}
 
+    {d.videos.length > 0 && (
+      <div class="mt-10 space-y-6">
+        {d.videos.map((v) => { const src = loomEmbed(v.url); return src && (
+          <figure class="m-0">
+            <div class="relative w-full overflow-hidden rounded-xl border border-line bg-surface" style="aspect-ratio:16/9">
+              <iframe src={src} title={v.title} loading="lazy" allowfullscreen class="absolute inset-0 h-full w-full" style="border:0"></iframe>
+            </div>
+            <figcaption class="text-sm text-muted mt-2">{v.title} · <a class="text-link underline underline-offset-4" href={v.url} target="_blank" rel="noopener">Open on Loom</a></figcaption>
+          </figure>
+        ); })}
+      </div>
+    )}
+
     <div class="prose max-w-none mt-10 prose-headings:font-display prose-a:text-link"><Content /></div>
+
+    {d.gallery.length > 0 && (
+      <section class="mt-10">
+        <h2 class="text-xl font-semibold mb-4">Inside the workflow</h2>
+        <Gallery items={d.gallery} />
+      </section>
+    )}
 
     <h2 class="text-xl font-semibold mt-10">Built with</h2>
     <div class="mt-3 flex flex-wrap gap-2">{d.stack.map((s) => <span class="tag">{s}</span>)}</div>

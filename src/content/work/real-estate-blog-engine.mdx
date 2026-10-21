@@ -1,0 +1,34 @@
+---
+title: SEO blog engine for a real-estate business
+summary: A topic in a sheet becomes a researched, SEO-ready WordPress draft and social posts, on a schedule.
+client: Real-estate and property business
+industry: Real estate
+category: n8n
+stack: [n8n, Claude API, Perplexity, WordPress, Yoast, Publer, Google Sheets]
+order: 6
+videos:
+  - title: "Automated real estate blogging and social posting"
+    url: https://www.loom.com/share/d256a36d65694a3599a1c3c0dc4e9b0e
+gallery:
+  - file: blog-engine-overview.png
+    caption: "The start of the flow: a scheduled run picks the next pending topic from Google Sheets"
+  - file: blog-engine-full.png
+    caption: "The whole engine on one canvas, from topic to published post"
+  - file: blog-engine-writing.png
+    caption: "Research, writing and SEO metadata with Claude, then a cover image from Unsplash"
+  - file: blog-engine-publishing.png
+    caption: "WordPress draft with Yoast SEO fields, social posts through Publer, an email notice and the sheet updated"
+---
+A property business wanted a steady stream of local blog content without writing it all by hand. I built an n8n engine that runs three times a week, takes the next topic from a Google Sheet, and does the research, writing and publishing work.
+
+## What the system does
+
+- Pulls local market data and web research for the topic
+- Plans and writes the post with Claude, then generates the SEO title and description
+- Finds a cover image and uploads it to WordPress with the post as a draft, with Yoast fields filled in
+- Creates matching social posts through Publer
+- Emails a notice and marks the topic as published in the sheet so it never runs twice
+
+## One honest limit
+
+The client's second website runs on a platform that does not let outside tools create blog posts, so cross-posting there stays a manual copy and paste step.

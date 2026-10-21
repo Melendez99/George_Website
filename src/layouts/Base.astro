@@ -25,6 +25,7 @@ const person = {
   name: SITE.person,
   alternateName: SITE.name,
   url: Astro.site?.href,
+  image: new URL('/images/george.png', Astro.site).href,
   jobTitle: 'AI Automation Developer',
   address: { '@type': 'PostalAddress', addressLocality: 'Lagos', addressCountry: 'NG' },
   knowsAbout: ['n8n', 'Make.com', 'GoHighLevel', 'AI voice agents', 'Workflow automation', 'Claude API', 'OpenAI'],

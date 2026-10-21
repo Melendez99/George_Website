@@ -1,19 +1,26 @@
 ---
-title: Missed-call-to-WhatsApp booking system
-summary: When a local service business misses a call, the caller gets a WhatsApp message and a booking link within seconds.
+title: Missed-call text-back and AI booking agent
+summary: When a home-service business misses a call, the caller gets a text back and an AI agent that can book them in.
 client: Automation agency for local service businesses
 industry: Home services
 category: n8n
-stack: [n8n, WhatsApp, Twilio, Calendar]
+stack: [n8n, Twilio, Airtable, Google Calendar, Retell AI]
 order: 1
+videos:
+  - title: "Missed call text-back + AI booking agent (n8n, Twilio, Airtable, Google Calendar)"
+    url: https://www.loom.com/share/5a7fde28dd3a46a4949219dd7974afc1
+  - title: "AI automation for a home service business"
+    url: https://www.loom.com/share/0eac70e212d6469998eeaff3466b2366
+gallery:
+  - file: retell-booking-agent.png
+    caption: "AI voice agent books callers: the call hits an n8n webhook, one agent checks Google Calendar availability and another books the slot"
+
 ---
-An agency serving local service businesses needed a way to stop losing leads when the phone went unanswered. I built an n8n system that detects the missed call, sends the caller a WhatsApp message, and offers a booking link so the lead can book without waiting for a callback.
+An agency serving home-service businesses was losing leads when the phone went unanswered. I built an n8n system that texts the caller back straight away and hands them to an AI booking agent, so the lead can book without waiting for a callback. Watch the walkthroughs above to see it run.
 
 ## What the system does
 
-- Detects missed calls and triggers a follow-up right away
-- Sends a WhatsApp message with a booking link
-- Logs every lead and outcome so the agency can report to its clients
-- Alerts the team when a step fails
-
-Delivered in milestones so the agency could test each part before moving on.
+- Detects missed calls and sends a text-back right away
+- Lets an AI agent check Google Calendar availability and book the appointment
+- Suggests another time when the requested slot is taken
+- Logs every lead and outcome in Airtable so the business can see what came in

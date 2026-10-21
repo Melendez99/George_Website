@@ -1,0 +1,39 @@
+---
+import { Image } from 'astro:assets';
+import { workImage } from '../lib/work-images';
+const { items = [], cols = 2 } = Astro.props as { items: { file: string; caption: string }[]; cols?: number };
+const shots = items.map((i) => ({ ...i, img: workImage(i.file) })).filter((i) => i.img);
+---
+{shots.length > 0 && (
+  <div class:list={['grid gap-4', cols === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-2 lg:grid-cols-3']}>
+    {shots.map((s) => (
+      <figure class="m-0">
+        <button type="button" class="gallery-item block w-full overflow-hidden rounded-xl border border-line bg-surface cursor-zoom-in" data-full={s.img!.src} data-caption={s.caption} aria-label={`Enlarge: ${s.caption}`}>
+          <Image src={s.img!} alt={s.caption} widths={[480, 800, 1200]} sizes="(min-width: 768px) 45vw, 92vw" loading="lazy" class="w-full aspect-[16/10] object-cover object-top" />
+        </button>
+        <figcaption class="text-xs text-muted mt-2">{s.caption}</figcaption>
+      </figure>
+    ))}
+  </div>
+)}
+{shots.length > 0 && (
+  <dialog id="lightbox" class="m-auto w-[96vw] max-w-6xl bg-transparent p-0 backdrop:bg-black/80 outline-none">
+    <div class="relative">
+      <button type="button" id="lightbox-close" class="absolute right-2 top-2 z-10 btn btn-ghost !py-1.5 !px-3 text-sm" aria-label="Close">Close ✕</button>
+      <img id="lightbox-img" alt="" class="w-full max-h-[88vh] object-contain rounded-xl bg-surface" />
+      <p id="lightbox-cap" class="text-sm text-white/80 mt-2 text-center"></p>
+    </div>
+  </dialog>
+)}
+<script>
+  const dlg = document.getElementById('lightbox') as HTMLDialogElement | null;
+  if (dlg) {
+    const img = document.getElementById('lightbox-img') as HTMLImageElement;
+    const cap = document.getElementById('lightbox-cap')!;
+    document.querySelectorAll<HTMLButtonElement>('.gallery-item').forEach((b) => b.addEventListener('click', () => {
+      img.src = b.dataset.full!; img.alt = b.dataset.caption || ''; cap.textContent = b.dataset.caption || ''; dlg.showModal();
+    }));
+    document.getElementById('lightbox-close')?.addEventListener('click', () => dlg.close());
+    dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  }
+</script>

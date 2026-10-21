@@ -4,13 +4,20 @@ summary: Long videos are turned into clips and published across platforms on a s
 client: Content creator
 industry: Media
 category: n8n
-stack: [n8n, Vizard, Airtable]
+stack: [n8n, Vizard, Notion, Ayrshare, Google Drive]
 order: 4
+videos:
+  - title: "Automated clipping system"
+    url: https://www.loom.com/share/8c04ad9e0f7f4c158315f61e585b74ab
+  - title: "Automated clipping workflow"
+    url: https://www.loom.com/share/906f5e6228dd4b64a8001c6a92c6befd
+
 ---
-A creator wanted to turn long videos into short clips and post them across platforms without doing it by hand. I built an n8n pipeline that sends videos to Vizard for clipping, tracks each clip in Airtable, and publishes on a schedule.
+A creator wanted to turn long videos into short clips and post them across platforms without doing it by hand. I built an n8n pipeline that sends each uploaded video to Vizard for clipping, saves every clip to Notion for review, and schedules the approved ones through Ayrshare.
 
 ## What the system does
 
-- Sends new videos for clipping automatically
-- Tracks clip status and approvals in Airtable
-- Publishes approved clips to multiple platforms on a schedule
+- Picks up new videos from a Google Drive folder and sends them for clipping automatically
+- Saves each clip to Notion with its title, score and transcript so it can be reviewed and approved
+- Schedules approved clips across platforms on a posting calendar
+- Marks failed projects so nothing disappears silently

@@ -57,6 +57,14 @@ export default config({
           { label: 'Results / metrics', itemLabel: (p) => `${p.fields.value.value} ${p.fields.label.value}` },
         ),
         demo: fields.url({ label: 'Demo or Loom link (optional)' }),
+        videos: fields.array(
+          fields.object({ title: fields.text({ label: 'Video title' }), url: fields.url({ label: 'Loom share link' }) }),
+          { label: 'Loom videos (shown embedded on the page)', itemLabel: (p) => p.fields.title.value },
+        ),
+        gallery: fields.array(
+          fields.object({ file: fields.text({ label: 'Image file name in src/assets/work' }), caption: fields.text({ label: 'Caption' }) }),
+          { label: 'Workflow screenshots (ask Claude to add new files)', itemLabel: (p) => p.fields.caption.value },
+        ),
         order: fields.integer({ label: 'Sort order (lower shows first)', defaultValue: 100 }),
         cover: fields.image({
           label: 'Cover image (optional)',
