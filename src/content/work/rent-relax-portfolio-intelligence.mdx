@@ -1,0 +1,43 @@
+---
+title: Portfolio intelligence for a vacation-rental company
+summary: Daily Streamline data, market benchmarks and automatic alerts across 129 properties, ready for ChatGPT to query.
+client: Brenton Hitchcock, Rent & Relax
+industry: Vacation rentals
+category: n8n
+stack: [n8n, Supabase, Streamline PartnerX API, Key Data, MCP, ChatGPT, DigitalOcean]
+order: 7
+metrics:
+  - value: "129"
+    label: "properties monitored every day"
+  - value: "3"
+    label: "automatic anomaly checks"
+  - value: "7am"
+    label: "daily digest in the inbox"
+gallery:
+  - file: rent-relax-dashboard.png
+    caption: "Portfolio overview: properties, upcoming revenue, today's flags and changes in the last 7 days"
+  - file: rent-relax-streamline-pipeline.png
+    caption: "The 5am pipeline: properties, availability, rates and reservations pulled from Streamline into a historical database"
+  - file: rent-relax-anomaly-detection.png
+    caption: "Daily anomaly detection for rate changes, availability changes and booking pace drops"
+  - file: rent-relax-daily-digest.png
+    caption: "The 7am digest: properties needing attention, anomalies and heavy owner use in one email"
+  - file: rent-relax-property-diagnostic.png
+    caption: "Property diagnostic: each property is compared with a Key Data comp set and a rental projection"
+  - file: rent-relax-market-kpis.png
+    caption: "Market KPIs pulled from Key Data and mapped to the properties in each market"
+  - file: rent-relax-market-snapshot.png
+    caption: "Weekly market-position snapshot, so positioning history is kept and can be compared over time"
+  - file: rent-relax-listing-url-sync.png
+    caption: "Listing link sync so ChatGPT looks up the real Airbnb or Vrbo listing instead of guessing"
+---
+Brenton Hitchcock runs Rent & Relax and wanted his Streamline data made useful: what changed, what is underperforming and how each property compares with its market. I built the data layer in n8n and Supabase and connected it to ChatGPT through an MCP connector, so he can ask questions about current and historical data in plain language.
+
+## What the system does
+
+- Pulls properties, availability, rates and reservations from Streamline every morning and keeps the history
+- Checks for rate changes, owner holds and maintenance blocks, and booking pace drops, and stores each finding
+- Compares properties with a Key Data comp set and market KPIs
+- Emails a daily digest that groups properties by the reason they were flagged
+- Keeps weekly snapshots of market position so trends can be reviewed later
+- Gives ChatGPT the data and the listing links it needs to answer questions about the portfolio

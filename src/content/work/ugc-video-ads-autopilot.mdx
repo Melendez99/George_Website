@@ -1,0 +1,22 @@
+---
+title: UGC video ads on autopilot with Veo 3
+summary: Product photos go in, and AI-generated UGC-style video ads come out, tracked in Airtable.
+client: Portfolio build
+industry: E-commerce
+category: n8n
+stack: [n8n, Veo 3, Gemini, Airtable, Telegram, Google Sheets]
+order: 11
+gallery:
+  - file: ugc-veo3-tiktok-shop.png
+    caption: "Trending product photos are analysed, turned into model images and scene prompts, rendered as video clips and merged"
+  - file: ugc-nanobanana-veo31.png
+    caption: "A newer version driven from a Google Sheet, with a starting frame from Nano Banana and the video from Veo 3.1"
+---
+A portfolio build for TikTok Shop and affiliate sellers. A product photo is analysed, an AI writes the image and scene prompts, a model image is generated and Veo creates the video clips, which are then merged into one ad and saved with a link in Airtable. A second version runs from a Google Sheet on a schedule.
+
+## What the system does
+
+- Reads the product photo and description and writes the prompts
+- Generates a starting frame and the video scenes, waiting and polling until each is ready
+- Merges the clips into one video and stores the link
+- Updates the sheet or Airtable row when it is done

@@ -1,0 +1,29 @@
+---
+title: Purchase-to-welcome-email automation for a healthcare membership
+summary: A new member's purchase is matched to their lead record, checked for email consent and turned into a Brevo contact and welcome email.
+client: Coy Swaim, Simple Freakin' Care
+industry: Healthcare access
+category: Make.com
+stack: [Make.com, Brevo, LegUpRx API, Gmail]
+order: 8
+gallery:
+  - file: make-lead-routing.png
+    caption: "Make.com scenario: webhook, signature check, sub-account and lead matching, consent check, then Brevo contact, list and welcome email"
+  - file: sfc-brevo-series-1.png
+    caption: "Brevo automation: the Freakin' Facts email series starts when a contact joins a list"
+  - file: sfc-brevo-series-2.png
+    caption: "One email every seven days, from care navigation to mental health, labs and a final membership check-up"
+---
+Coy Swaim runs Simple Freakin' Care and wanted new members to get a welcome email automatically after they buy. The purchase webhook did not include the buyer's name or email, so I built a match between the order and the lead record, and tested it with a live purchase before launch.
+
+## What the system does
+
+- Checks the webhook secret so only genuine purchase events get through
+- Finds the right sub-account and matches the order to the buyer's lead
+- Checks email consent before anything is sent, with alerts for no match or missing consent
+- Creates or updates the contact in Brevo, adds it to the members list and sends the welcome email
+- Feeds members into a weekly email series built in Brevo
+
+## Scope note
+
+Cancellation emails were left out at the client's request, so Brevo's unsubscribe link handles members who leave.

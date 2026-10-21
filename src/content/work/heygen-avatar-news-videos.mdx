@@ -1,0 +1,20 @@
+---
+title: AI avatar news videos with HeyGen
+summary: Today's news is scraped, turned into a script by an AI writer and rendered as a talking-avatar video.
+client: Portfolio build
+industry: Media
+category: n8n
+stack: [n8n, HeyGen, Apify, OpenAI]
+order: 9
+gallery:
+  - file: heygen-avatar-videos.png
+    caption: "Avatar and voice lookup, video creation, script writing and status polling in n8n"
+---
+A portfolio build that shows an automated news video studio. The workflow chooses an avatar and voice in HeyGen, scrapes the news with Apify, has an AI script writer turn it into a short script and asks HeyGen to render the video. It then polls until the video is ready.
+
+## What the system does
+
+- Looks up the avatar and the voice to use
+- Scrapes current news and writes a script with an AI agent
+- Creates the video in HeyGen
+- Waits and checks the status every 30 seconds until the video is finished

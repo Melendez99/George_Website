@@ -1,7 +1,7 @@
 ---
-title: TikTok content pipeline with multi-platform publishing
-summary: Long videos are turned into clips and published across platforms on a schedule.
-client: Content creator
+title: Clip pipeline with scheduled multi-platform publishing
+summary: Long videos are clipped by AI, approved in Notion and scheduled across social platforms.
+client: Daniel Grozev
 industry: Media
 category: n8n
 stack: [n8n, Vizard, Notion, Ayrshare, Google Drive]
@@ -11,13 +11,18 @@ videos:
     url: https://www.loom.com/share/8c04ad9e0f7f4c158315f61e585b74ab
   - title: "Automated clipping workflow"
     url: https://www.loom.com/share/906f5e6228dd4b64a8001c6a92c6befd
-
+gallery:
+  - file: vizard-clip-pipeline.png
+    caption: "Stage by stage: Google Drive upload, Vizard clipping, webhook, split clips and save each clip to Notion"
+  - file: clip-auto-scheduler.png
+    caption: "The scheduler: approved scripts and clips are paired, then scheduled on a posting calendar through Ayrshare"
 ---
-A creator wanted to turn long videos into short clips and post them across platforms without doing it by hand. I built an n8n pipeline that sends each uploaded video to Vizard for clipping, saves every clip to Notion for review, and schedules the approved ones through Ayrshare.
+Daniel Grozev wanted to turn long videos into short clips and post them across platforms without doing it by hand. I built a set of n8n workflows that send each uploaded video to Vizard for clipping, save every clip to Notion for review, and schedule the approved ones through Ayrshare. The pipeline later gained YouTube Shorts, Instagram Reels and LinkedIn, and I maintain it as a retainer.
 
 ## What the system does
 
 - Picks up new videos from a Google Drive folder and sends them for clipping automatically
-- Saves each clip to Notion with its title, score and transcript so it can be reviewed and approved
-- Schedules approved clips across platforms on a posting calendar
+- Saves each clip to Notion with its title, viral score and transcript so it can be reviewed and approved
+- Pairs approved scripts with approved clips and schedules them across platforms, spread over the month
 - Marks failed projects so nothing disappears silently
+- Copies clips to permanent storage, because clip links from the clipping tool expire after seven days

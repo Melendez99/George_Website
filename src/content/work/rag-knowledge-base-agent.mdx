@@ -1,0 +1,20 @@
+---
+title: RAG knowledge-base agent kept in sync with Google Drive
+summary: A chat agent answers from your own documents, and the knowledge base updates itself when files are added, changed or deleted.
+client: Portfolio build
+industry: Knowledge management
+category: AI agents
+stack: [n8n, Supabase Vector Store, OpenAI Embeddings, OpenRouter, Google Drive]
+order: 10
+gallery:
+  - file: rag-agent-pipelines.png
+    caption: "The agent plus three pipelines: upload, update and delete documents in Google Drive"
+---
+A portfolio build for businesses that want to ask questions of their own documents. A chat agent searches a Supabase vector store and answers from what it finds, and three small pipelines keep that store in step with a Google Drive folder.
+
+## What the system does
+
+- Answers chat questions with an AI agent that looks up the right passages first
+- Adds a new Drive file to the vector store when it is uploaded
+- Replaces the old entries when a file is updated, so answers do not use stale text
+- Removes the entries when a file is deleted

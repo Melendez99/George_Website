@@ -1,0 +1,10 @@
+export type Video = { id: string; title: string; client: string; blurb: string; slug: string; tool: string };
+export const videos: Video[] = [
+  { id: '5a7fde28dd3a46a4949219dd7974afc1', title: 'Missed call text-back + AI booking agent', client: 'Jerry Jennings', blurb: 'A missed call turns into a text conversation and a booked appointment.', slug: 'missed-call-booking', tool: 'n8n, Twilio, Airtable, Google Calendar' },
+  { id: '70d43fea8ac041cab82e8c921415dbd5', title: 'Automated Instagram lead pipeline to webinar', client: 'Denis Cauvier and Abel Prieto (inCruises)', blurb: 'Engaged commenters are found, scored, emailed and invited to a webinar.', slug: 'instagram-lead-pipeline', tool: 'n8n, Apify, Claude, Instantly' },
+  { id: 'd256a36d65694a3599a1c3c0dc4e9b0e', title: 'Automated real estate blogging and social posting', client: 'Brenton Hitchcock (Hitchcock Properties)', blurb: 'A topic in a sheet becomes a WordPress draft and social posts on a schedule.', slug: 'real-estate-blog-engine', tool: 'n8n, Claude, WordPress, Publer' },
+  { id: 'a2eff69489a0497da2c73180ebadd3bc', title: 'Sales call analysis automation walkthrough', client: 'Kristin Eifler', blurb: 'Sales call transcripts are scored and turned into structured feedback.', slug: 'ai-sales-call-analysis', tool: 'Make.com, Claude' },
+  { id: '8c04ad9e0f7f4c158315f61e585b74ab', title: 'Automated clipping system', client: 'Daniel Grozev', blurb: 'Long videos are clipped, reviewed in Notion and scheduled to social platforms.', slug: 'tiktok-content-pipeline', tool: 'n8n, Vizard, Notion, Ayrshare' },
+  { id: '906f5e6228dd4b64a8001c6a92c6befd', title: 'Automated clipping workflow', client: 'Daniel Grozev', blurb: 'A second walkthrough of the clip approval and scheduling flow.', slug: 'tiktok-content-pipeline', tool: 'n8n, Vizard, Notion, Ayrshare' },
+  { id: '0eac70e212d6469998eeaff3466b2366', title: 'AI automation for a home service business', client: 'Home-service business demo', blurb: 'How AI automation can run the front desk of a home-service company.', slug: 'missed-call-booking', tool: 'n8n, AI agents' },
+];

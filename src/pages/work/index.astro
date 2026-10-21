@@ -4,11 +4,18 @@ import Base from '../../layouts/Base.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import WorkCard from '../../components/WorkCard.astro';
 import Gallery from '../../components/Gallery.astro';
+import VideoShowcase from '../../components/VideoShowcase.astro';
 const more = [
-  { file: 'make-lead-routing.png', caption: 'Make.com: lead routing from a webhook, matched to the right sub-account, then added to Brevo with a welcome email' },
   { file: 'wordpress-blog-automation.png', caption: 'n8n: AI blog engine from news ingestion and scoring to a published WordPress post' },
   { file: 'trend-seo-pipeline.png', caption: 'n8n: trending-topic research, writing and internal linking, then publishing to WordPress' },
-  { file: 'ugc-video-autopilot.png', caption: 'n8n: product photos turned into UGC-style videos with Veo 3, Gemini and Airtable' },
+  { file: 'social-content-factory.png', caption: 'n8n: one brief becomes posts for Instagram, Facebook, X and LinkedIn, with an approval step before publishing' },
+  { file: 'whatsapp-booking-agent.png', caption: 'n8n: WhatsApp AI booking assistant with Cal.com booking and SMS reminders' },
+  { file: 'sms-chat-buffer-redis.png', caption: 'n8n: a Twilio SMS agent that waits for a burst of messages and replies once, using Redis' },
+  { file: 'retell-booking-agent.png', caption: 'n8n: Retell AI voice agent that checks Google Calendar availability and books the appointment' },
+  { file: 'retell-inbound-lead-qualification.png', caption: 'n8n: Retell AI call transcript analysed by Gemini and written back to the lead in Airtable' },
+  { file: 'woocommerce-support-agent.png', caption: 'n8n: AI support agent that looks up WooCommerce orders and DHL tracking' },
+  { file: 'woocommerce-post-sales-chatbot.png', caption: 'n8n: post-sales chatbot with a policy knowledge base and human hand-off on Telegram' },
+  { file: 'ai-sales-researcher.png', caption: 'n8n: AI company researcher that fills a Google Sheet with research on each account' },
 ];
 
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
@@ -24,9 +31,13 @@ const cats = ['All', ...new Set(work.map((w) => w.data.category))];
       {work.map((w, i) => <div data-cat={w.data.category}><WorkCard entry={w} delay={i * 60} /></div>)}
     </div>
   </section>
+  <section class="container-x pb-16" id="videos">
+    <SectionHead eyebrow="Watch" title="Video walkthroughs" sub="Short Loom recordings where I walk through real builds and show them running." />
+    <VideoShowcase />
+  </section>
   <section class="container-x pb-20">
     <SectionHead eyebrow="More builds" title="Workflow gallery" sub="More automations from my n8n and Make.com canvases. Click any image to enlarge." />
-    <Gallery items={more} />
+    <Gallery items={more} cols={3} />
   </section>
   <script>
     const btns = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
