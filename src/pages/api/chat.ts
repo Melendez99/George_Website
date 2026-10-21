@@ -14,7 +14,7 @@ function limited(ip: string) {
   return recent.length > 15;
 }
 
-const contact = `You can book a free call at ${SITE.bookUrl}, hire George on Upwork (${SITE.links.upwork}), email ${SITE.email}, or message George on WhatsApp (https://wa.me/${SITE.whatsapp}).`;
+const contact = `Reach George here:\nBook a free call: ${SITE.bookUrl}\nWhatsApp: https://wa.me/${SITE.whatsapp}\nEmail: ${SITE.email}\nUpwork: ${SITE.links.upwork}`;
 
 const SYSTEM = `You are the website assistant for ${SITE.person} (${SITE.name}), a freelance AI automation developer in ${SITE.location}. You are an AI, not George, and you say so if asked.
 Facts you can use:
@@ -28,9 +28,10 @@ Rules: keep answers under 90 words, plain and friendly, no markdown headings. Ne
 const FAQ: Array<[RegExp, string]> = [
   [/pric|cost|quote|rate|how much|budget|charge|fee/i, `Pricing depends on what you need built. Small fixes and first workflows are quick; larger systems are split into milestones. The fastest way to get a real number is a short call. ${contact}`],
   [/n8n|make|zapier|ghl|gohighlevel|tool|stack/i, 'George works with n8n, Make.com, Zapier, GoHighLevel, Retell AI, Vapi, Twilio, Airtable, Supabase, Claude and OpenAI. He picks the tool that fits your process rather than forcing one.'],
+  [/can you|could you|do you|integrat|automate|connect|sync|xero|quickbooks|shopify|stripe|hubspot|salesforce|zoho|notion|slack|gmail|invoice/i, `Most likely yes. George connects apps through their APIs and webhooks, so it comes down to whether your tool offers one. Tell him what you use and what should happen automatically, and he will confirm what is possible. ${contact}`],
   [/missed call|voice|phone|receptionist|calls?/i, 'Yes. George builds missed-call text-back and AI voice agents that answer, qualify the caller and book into your calendar. There is a full walkthrough video on the Work page.'],
   [/example|portfolio|work|case|proof|video/i, 'Open the Work page to see case studies with Loom walkthroughs and the real workflow screenshots, covering booking agents, webinar funnels, lead pipelines and content engines.'],
-  [/start|hire|book|call|contact|talk|reach/i, `Easy. ${contact}`],
+  [/start|hire|book|call|contact|talk|reach/i, `The easiest start is a free call to talk through what you want automated. ${contact}`],
   [/who|george|about|experience|upwork|review/i, 'George Melody is a freelance AI automation developer in Lagos, Top Rated on Upwork with a 100% Job Success Score. The Reviews page has real client feedback.'],
 ];
 
@@ -69,5 +70,5 @@ export const POST: APIRoute = async ({ request, clientAddress }) => {
     } catch { /* fall through to the built-in answers */ }
   }
   const hit = FAQ.find(([re]) => re.test(last.content));
-  return json(hit ? hit[1] : `I am an automated assistant and I may not have that answer. ${contact}`);
+  return json(hit ? hit[1] : `I am an automated assistant and may not have that answer, but George can help directly. ${contact}`);
 };

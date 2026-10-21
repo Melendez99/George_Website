@@ -33,14 +33,16 @@
   let busy = false;
 
   const linkify = (el: HTMLElement, text: string) => {
-    text.split(/(https?:\/\/[^\s)]+)/g).forEach((part) => {
-      if (/^https?:\/\//.test(part)) { const a = document.createElement('a'); a.href = part; a.textContent = part.replace(/^https?:\/\//, ''); a.target = '_blank'; a.rel = 'noopener'; a.className = 'underline text-link'; el.appendChild(a); }
+    text.split(/(https?:\/\/[^\s)]+)/g).forEach((raw) => {
+      const tail = /^https?:\/\//.test(raw) ? (raw.match(/[.,;:!?]+$/)?.[0] ?? '') : '';
+      const part = tail ? raw.slice(0, -tail.length) : raw;
+      if (/^https?:\/\//.test(part)) { const a = document.createElement('a'); a.href = part; a.textContent = part.replace(/^https?:\/\//, ''); a.target = '_blank'; a.rel = 'noopener'; a.className = 'underline text-link'; el.appendChild(a); if (tail) el.appendChild(document.createTextNode(tail)); }
       else el.appendChild(document.createTextNode(part));
     });
   };
   const add = (role: 'user' | 'assistant', text: string) => {
     const b = document.createElement('div');
-    b.className = role === 'user' ? 'ml-8 rounded-2xl rounded-br-sm bg-brand text-brandink px-3 py-2 w-fit max-w-[85%] ml-auto' : 'mr-8 rounded-2xl rounded-bl-sm bg-surface2 px-3 py-2 w-fit max-w-[90%]';
+    b.className = role === 'user' ? 'ml-8 rounded-2xl rounded-br-sm bg-brand text-brandink px-3 py-2 w-fit max-w-[85%] ml-auto' : 'mr-8 rounded-2xl rounded-bl-sm bg-surface2 px-3 py-2 w-fit max-w-[90%] whitespace-pre-line';
     linkify(b, text); log.appendChild(b); log.scrollTop = log.scrollHeight; return b;
   };
   const toggle = (show: boolean) => {
