@@ -1,4 +1,12 @@
+import n8nImg from '../assets/services/n8n.webp';
+import makeImg from '../assets/services/make.webp';
+import voiceImg from '../assets/services/ai-voice.webp';
+import crmImg from '../assets/services/gohighlevel.webp';
+import agentsImg from '../assets/services/ai-agents.webp';
+import webImg from '../assets/services/websites.webp';
+
 export interface Service {
+  image: ImageMetadata;
   slug: string;
   title: string;
   short: string;
@@ -12,6 +20,7 @@ export interface Service {
 export const services: Service[] = [
   {
     slug: 'n8n-automation',
+    image: n8nImg,
     title: 'n8n Workflow Automation',
     short: 'Self-hosted or cloud workflows that connect your tools and run without you.',
     intro:
@@ -31,6 +40,7 @@ export const services: Service[] = [
   },
   {
     slug: 'make-automation',
+    image: makeImg,
     title: 'Make.com Automation',
     short: 'Scenarios that move data between your apps and cut manual work.',
     intro:
@@ -49,6 +59,7 @@ export const services: Service[] = [
   },
   {
     slug: 'ai-voice-agents',
+    image: voiceImg,
     title: 'AI Voice Agents',
     short: 'Phone agents that answer, qualify and book, around the clock.',
     intro:
@@ -67,6 +78,7 @@ export const services: Service[] = [
   },
   {
     slug: 'gohighlevel-crm',
+    image: crmImg,
     title: 'GoHighLevel CRM Systems',
     short: 'Pipelines, follow-ups and automations inside GoHighLevel.',
     intro:
@@ -85,6 +97,7 @@ export const services: Service[] = [
   },
   {
     slug: 'ai-agents-integrations',
+    image: agentsImg,
     title: 'AI Agents and Integrations',
     short: 'Claude and OpenAI wired into the way your business already works.',
     intro:
@@ -103,6 +116,7 @@ export const services: Service[] = [
   },
   {
     slug: 'websites-and-apps',
+    image: webImg,
     title: 'Websites and Apps',
     short: 'Fast sites and web apps, built with modern tooling and AI-assisted workflows.',
     intro:

@@ -14,7 +14,7 @@ function limited(ip: string) {
   return recent.length > 15;
 }
 
-const contact = `You can book a call on Upwork (${SITE.bookUrl}), email ${SITE.email}, or message George on WhatsApp (https://wa.me/${SITE.whatsapp}).`;
+const contact = `You can book a free call at ${SITE.bookUrl}, hire George on Upwork (${SITE.links.upwork}), email ${SITE.email}, or message George on WhatsApp (https://wa.me/${SITE.whatsapp}).`;
 
 const SYSTEM = `You are the website assistant for ${SITE.person} (${SITE.name}), a freelance AI automation developer in ${SITE.location}. You are an AI, not George, and you say so if asked.
 Facts you can use:

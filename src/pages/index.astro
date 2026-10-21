@@ -4,8 +4,10 @@ import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import SectionHead from '../components/SectionHead.astro';
 import WorkCard from '../components/WorkCard.astro';
+import IntroVideo from '../components/IntroVideo.astro';
 import VideoShowcase from '../components/VideoShowcase.astro';
 import Icon from '../components/Icon.astro';
+import { Image } from 'astro:assets';
 import { services } from '../data/services';
 import testimonials from '../data/testimonials.json';
 import Testimonial from '../components/Testimonial.astro';
@@ -14,18 +16,35 @@ import { SITE } from '../config';
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
 const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
 const stack = ['n8n', 'Make.com', 'GoHighLevel', 'Zapier', 'Retell AI', 'Vapi', 'ElevenLabs', 'Twilio', 'Airtable', 'Supabase', 'Claude API', 'OpenAI', 'Astro', 'Vercel'];
+const introVideoLd = {
+  '@context': 'https://schema.org',
+  '@type': 'VideoObject',
+  name: 'George Melody: AI automation developer intro',
+  description: 'A 55-second introduction to George Melody, an AI automation developer who builds n8n, Make.com, GoHighLevel and voice agent systems.',
+  thumbnailUrl: new URL('/video/george-intro-poster.webp', Astro.site).href,
+  contentUrl: new URL('/video/george-intro.mp4', Astro.site).href,
+  uploadDate: '2026-10-21',
+  duration: 'PT55S',
+};
 ---
-<Base>
+<Base jsonLd={[introVideoLd]}>
   <Hero />
+
+  <section class="container-x py-12 max-w-4xl" id="intro">
+    <IntroVideo />
+  </section>
 
   <section class="container-x py-16">
     <SectionHead eyebrow="What I do" title="Automation that does a real job" sub="Pick a service to see what is included, the tools I use, and common questions." />
     <div class="grid gap-4 md:grid-cols-3">
       {services.map((s, i) => (
-        <a href={`/services/${s.slug}`} class:list={['card reveal group', [0, 3, 5].includes(i) && 'md:col-span-2']} style={`--d:${i * 70}ms`}>
-          <div class="w-11 h-11 rounded-xl grid place-items-center bg-surface2 text-link mb-4"><Icon name={s.icon} /></div>
-          <h3 class="text-xl font-semibold group-hover:text-link transition-colors">{s.title}</h3>
-          <p class="text-muted text-sm mt-2">{s.short}</p>
+        <a href={`/services/${s.slug}`} class="card reveal group" style={`--d:${i * 70}ms`}>
+          <Image src={s.image} alt={`${s.title} illustration`} widths={[480, 800, 1200]} sizes="(min-width: 768px) 33vw, 100vw" class="-mx-6 -mt-6 mb-5 w-[calc(100%+3rem)] max-w-none aspect-[2/1] object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 shrink-0 rounded-xl grid place-items-center bg-surface2 text-link"><Icon name={s.icon} /></div>
+            <h3 class="text-xl font-semibold group-hover:text-link transition-colors">{s.title}</h3>
+          </div>
+          <p class="text-muted text-sm mt-3">{s.short}</p>
           <p class="mt-4 text-sm text-link inline-flex items-center gap-1">Learn more <span class="transition-transform group-hover:translate-x-1">→</span></p>
         </a>
       ))}

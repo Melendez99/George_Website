@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+const embed = `${SITE.bookUrl}?hide_gdpr_banner=1&background_color=0a0f1c&text_color=e8eefc&primary_color=38b6ff`;
+const topics = [
+  'A first look at your idea and which tools fit',
+  'Review of an existing n8n, Make or GoHighLevel setup',
+  'Scoping a voice agent, lead flow or content pipeline',
+  'Quote and timeline for a project you already have in mind',
+];
+---
+<Base title="Book a call" description="Book a free consultation with George Melody. Talk through your automation idea, get a clear scope, a timeline and a quote.">
+  <section class="container-x pt-36 pb-12 max-w-4xl">
+    <p class="eyebrow">Book a call</p>
+    <h1 class="text-4xl md:text-5xl font-bold mt-2">Book a consultation</h1>
+    <p class="text-lg text-muted mt-4 max-w-2xl">Pick a time that suits you. We talk through what is slowing your business down and I tell you honestly what to automate first, what it takes and what it costs.</p>
+
+    <ul class="mt-8 grid sm:grid-cols-2 gap-3">
+      {topics.map((t) => <li class="flex gap-3 text-sm"><span class="text-mint mt-0.5">✓</span><span>{t}</span></li>)}
+    </ul>
+
+    <div class="card !p-0 mt-10">
+      <div id="cal-wrap" class="min-h-[420px] grid place-items-center text-center p-8">
+        <div>
+          <p class="font-semibold text-lg">Choose a time that works for you</p>
+          <p class="text-sm text-muted mt-2 max-w-md mx-auto">The calendar is loaded from Calendly when you press the button, which keeps this page fast.</p>
+          <button id="cal-load" type="button" class="btn btn-primary mt-5" data-src={embed}>Open the calendar <span class="arrow">→</span></button>
+          <p class="text-sm text-muted mt-4">Prefer a new tab? <a class="text-link underline underline-offset-4" href={SITE.bookUrl} target="_blank" rel="noopener">Open Calendly directly</a>.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-sm text-muted mt-6">Not ready for a call? Send a message on <a class="text-link underline underline-offset-4" href="/contact">the contact page</a> or take the <a class="text-link underline underline-offset-4" href="/scorecard">free automation scorecard</a>.</p>
+  </section>
+
+  <script>
+    const btn = document.getElementById('cal-load') as HTMLButtonElement | null;
+    btn?.addEventListener('click', () => {
+      const wrap = document.getElementById('cal-wrap');
+      if (!wrap || !btn.dataset.src) return;
+      const f = document.createElement('iframe');
+      f.src = btn.dataset.src;
+      f.title = 'Book a call with George on Calendly';
+      f.className = 'w-full h-[760px] rounded-[1.25rem] border-0';
+      wrap.className = 'p-0';
+      wrap.replaceChildren(f);
+    });
+  </script>
+</Base>

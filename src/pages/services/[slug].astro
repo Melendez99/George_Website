@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
+import { Image } from 'astro:assets';
 import { services } from '../../data/services';
 import { SITE } from '../../config';
 
@@ -19,6 +20,7 @@ const jsonLd = [
 <Base title={s.title} description={s.short + ' ' + s.intro.slice(0, 90)} jsonLd={jsonLd}>
   <article class="container-x pt-36 pb-12 max-w-3xl">
     <a href="/services" class="text-sm text-muted hover:text-link">← All services</a>
+    <Image src={s.image} alt={`${s.title} illustration`} widths={[640, 960, 1280]} sizes="(min-width: 768px) 768px, 100vw" loading="eager" class="mt-6 w-full aspect-[2/1] object-cover rounded-2xl border border-line" />
     <div class="w-12 h-12 rounded-xl grid place-items-center bg-surface2 text-link mt-6"><Icon name={s.icon} /></div>
     <h1 class="text-4xl md:text-5xl font-bold mt-4">{s.title}</h1>
     <p class="text-lg text-muted mt-4">{s.intro}</p>

@@ -1,0 +1,28 @@
+---
+import SectionHead from './SectionHead.astro';
+interface Props { heading?: boolean }
+const { heading = true } = Astro.props;
+---
+<div class="reveal">
+  {heading && <SectionHead eyebrow="Meet George" title="55 seconds on how I work" sub="A quick silent walkthrough: the problem I solve, who I am and the tools I use. Captions are on the slides." />}
+  <div class="relative overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_30px_70px_-35px_var(--glow)] aspect-video" data-intro-video>
+    <video class="absolute inset-0 h-full w-full object-cover" controls preload="none" playsinline poster="/video/george-intro-poster.webp" aria-label="George Melody intro video, 55 seconds, no audio">
+      <source src="/video/george-intro.mp4" type="video/mp4" />
+      Your browser can't play this video. <a href="/video/george-intro.mp4">Download it</a>.
+    </video>
+    <button type="button" class="intro-play absolute inset-0 grid place-items-center bg-black/10 hover:bg-transparent transition-colors" aria-label="Play the intro video">
+      <span class="grid h-20 w-20 place-items-center rounded-full bg-brand text-bg shadow-xl"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span>
+    </button>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-intro-video]').forEach((box) => {
+    const v = box.querySelector('video');
+    const b = box.querySelector<HTMLButtonElement>('.intro-play');
+    if (!v || !b) return;
+    b.addEventListener('click', () => { b.hidden = true; v.play().catch(() => { b.hidden = false; }); });
+    v.addEventListener('pause', () => { if (v.ended) b.hidden = false; });
+    v.addEventListener('ended', () => { b.hidden = false; v.load(); });
+  });
+</script>

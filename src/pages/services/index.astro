@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import SectionHead from '../../components/SectionHead.astro';
 import Icon from '../../components/Icon.astro';
+import { Image } from 'astro:assets';
 import { services } from '../../data/services';
 ---
 <Base title="Services" description="n8n, Make.com, GoHighLevel, AI voice agents and AI integrations. See what each service includes and the tools used.">
@@ -10,8 +11,11 @@ import { services } from '../../data/services';
     <div class="grid gap-4 md:grid-cols-2">
       {services.map((s, i) => (
         <a href={`/services/${s.slug}`} class="card reveal group" style={`--d:${i * 60}ms`}>
-          <div class="w-11 h-11 rounded-xl grid place-items-center bg-surface2 text-link mb-4"><Icon name={s.icon} /></div>
-          <h2 class="text-xl font-semibold group-hover:text-link transition-colors">{s.title}</h2>
+          <Image src={s.image} alt={`${s.title} illustration`} widths={[480, 800]} sizes="(min-width: 768px) 50vw, 100vw" class="-mx-6 -mt-6 mb-5 w-[calc(100%+3rem)] max-w-none aspect-[2/1] object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 shrink-0 rounded-xl grid place-items-center bg-surface2 text-link"><Icon name={s.icon} /></div>
+            <h2 class="text-xl font-semibold group-hover:text-link transition-colors">{s.title}</h2>
+          </div>
           <p class="text-muted text-sm mt-2">{s.short}</p>
           <div class="mt-4 flex flex-wrap gap-2">{s.stack.slice(0, 4).map((t) => <span class="tag">{t}</span>)}</div>
         </a>

@@ -9,7 +9,8 @@ export const SITE = {
   email: 'melodygeorge99@gmail.com',
   whatsapp: '2349063498313', // digits only, with country code
   // Optional: URL of an n8n (or Make) webhook that receives contact form submissions. Set PUBLIC_FORM_WEBHOOK in Vercel.
-  bookUrl: 'https://www.upwork.com/freelancers/georgem57',
+  // Calendly page used by every "Book a call" button. Upwork stays available under links.
+  bookUrl: 'https://calendly.com/georgethedeveloper/meet-with-george',
   links: {
     upwork: 'https://www.upwork.com/freelancers/georgem57',
     linkedin: 'https://www.linkedin.com/in/george-melody',

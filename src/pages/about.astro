@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import { SITE } from '../config';
 import { Image } from 'astro:assets';
 import george from '../assets/george.png';
+import IntroVideo from '../components/IntroVideo.astro';
 const stack = ['n8n', 'Make.com', 'Zapier', 'GoHighLevel', 'Retell AI', 'Vapi', 'ElevenLabs', 'Twilio', 'Airtable', 'Supabase', 'Claude API', 'OpenAI', 'WordPress REST API', 'Lovable', 'Replit', 'Base44'];
 ---
 <Base title="About" description="George Melody is a freelance AI automation developer in Lagos, Top Rated on Upwork with a 100% Job Success Score.">
@@ -19,6 +20,8 @@ const stack = ['n8n', 'Make.com', 'Zapier', 'GoHighLevel', 'Retell AI', 'Vapi', 
       <p>Most of my work comes through Upwork, where I'm Top Rated with a 100% Job Success Score. I also build websites and mobile apps, and I use AI-assisted coding to ship them fast.</p>
       <p>I run <a class="text-link underline underline-offset-4" href={SITE.links.guild} target="_blank" rel="noopener">The Developers Guild</a>, a mentorship and training hub where I teach digital and automation skills.</p>
     </div>
+
+    <div class="mt-10"><IntroVideo heading={false} /></div>
 
     <h2 class="text-xl font-semibold mt-12">Tools I use daily</h2>
     <div class="mt-4 flex flex-wrap gap-2">{stack.map((s) => <span class="tag">{s}</span>)}</div>
