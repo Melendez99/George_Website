@@ -1,8 +1,9 @@
 ---
-const { eyebrow, title, sub } = Astro.props;
+const { eyebrow, title, sub, h1 = false } = Astro.props;
+const H = h1 ? 'h1' : 'h2';
 ---
 <div class="reveal max-w-2xl mb-10">
   <p class="eyebrow">{eyebrow}</p>
-  <h2 class="text-3xl md:text-4xl font-bold mt-2">{title}</h2>
+  <H class="text-3xl md:text-4xl font-bold mt-2">{title}</H>
   {sub && <p class="text-muted mt-3">{sub}</p>}
 </div>

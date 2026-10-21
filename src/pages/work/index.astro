@@ -23,7 +23,7 @@ const cats = ['All', ...new Set(work.map((w) => w.data.category))];
 ---
 <Base title="Work" description="Case studies of automation systems built with n8n, Make.com, GoHighLevel and AI voice agents.">
   <section class="container-x pt-36 pb-16">
-    <SectionHead eyebrow="Work" title="Case studies" sub="A selection of systems I have built. Client names are kept private where needed." />
+    <SectionHead h1 eyebrow="Work" title="Case studies" sub="A selection of systems I have built for clients around the world." />
     <div class="flex flex-wrap gap-2 mb-8" id="filters" role="group" aria-label="Filter projects">
       {cats.map((c, i) => <button data-filter={c} class:list={['tag cursor-pointer transition', i === 0 && '!border-brand !text-link']}>{c}</button>)}
     </div>

@@ -7,7 +7,7 @@ import { services } from '../../data/services';
 ---
 <Base title="Services" description="n8n, Make.com, GoHighLevel, AI voice agents and AI integrations. See what each service includes and the tools used.">
   <section class="container-x pt-36 pb-16">
-    <SectionHead eyebrow="Services" title="What I can build for you" sub="Every project ends with a working system, a short handover doc, and alerts so you know when something needs attention." />
+    <SectionHead h1 eyebrow="Services" title="What I can build for you" sub="Every project ends with a working system, a short handover doc, and alerts so you know when something needs attention." />
     <div class="grid gap-4 md:grid-cols-2">
       {services.map((s, i) => (
         <a href={`/services/${s.slug}`} class="card reveal group" style={`--d:${i * 60}ms`}>
