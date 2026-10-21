@@ -1,0 +1,22 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import SectionHead from '../../components/SectionHead.astro';
+
+const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date);
+---
+<Base title="Blog" description="Practical notes on n8n, Make.com, GoHighLevel, AI agents and automation for small businesses.">
+  <section class="container-x pt-36 pb-16">
+    <SectionHead eyebrow="Blog" title="Notes on automation" sub="Practical write-ups from real builds." />
+    <div class="grid gap-4 md:grid-cols-2">
+      {posts.map((p, i) => (
+        <a href={`/blog/${p.id}`} class="card reveal block group" style={`--d:${i * 60}ms`}>
+          <p class="text-xs text-muted font-mono">{p.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+          <h2 class="font-semibold text-xl mt-2 group-hover:text-link transition-colors">{p.data.title}</h2>
+          <p class="text-muted text-sm mt-2">{p.data.description}</p>
+          <div class="mt-4 flex flex-wrap gap-2">{p.data.tags.map((t) => <span class="tag">{t}</span>)}</div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

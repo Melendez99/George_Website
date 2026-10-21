@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import SectionHead from '../components/SectionHead.astro';
+import WorkCard from '../components/WorkCard.astro';
+import Icon from '../components/Icon.astro';
+import { services } from '../data/services';
+import testimonials from '../data/testimonials.json';
+import { SITE } from '../config';
+
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
+const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) => +b.data.date - +a.data.date).slice(0, 3);
+const stack = ['n8n', 'Make.com', 'GoHighLevel', 'Zapier', 'Retell AI', 'Vapi', 'ElevenLabs', 'Twilio', 'Airtable', 'Supabase', 'Claude API', 'OpenAI', 'Astro', 'Vercel'];
+---
+<Base>
+  <Hero />
+
+  <section class="container-x py-16">
+    <SectionHead eyebrow="What I do" title="Automation that does a real job" sub="Pick a service to see what is included, the tools I use, and common questions." />
+    <div class="grid gap-4 md:grid-cols-3">
+      {services.map((s, i) => (
+        <a href={`/services/${s.slug}`} class:list={['card reveal group', [0, 3, 5].includes(i) && 'md:col-span-2']} style={`--d:${i * 70}ms`}>
+          <div class="w-11 h-11 rounded-xl grid place-items-center bg-surface2 text-link mb-4"><Icon name={s.icon} /></div>
+          <h3 class="text-xl font-semibold group-hover:text-link transition-colors">{s.title}</h3>
+          <p class="text-muted text-sm mt-2">{s.short}</p>
+          <p class="mt-4 text-sm text-link inline-flex items-center gap-1">Learn more <span class="transition-transform group-hover:translate-x-1">→</span></p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  {work.length > 0 && (
+    <section class="container-x py-16">
+      <SectionHead eyebrow="Selected work" title="Systems I have built" />
+      <div class="grid gap-4 md:grid-cols-3">
+        {work.map((w, i) => <WorkCard entry={w} delay={i * 80} />)}
+      </div>
+      <div class="reveal mt-8"><a href="/work" class="btn btn-ghost">All projects <span class="arrow">→</span></a></div>
+    </section>
+  )}
+
+  <section class="py-12 overflow-hidden" aria-label="Tools I work with">
+    <div class="marquee">
+      {[...stack, ...stack].map((s) => <span class="font-mono text-sm text-muted whitespace-nowrap border border-line rounded-full px-4 py-2 bg-surface">{s}</span>)}
+    </div>
+  </section>
+
+  {testimonials.length > 0 && (
+    <section class="container-x py-16">
+      <SectionHead eyebrow="Kind words" title="What clients say" />
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {testimonials.map((t: any, i: number) => (
+          <figure class="card reveal" style={`--d:${i * 80}ms`}>
+            <blockquote class="text-ink">“{t.quote}”</blockquote>
+            <figcaption class="mt-4 text-sm text-muted"><span class="text-ink font-medium">{t.name}</span>{t.role ? `, ${t.role}` : ''}{t.company ? ` at ${t.company}` : ''}{t.source ? ` · via ${t.source}` : ''}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {posts.length > 0 && (
+    <section class="container-x py-16">
+      <SectionHead eyebrow="From the blog" title="Notes on automation" />
+      <div class="grid gap-4 md:grid-cols-3">
+        {posts.map((p, i) => (
+          <a href={`/blog/${p.id}`} class="card reveal block group" style={`--d:${i * 80}ms`}>
+            <p class="text-xs text-muted font-mono">{p.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+            <h3 class="font-semibold text-lg mt-2 group-hover:text-link transition-colors">{p.data.title}</h3>
+            <p class="text-muted text-sm mt-2">{p.data.description}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <section class="container-x py-16">
+    <div class="reveal card !p-10 md:!p-14 text-center relative">
+      <div class="absolute inset-0 -z-0 opacity-60" style="background: radial-gradient(60% 80% at 50% 0%, var(--glow), transparent 70%)"></div>
+      <h2 class="text-3xl md:text-4xl font-bold">Got a process that eats your week?</h2>
+      <p class="text-muted mt-3 max-w-xl mx-auto">Tell me what is slowing you down. I will tell you what can be automated and what it would take.</p>
+      <div class="mt-7 flex flex-wrap gap-3 justify-center">
+        <a href={SITE.bookUrl} target="_blank" rel="noopener" class="btn btn-primary">Book a call <span class="arrow">→</span></a>
+        <a href="/contact" class="btn btn-ghost">Other ways to reach me</a>
+      </div>
+    </div>
+  </section>
+</Base>

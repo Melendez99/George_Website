@@ -1,0 +1,146 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource-variable/jetbrains-mono";
+
+:root {
+  --bg: #0a0f1c;
+  --surface: #111a2e;
+  --surface-2: #162038;
+  --border: #1e2a44;
+  --text: #e8eef9;
+  --muted: #8fa0bc;
+  --primary: #38b6ff;
+  --primary-ink: #05101f;
+  --link: #38b6ff;
+  --violet: #7c5cff;
+  --mint: #2de2c0;
+  --glow: rgba(56, 182, 255, 0.25);
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #f6f9fe;
+  --surface: #ffffff;
+  --surface-2: #eef3fb;
+  --border: #d9e3f2;
+  --text: #0b1220;
+  --muted: #55657f;
+  --link: #0b8bd6;
+  --glow: rgba(56, 182, 255, 0.28);
+  color-scheme: light;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface2: var(--surface-2);
+  --color-line: var(--border);
+  --color-ink: var(--text);
+  --color-muted: var(--muted);
+  --color-brand: var(--primary);
+  --color-brandink: var(--primary-ink);
+  --color-link: var(--link);
+  --color-violet: var(--violet);
+  --color-mint: var(--mint);
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+  --font-display: "Space Grotesk Variable", "Inter Variable", sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+}
+
+@view-transition { navigation: auto; }
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+::selection { background: var(--primary); color: var(--primary-ink); }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; border-radius: 6px; }
+
+@layer components {
+.container-x { width: min(1120px, 100% - 2rem); margin-inline: auto; }
+.grad-text {
+  background: linear-gradient(135deg, #38b6ff, #7c5cff);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.eyebrow { font-family: var(--font-mono); font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--link); }
+
+/* Buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: .5rem; padding: .8rem 1.25rem;
+  border-radius: 999px; font-weight: 600; font-size: .95rem; transition: transform .2s, box-shadow .2s, background .2s;
+  border: 1px solid transparent;
+}
+.btn-primary { background: var(--primary); color: var(--primary-ink); }
+.btn-primary:hover { background: linear-gradient(135deg, #38b6ff, #7c5cff); color: #fff; box-shadow: 0 10px 30px -8px var(--glow); transform: translateY(-2px); }
+.btn-ghost { border-color: var(--border); color: var(--text); background: transparent; }
+.btn-ghost:hover { border-color: var(--primary); box-shadow: 0 0 0 4px var(--glow); }
+.btn .arrow { transition: transform .2s; }
+.btn:hover .arrow { transform: translateX(4px); }
+
+/* Cards with cursor spotlight + gradient border */
+.card {
+  position: relative; border-radius: 1.25rem; background: var(--surface);
+  border: 1px solid var(--border); padding: 1.5rem; overflow: hidden;
+  transition: transform .25s, border-color .25s, box-shadow .25s;
+}
+.card::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .25s;
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), var(--glow), transparent 60%);
+}
+.card:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--primary) 55%, var(--border)); box-shadow: 0 18px 40px -22px var(--glow); }
+.card:hover::before { opacity: 1; }
+.card > * { position: relative; }
+
+.tag {
+  font-family: var(--font-mono); font-size: .72rem; padding: .25rem .6rem; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--muted); background: var(--surface-2);
+}
+
+}
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
+.reveal.in { opacity: 1; transform: none; }
+.no-js .reveal { opacity: 1; transform: none; }
+
+/* Hero glow */
+.hero-glow { position: absolute; inset: -20% -10% auto -10%; height: 70%; pointer-events: none; filter: blur(60px);
+  background: radial-gradient(40% 60% at 25% 30%, rgba(56,182,255,.28), transparent 70%), radial-gradient(35% 55% at 75% 20%, rgba(124,92,255,.22), transparent 70%);
+  animation: drift 14s ease-in-out infinite alternate; }
+@keyframes drift { to { transform: translate3d(3%, 4%, 0) scale(1.06); } }
+
+.caret { display: inline-block; width: .08em; height: 1em; background: var(--primary); margin-left: .12em; vertical-align: -.1em; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+.dot-live { width: .55rem; height: .55rem; border-radius: 999px; background: var(--mint); box-shadow: 0 0 0 0 rgba(45,226,192,.6); animation: pulse 2s infinite; }
+@keyframes pulse { 70% { box-shadow: 0 0 0 9px rgba(45,226,192,0); } 100% { box-shadow: 0 0 0 0 rgba(45,226,192,0); } }
+
+/* Workflow node diagram */
+.flow-line { stroke-dasharray: 6 8; animation: dash 1.4s linear infinite; }
+@keyframes dash { to { stroke-dashoffset: -28; } }
+
+/* Marquee */
+.marquee { display: flex; gap: 2.5rem; width: max-content; animation: scroll 38s linear infinite; }
+.marquee:hover { animation-play-state: paused; }
+@keyframes scroll { to { transform: translateX(-50%); } }
+
+header.site { transition: background .25s, border-color .25s, padding .25s; }
+header.site.scrolled { background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+
+.prose {
+  --tw-prose-body: var(--text); --tw-prose-headings: var(--text); --tw-prose-lead: var(--muted);
+  --tw-prose-links: var(--link); --tw-prose-bold: var(--text); --tw-prose-counters: var(--muted);
+  --tw-prose-bullets: var(--muted); --tw-prose-hr: var(--border); --tw-prose-quotes: var(--text);
+  --tw-prose-quote-borders: var(--primary); --tw-prose-captions: var(--muted); --tw-prose-code: var(--text);
+  --tw-prose-pre-code: var(--text); --tw-prose-pre-bg: var(--surface); --tw-prose-th-borders: var(--border); --tw-prose-td-borders: var(--border);
+}

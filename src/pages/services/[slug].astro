@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { services } from '../../data/services';
+import { SITE } from '../../config';
+
+export function getStaticPaths() {
+  return services.map((s) => ({ params: { slug: s.slug }, props: { s } }));
+}
+const { s } = Astro.props;
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'Service', name: s.title, description: s.intro, provider: { '@type': 'Person', name: SITE.person }, areaServed: 'Worldwide' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: s.faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Services', item: new URL('/services', Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: s.title, item: new URL(Astro.url.pathname, Astro.site).href } ] },
+];
+---
+<Base title={s.title} description={s.short + ' ' + s.intro.slice(0, 90)} jsonLd={jsonLd}>
+  <article class="container-x pt-36 pb-12 max-w-3xl">
+    <a href="/services" class="text-sm text-muted hover:text-link">← All services</a>
+    <div class="w-12 h-12 rounded-xl grid place-items-center bg-surface2 text-link mt-6"><Icon name={s.icon} /></div>
+    <h1 class="text-4xl md:text-5xl font-bold mt-4">{s.title}</h1>
+    <p class="text-lg text-muted mt-4">{s.intro}</p>
+
+    <h2 class="text-xl font-semibold mt-10">What is included</h2>
+    <ul class="mt-4 space-y-3">
+      {s.bullets.map((b) => <li class="flex gap-3"><span class="text-mint mt-1">✓</span><span>{b}</span></li>)}
+    </ul>
+
+    <h2 class="text-xl font-semibold mt-10">Tools</h2>
+    <div class="mt-4 flex flex-wrap gap-2">{s.stack.map((t) => <span class="tag">{t}</span>)}</div>
+
+    <h2 class="text-xl font-semibold mt-10">Questions</h2>
+    <div class="mt-4 space-y-3">
+      {s.faq.map((f) => (
+        <details class="card !p-5 group"><summary class="cursor-pointer font-medium">{f.q}</summary><p class="text-muted mt-3 text-sm">{f.a}</p></details>
+      ))}
+    </div>
+
+    <div class="card !p-8 mt-12 text-center">
+      <h2 class="text-2xl font-bold">Want this for your business?</h2>
+      <p class="text-muted mt-2">Tell me what you need and I will scope it.</p>
+      <a href={SITE.bookUrl} target="_blank" rel="noopener" class="btn btn-primary mt-5">Book a call <span class="arrow">→</span></a>
+    </div>
+  </article>
+</Base>

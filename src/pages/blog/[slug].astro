@@ -1,0 +1,37 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { SITE } from '../../config';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', (p) => !p.data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const d = post.data;
+const url = new URL(Astro.url.pathname, Astro.site).href;
+const words = (post.body ?? '').split(/\s+/).length;
+const mins = Math.max(1, Math.round(words / 220));
+const jsonLd = [
+  { '@context': 'https://schema.org', '@type': 'Article', headline: d.title, description: d.description, datePublished: d.date.toISOString(), dateModified: (d.updated ?? d.date).toISOString(),
+    author: { '@type': 'Person', name: SITE.person, url: Astro.site?.href }, publisher: { '@type': 'Person', name: SITE.person }, mainEntityOfPage: url,
+    image: new URL(d.cover ?? '/og.png', Astro.site).href },
+  { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Blog', item: new URL('/blog', Astro.site).href },
+    { '@type': 'ListItem', position: 2, name: d.title, item: url } ] },
+];
+---
+<Base title={d.title} description={d.description} image={d.cover ?? '/og.png'} type="article" published={d.date} modified={d.updated ?? d.date} jsonLd={jsonLd}>
+  <article class="container-x pt-36 pb-12 max-w-3xl">
+    <a href="/blog" class="text-sm text-muted hover:text-link">← All posts</a>
+    <p class="text-xs text-muted font-mono mt-6">{d.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })} · {mins} min read</p>
+    <h1 class="text-4xl md:text-5xl font-bold mt-3">{d.title}</h1>
+    <div class="mt-4 flex flex-wrap gap-2">{d.tags.map((t) => <span class="tag">{t}</span>)}</div>
+    <div class="prose max-w-none mt-10 prose-headings:font-display prose-a:text-link prose-code:font-mono prose-pre:bg-surface prose-pre:border prose-pre:border-line"><Content /></div>
+    <div class="card !p-8 mt-14 text-center">
+      <h2 class="text-2xl font-bold">Want this built for you?</h2>
+      <a href={SITE.bookUrl} target="_blank" rel="noopener" class="btn btn-primary mt-5">Book a call <span class="arrow">→</span></a>
+    </div>
+  </article>
+</Base>

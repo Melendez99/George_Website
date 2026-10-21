@@ -1,0 +1,27 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+const channels = [
+  { label: 'Upwork', href: SITE.links.upwork, note: 'Hire me with escrow protection' },
+  { label: 'LinkedIn', href: SITE.links.linkedin, note: 'Message me directly' },
+  { label: 'Contra', href: SITE.links.contra, note: 'Independent work profile' },
+  { label: 'GitHub', href: SITE.links.github, note: 'Code and experiments' },
+];
+---
+<Base title="Contact" description="Book a call or message George about your automation project.">
+  <section class="container-x pt-36 pb-12 max-w-3xl">
+    <p class="eyebrow">Contact</p>
+    <h1 class="text-4xl md:text-5xl font-bold mt-2">Let's talk about your project.</h1>
+    <p class="text-lg text-muted mt-4">Tell me what is slowing you down. I reply within a day.</p>
+    <div class="mt-8"><a href={SITE.bookUrl} target="_blank" rel="noopener" class="btn btn-primary">Book a call <span class="arrow">→</span></a></div>
+    {SITE.email && <p class="mt-6 text-muted">Or email <a class="text-link underline" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>}
+    <div class="grid sm:grid-cols-2 gap-4 mt-10">
+      {channels.map((c, i) => (
+        <a href={c.href} target="_blank" rel="noopener" class="card reveal block group" style={`--d:${i * 60}ms`}>
+          <h2 class="font-semibold group-hover:text-link transition-colors">{c.label} →</h2>
+          <p class="text-sm text-muted mt-1">{c.note}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</Base>

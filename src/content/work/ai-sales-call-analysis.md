@@ -1,0 +1,17 @@
+---
+title: AI sales-call analysis in Make.com
+summary: Sales calls are transcribed, analysed by AI and scored, so the team gets feedback without listening to recordings.
+client: Sales consultancy
+industry: Sales and coaching
+category: AI agents
+stack: [Make.com, Claude API, OpenAI]
+order: 3
+---
+A sales team wanted consistent feedback on its calls without a manager listening to every recording. I built a Make.com scenario that takes the call transcript, runs it through an AI analysis, and writes structured feedback back to the team's tools.
+
+## What the system does
+
+- Picks up new call recordings and transcripts automatically
+- Scores each call against the team's own criteria
+- Summarises strengths, gaps and next steps
+- Stores results so trends are easy to review

@@ -1,0 +1,30 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import SectionHead from '../../components/SectionHead.astro';
+import WorkCard from '../../components/WorkCard.astro';
+
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+const cats = ['All', ...new Set(work.map((w) => w.data.category))];
+---
+<Base title="Work" description="Case studies of automation systems built with n8n, Make.com, GoHighLevel and AI voice agents.">
+  <section class="container-x pt-36 pb-16">
+    <SectionHead eyebrow="Work" title="Case studies" sub="A selection of systems I have built. Client names are kept private where needed." />
+    <div class="flex flex-wrap gap-2 mb-8" id="filters" role="group" aria-label="Filter projects">
+      {cats.map((c, i) => <button data-filter={c} class:list={['tag cursor-pointer transition', i === 0 && '!border-brand !text-link']}>{c}</button>)}
+    </div>
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3" id="grid">
+      {work.map((w, i) => <div data-cat={w.data.category}><WorkCard entry={w} delay={i * 60} /></div>)}
+    </div>
+  </section>
+  <script>
+    const btns = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+    const items = document.querySelectorAll<HTMLElement>('#grid > [data-cat]');
+    btns.forEach((b) => b.addEventListener('click', () => {
+      btns.forEach((x) => x.classList.remove('!border-brand', '!text-link'));
+      b.classList.add('!border-brand', '!text-link');
+      const f = b.dataset.filter;
+      items.forEach((it) => (it.style.display = f === 'All' || it.dataset.cat === f ? '' : 'none'));
+    }));
+  </script>
+</Base>

@@ -1,0 +1,36 @@
+---
+import { SITE } from '../config';
+const year = new Date().getFullYear();
+---
+<footer class="border-t border-line mt-24">
+  <div class="container-x py-12 grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">
+    <div>
+      <p class="font-display font-bold text-lg">George<span class="grad-text">TheDeveloper</span></p>
+      <p class="text-muted text-sm mt-3 max-w-sm">AI automation systems for businesses that want to stop doing repeat work by hand. Based in {SITE.location}, working worldwide.</p>
+      <p class="mt-4 inline-flex items-center gap-2 text-sm"><span class="dot-live"></span> Taking on new projects</p>
+    </div>
+    <div>
+      <p class="eyebrow mb-3">Explore</p>
+      <ul class="space-y-2 text-sm text-muted">
+        <li><a class="hover:text-link" href="/work">Work</a></li>
+        <li><a class="hover:text-link" href="/services">Services</a></li>
+        <li><a class="hover:text-link" href="/blog">Blog</a></li>
+        <li><a class="hover:text-link" href="/about">About</a></li>
+        <li><a class="hover:text-link" href="/contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="eyebrow mb-3">Find me</p>
+      <ul class="space-y-2 text-sm text-muted">
+        <li><a class="hover:text-link" rel="me noopener" target="_blank" href={SITE.links.upwork}>Upwork</a></li>
+        <li><a class="hover:text-link" rel="me noopener" target="_blank" href={SITE.links.linkedin}>LinkedIn</a></li>
+        <li><a class="hover:text-link" rel="me noopener" target="_blank" href={SITE.links.contra}>Contra</a></li>
+        <li><a class="hover:text-link" rel="me noopener" target="_blank" href={SITE.links.github}>GitHub</a></li>
+        <li><a class="hover:text-link" rel="me noopener" target="_blank" href={SITE.links.guild}>The Developers Guild</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-line">
+    <p class="container-x py-5 text-xs text-muted">© {year} {SITE.person}. All rights reserved.</p>
+  </div>
+</footer>

@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+const stack = ['n8n', 'Make.com', 'Zapier', 'GoHighLevel', 'Retell AI', 'Vapi', 'ElevenLabs', 'Twilio', 'Airtable', 'Supabase', 'Claude API', 'OpenAI', 'WordPress REST API', 'Lovable', 'Replit', 'Base44'];
+---
+<Base title="About" description="George Melody is a freelance AI automation developer in Lagos, Top Rated on Upwork with a 100% Job Success Score.">
+  <section class="container-x pt-36 pb-12 max-w-3xl">
+    <p class="eyebrow">About</p>
+    <h1 class="text-4xl md:text-5xl font-bold mt-2">Hi, I'm George.</h1>
+    <div class="mt-6 space-y-4 text-lg text-muted">
+      <p>I'm a freelance AI automation developer based in {SITE.location}. I build systems that take repeat work off your plate: lead follow-up, webinar funnels, voice agents, content pipelines and CRM clean-ups.</p>
+      <p>Most of my work comes through Upwork, where I'm Top Rated with a 100% Job Success Score. I also build websites and mobile apps, and I use AI-assisted coding to ship them fast.</p>
+      <p>I run <a class="text-link underline underline-offset-4" href={SITE.links.guild} target="_blank" rel="noopener">The Developers Guild</a>, a mentorship and training hub where I teach digital and automation skills.</p>
+    </div>
+
+    <h2 class="text-xl font-semibold mt-12">Tools I use daily</h2>
+    <div class="mt-4 flex flex-wrap gap-2">{stack.map((s) => <span class="tag">{s}</span>)}</div>
+
+    <div class="mt-12 flex flex-wrap gap-3">
+      <a href={SITE.bookUrl} target="_blank" rel="noopener" class="btn btn-primary">Book a call <span class="arrow">→</span></a>
+      <a href="/work" class="btn btn-ghost">See my work</a>
+    </div>
+  </section>
+</Base>
