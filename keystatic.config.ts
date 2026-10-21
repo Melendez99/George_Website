@@ -23,8 +23,16 @@ export default config({
         }),
         date: fields.date({ label: 'Publish date', defaultValue: { kind: 'today' }, validation: { isRequired: true } }),
         tags: fields.array(fields.text({ label: 'Tag' }), { label: 'Tags', itemLabel: (p) => p.value }),
+        cover: fields.image({
+          label: 'Cover image (1200x630 works best)',
+          directory: 'public/images/blog',
+          publicPath: '/images/blog/',
+        }),
         draft: fields.checkbox({ label: 'Draft (hide from the site)', defaultValue: false }),
-        content: fields.mdx({ label: 'Post' }),
+        content: fields.mdx({
+          label: 'Post',
+          options: { image: { directory: 'public/images/blog', publicPath: '/images/blog/' } },
+        }),
       },
     }),
     work: collection({
@@ -50,7 +58,15 @@ export default config({
         ),
         demo: fields.url({ label: 'Demo or Loom link (optional)' }),
         order: fields.integer({ label: 'Sort order (lower shows first)', defaultValue: 100 }),
-        content: fields.mdx({ label: 'Case study body' }),
+        cover: fields.image({
+          label: 'Cover image (optional)',
+          directory: 'public/images/work',
+          publicPath: '/images/work/',
+        }),
+        content: fields.mdx({
+          label: 'Case study body',
+          options: { image: { directory: 'public/images/work', publicPath: '/images/work/' } },
+        }),
       },
     }),
   },

@@ -3,6 +3,7 @@ const { entry, delay = 0 } = Astro.props;
 const d = entry.data;
 ---
 <a href={`/work/${entry.id}`} class="card reveal block group" style={`--d:${delay}ms`}>
+  {d.cover && <img src={d.cover} alt={d.title} width="1200" height="630" loading="lazy" decoding="async" class="-mx-6 -mt-6 mb-5 w-[calc(100%+3rem)] max-w-none aspect-[1200/630] object-cover" />}
   <div class="flex items-center justify-between">
     <span class="tag">{d.category}</span>
     <span class="text-muted text-xs">{d.industry}</span>
