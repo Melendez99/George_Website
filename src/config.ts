@@ -6,8 +6,9 @@ export const SITE = {
   description:
     'George Melody builds AI automation systems with n8n, Make.com, GoHighLevel and voice agents. Top Rated on Upwork. Based in Lagos, working with clients worldwide.',
   location: 'Lagos, Nigeria',
-  // Fill in when ready. Empty values are hidden on the site.
-  email: '',
+  email: 'melodygeorge99@gmail.com',
+  whatsapp: '2349063498313', // digits only, with country code
+  // Optional: URL of an n8n (or Make) webhook that receives contact form submissions. Set PUBLIC_FORM_WEBHOOK in Vercel.
   bookUrl: 'https://www.upwork.com/freelancers/georgem57',
   links: {
     upwork: 'https://www.upwork.com/freelancers/georgem57',

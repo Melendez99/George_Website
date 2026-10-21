@@ -7,6 +7,7 @@ import WorkCard from '../components/WorkCard.astro';
 import Icon from '../components/Icon.astro';
 import { services } from '../data/services';
 import testimonials from '../data/testimonials.json';
+import Testimonial from '../components/Testimonial.astro';
 import { SITE } from '../config';
 
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
@@ -48,15 +49,11 @@ const stack = ['n8n', 'Make.com', 'GoHighLevel', 'Zapier', 'Retell AI', 'Vapi', 
 
   {testimonials.length > 0 && (
     <section class="container-x py-16">
-      <SectionHead eyebrow="Kind words" title="What clients say" />
-      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {testimonials.map((t: any, i: number) => (
-          <figure class="card reveal" style={`--d:${i * 80}ms`}>
-            <blockquote class="text-ink">“{t.quote}”</blockquote>
-            <figcaption class="mt-4 text-sm text-muted"><span class="text-ink font-medium">{t.name}</span>{t.role ? `, ${t.role}` : ''}{t.company ? ` at ${t.company}` : ''}{t.source ? ` · via ${t.source}` : ''}</figcaption>
-          </figure>
-        ))}
+      <SectionHead eyebrow="Kind words" title="What clients say on Upwork" sub="Real reviews from completed Upwork contracts." />
+      <div class="columns-1 md:columns-2 lg:columns-3 gap-4 [&>figure]:mb-4 [&>figure]:break-inside-avoid">
+        {testimonials.filter((t: any) => t.quote.length < 520).slice(0, 6).map((t: any, i: number) => <Testimonial t={t} delay={i * 60} />)}
       </div>
+      <div class="reveal mt-8"><a href="/reviews" class="btn btn-ghost">Read all {testimonials.length} reviews <span class="arrow">→</span></a></div>
     </section>
   )}
 

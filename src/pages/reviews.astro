@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Testimonial from '../components/Testimonial.astro';
+import testimonials from '../data/testimonials.json';
+import { SITE } from '../config';
+---
+<Base title="Client Reviews" description="Five-star client reviews for George Melody's n8n, Make.com, GoHighLevel and AI voice agent automation work on Upwork.">
+  <section class="container-x pt-36 pb-16">
+    <SectionHead eyebrow="Reviews" title="What clients say" sub="Reviews from completed Upwork contracts. Client names are private on Upwork, so they appear here as Upwork clients." />
+    <div class="columns-1 md:columns-2 lg:columns-3 gap-4 [&>figure]:mb-4 [&>figure]:break-inside-avoid">
+      {testimonials.map((t: any, i: number) => <Testimonial t={t} delay={(i % 6) * 50} />)}
+    </div>
+    <div class="reveal card !p-8 mt-10 text-center">
+      <h2 class="text-2xl font-bold">Want results like these?</h2>
+      <div class="mt-5 flex flex-wrap gap-3 justify-center">
+        <a href="/contact" class="btn btn-primary">Tell me about your project <span class="arrow">→</span></a>
+        <a href={SITE.links.upwork} target="_blank" rel="noopener" class="btn btn-ghost">See my Upwork profile</a>
+      </div>
+    </div>
+  </section>
+</Base>

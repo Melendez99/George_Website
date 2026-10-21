@@ -1,0 +1,13 @@
+---
+const { t, delay = 0 } = Astro.props;
+---
+<figure class="card reveal flex flex-col" style={`--d:${delay}ms`}>
+  <div class="flex items-center gap-1 text-[#ffb020]" aria-label="5 out of 5 stars">
+    {[0,1,2,3,4].map(() => <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>)}
+  </div>
+  <blockquote class="mt-3 text-ink whitespace-pre-line text-[15px] leading-relaxed">“{t.quote}”</blockquote>
+  <figcaption class="mt-auto pt-4 text-sm text-muted">
+    <span class="text-ink font-medium">{t.name}</span> · {t.source}{t.date ? ` · ${t.date}` : ''}
+    {t.project && <span class="block text-xs mt-0.5">{t.project}</span>}
+  </figcaption>
+</figure>

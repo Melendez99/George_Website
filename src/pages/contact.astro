@@ -1,27 +1,87 @@
 ---
 import Base from '../layouts/Base.astro';
 import { SITE } from '../config';
+const webhook = import.meta.env.PUBLIC_FORM_WEBHOOK || '';
+const wa = `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent("Hi George, I found your site and want to talk about an automation project.")}`;
 const channels = [
+  { label: 'WhatsApp', href: wa, note: 'Fastest way to reach me' },
+  { label: 'Email', href: `mailto:${SITE.email}`, note: SITE.email },
   { label: 'Upwork', href: SITE.links.upwork, note: 'Hire me with escrow protection' },
   { label: 'LinkedIn', href: SITE.links.linkedin, note: 'Message me directly' },
-  { label: 'Contra', href: SITE.links.contra, note: 'Independent work profile' },
-  { label: 'GitHub', href: SITE.links.github, note: 'Code and experiments' },
 ];
 ---
-<Base title="Contact" description="Book a call or message George about your automation project.">
-  <section class="container-x pt-36 pb-12 max-w-3xl">
-    <p class="eyebrow">Contact</p>
-    <h1 class="text-4xl md:text-5xl font-bold mt-2">Let's talk about your project.</h1>
-    <p class="text-lg text-muted mt-4">Tell me what is slowing you down. I reply within a day.</p>
-    <div class="mt-8"><a href={SITE.bookUrl} target="_blank" rel="noopener" class="btn btn-primary">Book a call <span class="arrow">→</span></a></div>
-    {SITE.email && <p class="mt-6 text-muted">Or email <a class="text-link underline" href={`mailto:${SITE.email}`}>{SITE.email}</a></p>}
-    <div class="grid sm:grid-cols-2 gap-4 mt-10">
+<Base title="Contact" description="Tell George about your automation project. Reach him by form, WhatsApp, email, Upwork or LinkedIn.">
+  <section class="container-x pt-36 pb-12 grid lg:grid-cols-[1.1fr_.9fr] gap-10">
+    <div>
+      <p class="eyebrow">Contact</p>
+      <h1 class="text-4xl md:text-5xl font-bold mt-2">Let's talk about your project.</h1>
+      <p class="text-lg text-muted mt-4">Tell me what is slowing you down. I reply within a day.</p>
+
+      <form id="contact-form" class="card mt-8 space-y-4 !p-6" data-webhook={webhook} data-email={SITE.email} novalidate>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="block text-sm">Name
+            <input name="name" required autocomplete="name" class="mt-1 w-full rounded-xl bg-bg border border-line px-4 py-3 focus:border-brand outline-none" />
+          </label>
+          <label class="block text-sm">Email
+            <input name="email" type="email" required autocomplete="email" class="mt-1 w-full rounded-xl bg-bg border border-line px-4 py-3 focus:border-brand outline-none" />
+          </label>
+        </div>
+        <label class="block text-sm">What do you need automated?
+          <textarea name="message" required rows="5" class="mt-1 w-full rounded-xl bg-bg border border-line px-4 py-3 focus:border-brand outline-none" placeholder="Tools you use, what is manual today, what you want to happen instead"></textarea>
+        </label>
+        <label class="block text-sm">Budget (optional)
+          <select name="budget" class="mt-1 w-full rounded-xl bg-bg border border-line px-4 py-3 focus:border-brand outline-none">
+            <option value="">Not sure yet</option>
+            <option>Under $500</option>
+            <option>$500 to $1,500</option>
+            <option>$1,500 to $5,000</option>
+            <option>$5,000+</option>
+          </select>
+        </label>
+        <input type="text" name="company_website" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+        <div class="flex flex-wrap items-center gap-4">
+          <button type="submit" class="btn btn-primary">Send message <span class="arrow">→</span></button>
+          <p id="form-status" class="text-sm text-muted" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+
+    <div class="lg:pt-20 space-y-4">
       {channels.map((c, i) => (
-        <a href={c.href} target="_blank" rel="noopener" class="card reveal block group" style={`--d:${i * 60}ms`}>
+        <a href={c.href} target={c.href.startsWith('mailto') ? undefined : '_blank'} rel="noopener" class="card reveal block group" style={`--d:${i * 60}ms`}>
           <h2 class="font-semibold group-hover:text-link transition-colors">{c.label} →</h2>
-          <p class="text-sm text-muted mt-1">{c.note}</p>
+          <p class="text-sm text-muted mt-1 break-all">{c.note}</p>
         </a>
       ))}
     </div>
   </section>
+
+  <script>
+    const form = document.getElementById('contact-form') as HTMLFormElement | null;
+    const status = document.getElementById('form-status');
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      if (fd.get('company_website')) return; // honeypot
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      const data = Object.fromEntries(fd.entries());
+      delete (data as any).company_website;
+      const webhook = form.dataset.webhook;
+      const mailto = () => {
+        const body = `Name: ${data.name}\nEmail: ${data.email}\nBudget: ${data.budget || 'n/a'}\n\n${data.message}`;
+        location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent('Project enquiry from ' + data.name)}&body=${encodeURIComponent(body)}`;
+      };
+      if (!webhook) { if (status) status.textContent = 'Opening your email app...'; return mailto(); }
+      try {
+        if (status) status.textContent = 'Sending...';
+        const res = await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...data, page: location.href, sentAt: new Date().toISOString() }) });
+        if (!res.ok) throw new Error('bad status');
+        form.reset();
+        if (status) status.textContent = 'Thanks, message sent. I will reply within a day.';
+      } catch {
+        if (status) status.textContent = 'Could not send. Opening your email app instead...';
+        mailto();
+      }
+    });
+  </script>
 </Base>

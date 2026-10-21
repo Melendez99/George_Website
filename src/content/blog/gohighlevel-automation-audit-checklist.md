@@ -1,0 +1,35 @@
+---
+title: "A GoHighLevel automation audit checklist for agencies and local businesses"
+description: "A 10-point checklist to find leaks in your GoHighLevel pipeline, follow-ups and automations before they cost you leads."
+date: 2026-10-21
+tags: [GoHighLevel, CRM, Checklist]
+---
+Most GoHighLevel accounts grow messy. Workflows pile up, tags multiply, and nobody remembers what fires when. Run this checklist before you build anything new.
+
+## Pipeline
+
+1. **Every stage has a clear exit.** If a deal can sit in a stage forever, add a follow-up or an automatic move.
+2. **Stage names match how you work.** Rename stages that nobody uses.
+3. **Lost deals carry a reason.** Without it you cannot learn anything from them.
+
+## Follow-up
+
+4. **New leads get a reply within five minutes.** Check the speed-to-lead workflow, and check that it works outside business hours.
+5. **No-shows and cold leads have a sequence.** A single reminder is not a sequence.
+6. **Every message has a stop condition.** Leads who reply or book should leave the sequence at once.
+
+## Data
+
+7. **Duplicate contacts are merged.** Look for the same email or phone number under two records.
+8. **Tags follow a naming rule.** Pick a pattern such as `source-facebook` and `status-booked`, and delete the rest.
+9. **Custom fields are used.** Remove the ones nobody fills in.
+
+## Reliability
+
+10. **Failed workflow runs are monitored.** Check the execution logs weekly, or send failures to Slack through n8n.
+
+## How to score it
+
+Give yourself one point per item. Under 5 means you are losing leads right now. Between 5 and 8 means you have gaps worth closing. Above 8, you are in good shape and can look at AI voice agents or reactivation campaigns.
+
+If you want a second pair of eyes, I run GoHighLevel audits and fix the issues I find. Send me a message and tell me what your pipeline looks like today.

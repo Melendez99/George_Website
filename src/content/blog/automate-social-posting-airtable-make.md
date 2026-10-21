@@ -1,0 +1,38 @@
+---
+title: "Post to Instagram, Facebook and LinkedIn from one Airtable calendar"
+description: "How to build a content calendar in Airtable that publishes to three platforms on schedule with Make.com, handling resizing, failures and per-platform switches."
+date: 2026-10-21
+tags: [Make.com, Airtable, Social media, Automation]
+---
+Posting the same content to three platforms by hand eats an hour a day. One Airtable calendar and one Make.com scenario can do it for you.
+
+## The calendar
+
+Create an Airtable table with these fields:
+
+- **Caption** and an optional **LinkedIn caption**
+- **Image** (attachment)
+- **Publish at** (date and time)
+- **Instagram, Facebook, LinkedIn** (checkboxes, so you can switch each platform on or off per post)
+- **Status**: Draft, Scheduled, Posted, Error
+- **Post links** and an **Error note**
+
+## The scenario
+
+1. **Trigger:** every few minutes, search Airtable for records where Status is Scheduled and Publish at is in the past.
+2. **Router:** one branch per platform, each with a filter on its checkbox.
+3. **Image handling:** Instagram is strict about aspect ratios. Resize the image to a supported ratio before posting.
+4. **Publish:** use the Facebook Pages, Instagram Business and LinkedIn modules.
+5. **Update the record:** write the post links back and set Status to Posted.
+
+## Handle failures properly
+
+A broken post should never go out wrong. Add an error handler on each publishing module that sets Status to Error, writes the message to the Error note field, and sends you an alert. You fix the record and move it back to Scheduled.
+
+## Add measurement
+
+Once posting works, add a second scenario that pulls likes, comments and reach a few days after each post and writes them back to the calendar. A simple view sorted by engagement shows what content actually works.
+
+## Watch the limits
+
+Instagram posting through the API needs a Business or Creator account linked to a Facebook Page. LinkedIn tokens expire, so plan to reconnect them. Both are small setup steps that save headaches later.

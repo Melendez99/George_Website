@@ -1,1 +1,125 @@
-[]
+[
+  {
+    "quote": "George was excellent to work with. He took the time to understand the workflow before building anything and came back with a clear design covering the intake sources, AI classification, CRM deduplication, Slack notifications, retries, and failure handling.\n\nWhat stood out was that he didn't just jump into n8n. He asked the right technical questions, identified edge cases early, and explained how the workflow would prevent duplicate records and lost leads.\n\nThe first milestone was delivered clearly and on time, including the workflow outline, logic, and documentation. Communication was also very good.\n\nI'm satisfied with the progress and would be happy to continue with the full implementation.",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5,
+    "project": "AI intake workflow with CRM deduplication, Slack alerts and documentation",
+    "date": "2026-10"
+  },
+  {
+    "quote": "George was excellent to work with. He helped us build an AI workflow for our vacation rental company and did a great job understanding what we were trying to accomplish from both an operations and marketing standpoint.\n\nHe was knowledgeable, responsive, and able to take a fairly broad idea and turn it into a working process. He helped think through the automation, the AI tools, the content flow, and how everything needed to connect so it could actually be useful for our business instead of just being a \"cool\" tech setup.\n\nWhat I appreciated most was that George was patient, clear, and solutions-focused. He explained things when needed, made adjustments along the way, and helped us get closer to a system that can save time, improve consistency, and support our growth.\n\nI would definitely recommend George to anyone looking for help with AI workflows, automation, or improving business processes with AI. Great communication, strong technical ability, and a very professional overall experience.",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5,
+    "project": "AI workflow for a vacation rental company",
+    "date": "2026-06"
+  },
+  {
+    "quote": "Brilliant Make.com freelancer exactly what we hired for and more. I run a small brand and was exhausted from posting the same content to Instagram, Facebook and LinkedIn manually every day. He built an automation off our Airtable content calendar that publishes to all three platforms at the time I schedule, automatically marks posts as Posted, handles per-platform on/off, has an optional LinkedIn-specific caption, and auto-resizes images for Instagram (which I didn't know I needed). Broken posts get flagged instead of going out wrong. He then added an engagement-tracking scenario as a follow-up milestone so I can see what actually works. Communication was exceptional throughout clear written updates, an organised testing call, and zero ghosting. Fixed-price milestones with proper Upwork escrow made the whole thing feel safe. Would absolutely hire again.",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5,
+    "project": "Airtable content calendar to Instagram, Facebook and LinkedIn"
+  },
+  {
+    "quote": "Knew exactly what he was looking at he fixed three bugs I didn't even know I had\nI came in thinking this was a simple one-line fix. George diagnosed it in the first 15 minutes of conversation before I even hired him. Turned out there were three separate issues causing my Make.com + Vapi voice agent to fail: a stale assistant ID, a router condition that was never matching correctly, and a broken variable reference in the response module. He found all three, explained each one in plain English, updated me throughout the whole process, and tested it thoroughly before handing it back. Agent's been running clean since.\nHe also flagged a timeout setting that would've caused intermittent failures down the line didn't have to do that, just did it. If you're dealing with a Make.com or Vapi issue and want someone who actually understands how these systems talk to each other, George is the one. Already planning to bring him back for the next phase.",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5,
+    "project": "Make.com and Vapi voice agent fix"
+  },
+  {
+    "quote": "George did an excellent job building the automation I needed for my business. He connected LegUpRx with Brevo, worked through some unexpected technical issues, tested the system end-to-end, and made sure new customers were being identified and added correctly. He also built out my weekly email automation and provided documentation so I can manage and extend it myself going forward.\n\nWhat I appreciated most was his patience and communication. I'm not a developer, so I needed things explained in plain English, and George was willing to walk me through what he needed without making the process more complicated than it had to be. When something didn't work during testing, he troubleshot it and kept working until we had a solution.\n\nReliable, knowledgeable, responsive, and easy to work with. I would absolutely work with George again and recommend him for Make.com, Brevo, API, webhook, and automation projects.",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5,
+    "project": "LegUpRx to Brevo automation and weekly email"
+  },
+  {
+    "quote": "George was fantastic to work with. He took the time to understand my business, the problem I was trying to solve, and the technical requirements behind it. He was a clear communicator, detail-oriented, patient, and focused on finding an actual solution rather than over complicating things. He explained everything in a way that was easy to understand and left me feeling confident about moving forward. Excellent consultation and I'm looking forward to working with him on the full project. Highly recommend!",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5
+  },
+  {
+    "quote": "George built our n8n automation workflow quickly and professionally. His expertise in API Integration, AI Agent Development, Task Automation, Python/JavaScript logic, and LLM Prompt Engineering was obvious. The workflow is reliable, well-structured, and scalable. Communication was clear and timely throughout. Highly recommend George for any n8n or automation projects — we'll hire him again!",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5
+  },
+  {
+    "quote": "George delivered a highly professional n8automation workflow for our outbound engine. His expertise in AI Agent Development, API Integration, Python/JavaScript logic, LLM Prompt Engineering, and CRM Automation was evident throughout.\nThe workflow is reliable, modular, and production-ready. Communication was clear and timely. Highly recommend George for automation and AI-driven workflow projects — we'll hire him again!",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5,
+    "project": "n8n outbound engine"
+  },
+  {
+    "quote": "George expertly connected MindStudio to GoHighLevel via n8n. He quickly resolved a complex JSON issue with a clean middleware solution, enabling contact creation and audit report delivery in GHL. Highly recommend him for efficient and professional AI automation and workflow development.",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5,
+    "project": "MindStudio to GoHighLevel via n8n"
+  },
+  {
+    "quote": "Delivered exactly what we needed, faster than expected. Clear communicator, proactive with updates, and the voice agent works better than we hoped. Would hire again.",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5,
+    "project": "AI voice agent"
+  },
+  {
+    "quote": "George is fantastic - and I don't just give 10/10 without good reason. He was exceptional in each aspect I had hoped, from professionalism to communication, attention to detail, proactive proactive problem solving and willing to make suggestions to enhance the outcome of the job. He didn't just provide solutions, he uncovered opportunities and suggested solutions to outcomes. I can't say enough good things about him.",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5
+  },
+  {
+    "quote": "Did an amazing job, enough to use him on other projects with AI development and software development. This specifically was building through N8N a workflow to push out blogs using data from multiple software",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5,
+    "project": "n8n blog publishing workflow",
+    "date": "2026-09"
+  },
+  {
+    "quote": "Did a great job creating a workflow using AI through N8N and other software that successfully pushed out blogs and other info to our websites.",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5,
+    "project": "n8n content publishing workflow"
+  },
+  {
+    "quote": "Very professional freelancer. Clear communication, reliable delivery, and strong technical skills. Everything was done exactly as discussed. I recommend George. I am extremely satisfied and happy to work together again.",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5
+  },
+  {
+    "quote": "George is great, Truly. He strives to deliver solutions in the best interest of the employer and of the project while consistently communicating and maintaining the highest level of attention to detail. He's a pleasure to work with and I look forward to working with him again soon!",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5
+  },
+  {
+    "quote": "My first time using upwork, was nervous. George made the job easy very experienced at what he does & most of all got the job done fast.",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5
+  },
+  {
+    "quote": "George was a pleasure to work with, incredibly helpful and ensured the task was completed quickly and effectively.",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5,
+    "project": "Meta Pixel setup and optimization"
+  },
+  {
+    "quote": "Second time using George, he is great. Don't pass him by. Thanks again!",
+    "name": "Upwork client",
+    "source": "Upwork",
+    "rating": 5,
+    "project": "Repeat client"
+  }
+]
