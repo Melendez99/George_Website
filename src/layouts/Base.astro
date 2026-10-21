@@ -4,6 +4,8 @@ import { SITE } from '../config';
 import Nav from '../components/Nav.astro';
 import ChatWidget from '../components/ChatWidget.astro';
 import Footer from '../components/Footer.astro';
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 interface Props {
   title?: string;
@@ -91,6 +93,8 @@ const graph = Astro.url.pathname === '/' ? [person, business, ...jsonLd] : jsonL
     </main>
     <Footer />
     <ChatWidget />
+    <Analytics />
+    <SpeedInsights />
 
     <a href={SITE.bookUrl} target="_blank" rel="noopener" class="btn btn-primary fixed bottom-4 right-4 z-40 shadow-xl md:hidden">Book a call</a>
 
