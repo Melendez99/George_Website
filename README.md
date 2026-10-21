@@ -15,4 +15,4 @@ Portfolio and blog built with Astro, Tailwind CSS and MDX. Deployed on Vercel.
 - Cover/OG image: replace `public/og.png` (1200x630)
 
 ## Deploy
-Import this repo in Vercel (framework: Astro). Set `SITE_URL` to your live domain, for example `https://yourdomain.com`.
+Import this repo in Vercel (framework: Astro). `SITE_URL` is optional. The site reads Vercel's production URL automatically, including a custom domain once added.
