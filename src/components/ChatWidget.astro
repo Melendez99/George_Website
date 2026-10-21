@@ -1,0 +1,70 @@
+---
+---
+<div id="chat-root" class="fixed bottom-4 left-4 md:left-auto md:right-6 md:bottom-6 z-50">
+  <button id="chat-open" type="button" class="btn btn-primary !rounded-full !px-4 shadow-xl" aria-expanded="false" aria-controls="chat-panel">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span class="hidden sm:inline">Ask the AI assistant</span><span class="sm:hidden">Chat</span>
+  </button>
+  <section id="chat-panel" hidden class="fixed inset-x-3 bottom-20 md:inset-x-auto md:right-6 md:bottom-24 md:w-[380px] max-h-[75vh] flex flex-col rounded-2xl border border-line bg-bg shadow-2xl overflow-hidden" aria-label="AI assistant chat">
+    <header class="flex items-center justify-between gap-3 px-4 py-3 border-b border-line bg-surface">
+      <div>
+        <p class="font-semibold text-sm">Ask about George's work</p>
+        <p class="text-[11px] text-muted">AI assistant, not a person. <a class="underline" href="/privacy">Privacy</a></p>
+      </div>
+      <button id="chat-close" type="button" class="text-muted hover:text-ink p-1" aria-label="Close chat">✕</button>
+    </header>
+    <div id="chat-log" class="flex-1 overflow-y-auto px-4 py-3 space-y-3 text-sm" aria-live="polite"></div>
+    <div id="chat-chips" class="px-4 pb-2 flex flex-wrap gap-2"></div>
+    <form id="chat-form" class="flex gap-2 p-3 border-t border-line bg-surface">
+      <input id="chat-input" type="text" maxlength="500" autocomplete="off" placeholder="Type your question" class="flex-1 rounded-xl border border-line bg-bg px-3 py-2 text-sm outline-none focus:border-brand" aria-label="Your message" />
+      <button class="btn btn-primary !py-2 !px-4 text-sm" type="submit">Send</button>
+    </form>
+  </section>
+</div>
+<script>
+  const root = document.getElementById('chat-root')!;
+  const panel = document.getElementById('chat-panel') as HTMLElement;
+  const openBtn = document.getElementById('chat-open') as HTMLButtonElement;
+  const log = document.getElementById('chat-log')!;
+  const chips = document.getElementById('chat-chips')!;
+  const form = document.getElementById('chat-form') as HTMLFormElement;
+  const input = document.getElementById('chat-input') as HTMLInputElement;
+  const history: { role: 'user' | 'assistant'; content: string }[] = [];
+  let busy = false;
+
+  const linkify = (el: HTMLElement, text: string) => {
+    text.split(/(https?:\/\/[^\s)]+)/g).forEach((part) => {
+      if (/^https?:\/\//.test(part)) { const a = document.createElement('a'); a.href = part; a.textContent = part.replace(/^https?:\/\//, ''); a.target = '_blank'; a.rel = 'noopener'; a.className = 'underline text-link'; el.appendChild(a); }
+      else el.appendChild(document.createTextNode(part));
+    });
+  };
+  const add = (role: 'user' | 'assistant', text: string) => {
+    const b = document.createElement('div');
+    b.className = role === 'user' ? 'ml-8 rounded-2xl rounded-br-sm bg-brand text-brandink px-3 py-2 w-fit max-w-[85%] ml-auto' : 'mr-8 rounded-2xl rounded-bl-sm bg-surface2 px-3 py-2 w-fit max-w-[90%]';
+    linkify(b, text); log.appendChild(b); log.scrollTop = log.scrollHeight; return b;
+  };
+  const toggle = (show: boolean) => {
+    panel.hidden = !show; openBtn.setAttribute('aria-expanded', String(show));
+    if (show) { if (!log.childElementCount) greet(); input.focus(); }
+  };
+  const greet = () => {
+    add('assistant', "Hi, I'm an AI assistant for George's site. Ask about his services, tools or past work.");
+    ['What do you build?', 'How does pricing work?', 'Can you automate my missed calls?', 'How do I get started?'].forEach((q) => {
+      const c = document.createElement('button'); c.type = 'button'; c.textContent = q; c.className = 'tag cursor-pointer hover:!border-brand'; c.addEventListener('click', () => send(q)); chips.appendChild(c);
+    });
+  };
+  async function send(text: string) {
+    text = text.trim(); if (!text || busy) return;
+    busy = true; chips.innerHTML = ''; add('user', text); history.push({ role: 'user', content: text }); input.value = '';
+    const wait = add('assistant', 'Thinking...');
+    try {
+      const r = await fetch('/api/chat', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ messages: history }) });
+      const d = await r.json(); wait.textContent = ''; linkify(wait, d.reply || 'Sorry, something went wrong.'); history.push({ role: 'assistant', content: d.reply || '' });
+    } catch { wait.textContent = 'I could not reach the server. You can email melodygeorge99@gmail.com instead.'; }
+    busy = false; log.scrollTop = log.scrollHeight;
+  }
+  openBtn.addEventListener('click', () => toggle(panel.hidden));
+  document.getElementById('chat-close')!.addEventListener('click', () => toggle(false));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden) toggle(false); });
+  form.addEventListener('submit', (e) => { e.preventDefault(); send(input.value); });
+</script>

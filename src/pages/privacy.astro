@@ -1,0 +1,36 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+---
+<Base title="Privacy Policy" description="How GeorgeTheDeveloper handles the information you share through the chat assistant, contact form and scorecard.">
+  <article class="container-x pt-36 pb-16 max-w-3xl">
+    <p class="eyebrow">Legal</p>
+    <h1 class="text-4xl md:text-5xl font-bold mt-2">Privacy Policy</h1>
+    <p class="text-sm text-muted mt-3">Last updated 21 October 2026</p>
+    <div class="prose max-w-none mt-8 prose-headings:font-display prose-a:text-link">
+      <p>This site is run by {SITE.person} ({SITE.name}), based in {SITE.location}. This page explains what information the site handles and why.</p>
+
+      <h2>What you may share</h2>
+      <ul>
+        <li><strong>Contact form and email.</strong> If you write to me, I receive your name, email address and message and use them to reply.</li>
+        <li><strong>AI assistant chat.</strong> The messages you type are sent to my server and, when the AI mode is switched on, to Google's Gemini service to produce a reply. Please do not share passwords, payment details or other sensitive information in the chat. Messages are not stored on this site.</li>
+        <li><strong>Automation Readiness Scorecard.</strong> Your answers are worked out in your browser and are not sent anywhere. If an option to email you the results is shown and you use it, I receive your email address and score.</li>
+      </ul>
+
+      <h2>Cookies and storage</h2>
+      <p>The site stores one small item in your browser to remember your light or dark theme. It does not use advertising cookies. If I add visitor analytics, I will use a privacy-friendly tool that does not track you across sites and will update this page.</p>
+
+      <h2>Embedded videos and links</h2>
+      <p>Video walkthroughs are hosted by Loom and load when you press play. Loom may set its own cookies and has its own privacy policy. Links to Upwork, LinkedIn, WhatsApp and other sites are governed by those sites' policies.</p>
+
+      <h2>How long I keep information</h2>
+      <p>Emails and messages are kept for as long as needed to deal with your enquiry or any work that follows, then deleted on request.</p>
+
+      <h2>Your choices</h2>
+      <p>You can ask me to see, correct or delete anything I hold about you by emailing <a href={`mailto:${SITE.email}`}>{SITE.email}</a>.</p>
+
+      <h2>Changes</h2>
+      <p>If this policy changes, the date at the top will change with it.</p>
+    </div>
+  </article>
+</Base>

@@ -1,0 +1,85 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../config';
+const questions = [
+  { q: 'Do you copy and paste data between two tools every week?', tip: 'Connect those tools so the data moves on its own (n8n or Make).' },
+  { q: 'Does a new lead wait more than 5 minutes for a first reply?', tip: 'An instant reply by text or email, with a booking link, wins the lead back.' },
+  { q: 'Do people miss calls or messages outside working hours?', tip: 'A missed-call text-back or AI receptionist covers the gaps.' },
+  { q: 'Do you send follow-ups to leads or customers by hand?', tip: 'A timed follow-up sequence runs without you and stops when they reply.' },
+  { q: 'Do you build reports or spreadsheets by hand each week?', tip: 'Pull the numbers automatically and send the report on a schedule.' },
+  { q: 'Do no-shows or late cancellations cost you money?', tip: 'Automatic reminders by SMS and email cut no-shows.' },
+  { q: 'Do you post or repurpose content by hand on several platforms?', tip: 'A content pipeline can draft, approve and schedule posts for you.' },
+  { q: 'Do you answer the same customer questions again and again?', tip: 'An AI assistant trained on your own documents handles the repeats.' },
+  { q: 'Does information live in many places with no single source of truth?', tip: 'Sync everything into one CRM or database with clear rules.' },
+  { q: 'Would one broken step in your process go unnoticed for days?', tip: 'Add error alerts and a daily check so problems reach you first.' },
+];
+const webhook = import.meta.env.PUBLIC_LEAD_WEBHOOK || '';
+---
+<Base title="Automation Readiness Scorecard" description="Answer 10 quick questions to see which parts of your business are ready for automation and where to start. Free, no sign-up.">
+  <section class="container-x pt-36 pb-16 max-w-3xl">
+    <p class="eyebrow">Free tool</p>
+    <h1 class="text-4xl md:text-5xl font-bold mt-2">Automation Readiness Scorecard</h1>
+    <p class="text-lg text-muted mt-4">Ten yes-or-no questions. You get a score and the first three things worth automating in your business. Takes about two minutes and needs no sign-up.</p>
+
+    <form id="sc" class="mt-10 space-y-3">
+      {questions.map((x, i) => (
+        <label class="card flex items-start gap-4 cursor-pointer !p-5">
+          <input type="checkbox" name={`q${i}`} data-i={i} class="mt-1 h-5 w-5 accent-[var(--primary)] shrink-0" />
+          <span><span class="text-xs font-mono text-muted">Question {i + 1} of {questions.length}</span><br /><span class="font-medium">{x.q}</span></span>
+        </label>
+      ))}
+      <button type="submit" class="btn btn-primary mt-4">Show my score <span class="arrow">→</span></button>
+    </form>
+
+    <div id="result" hidden class="card !p-8 mt-10" tabindex="-1">
+      <p class="eyebrow">Your result</p>
+      <p class="font-display text-6xl font-bold grad-text mt-2"><span id="score">0</span><span class="text-2xl text-muted">/10</span></p>
+      <h2 id="tier" class="text-2xl font-bold mt-3"></h2>
+      <p id="tierText" class="text-muted mt-2"></p>
+      <h3 class="font-semibold mt-6">Start here</h3>
+      <ul id="tips" class="mt-2 space-y-2 list-disc pl-5 text-muted"></ul>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href={SITE.bookUrl} target="_blank" rel="noopener" class="btn btn-primary">Book a call <span class="arrow">→</span></a>
+        <a href={`https://wa.me/${SITE.whatsapp}`} target="_blank" rel="noopener" class="btn btn-ghost">Message on WhatsApp</a>
+        <button type="button" id="again" class="btn btn-ghost">Start again</button>
+      </div>
+      {webhook && (
+        <form id="lead" class="mt-8 border-t border-line pt-6 flex flex-wrap gap-2" data-endpoint={webhook}>
+          <label class="sr-only" for="lead-email">Email</label>
+          <input id="lead-email" type="email" required placeholder="Email me my results" class="flex-1 min-w-[220px] rounded-xl border border-line bg-bg px-3 py-2 outline-none focus:border-brand" />
+          <button class="btn btn-ghost" type="submit">Send</button>
+          <p id="lead-msg" class="w-full text-sm text-muted"></p>
+          <p class="w-full text-xs text-muted">Your email is used only to send your results. See the <a class="underline" href="/privacy">privacy page</a>.</p>
+        </form>
+      )}
+    </div>
+  </section>
+  <script define:vars={{ tips: questions.map((q) => q.tip) }}>
+    const form = document.getElementById('sc');
+    const res = document.getElementById('result');
+    let current = { score: 0, picked: [] };
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const picked = [...form.querySelectorAll('input:checked')].map((i) => +i.dataset.i);
+      const score = picked.length; current = { score, picked };
+      document.getElementById('score').textContent = score;
+      const tier = score >= 7 ? ['Strong candidate for automation', 'Several of your processes are repeat work that software can run. A focused build could give you hours back every week.']
+        : score >= 4 ? ['Good candidate, start small', 'You have a few clear wins. Automating one or two of them first will show the payoff quickly.']
+        : ['Early stage', 'Your processes may not need automation yet. A short call can confirm where it would help and where it would not.'];
+      document.getElementById('tier').textContent = tier[0]; document.getElementById('tierText').textContent = tier[1];
+      const ul = document.getElementById('tips'); ul.innerHTML = '';
+      (picked.length ? picked.slice(0, 3) : []).forEach((i) => { const li = document.createElement('li'); li.textContent = tips[i]; ul.appendChild(li); });
+      if (!picked.length) { const li = document.createElement('li'); li.textContent = 'Tell me what slows you down and I will point out where automation fits.'; ul.appendChild(li); }
+      res.hidden = false; res.focus(); res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    document.getElementById('again').addEventListener('click', () => { form.reset(); res.hidden = true; form.scrollIntoView({ behavior: 'smooth' }); });
+    const lead = document.getElementById('lead');
+    if (lead) lead.addEventListener('submit', async (e) => {
+      e.preventDefault(); const msg = document.getElementById('lead-msg');
+      try {
+        const r = await fetch(lead.dataset.endpoint, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ source: 'scorecard', email: document.getElementById('lead-email').value, score: current.score, answers: current.picked.map((i) => i + 1) }) });
+        msg.textContent = r.ok ? 'Sent. Check your inbox.' : 'Something went wrong. Please try again.';
+      } catch { msg.textContent = 'Something went wrong. Please try again.'; }
+    });
+  </script>
+</Base>
