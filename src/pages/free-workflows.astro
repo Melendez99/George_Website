@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHead from '../components/SectionHead.astro';
+import { freeWorkflows } from '../data/workflows';
+import { SITE } from '../config';
+---
+<Base title="Free n8n workflow downloads" description="Free n8n workflow JSON files for blog writing, WhatsApp booking and social video posting. Download, import and connect your own accounts.">
+  <section class="container-x pt-36 pb-12">
+    <SectionHead h1 eyebrow="Free" title="Free n8n workflows" sub="Six workflows I have built and reworked. Download the JSON, import it into n8n and connect your own accounts. No email needed." />
+    <div class="grid gap-4 md:grid-cols-2">
+      {freeWorkflows.map((w, i) => (
+        <article class="card reveal flex flex-col" style={`--d:${i * 60}ms`}>
+          <span class="tag self-start">{w.tool}</span>
+          <h2 class="text-xl font-semibold mt-3">{w.title}</h2>
+          <p class="text-muted text-sm mt-2">{w.what}</p>
+          <p class="text-xs text-muted mt-3"><span class="text-ink">You will need:</span> {w.needs.join(', ')}</p>
+          <p class="text-xs text-muted mt-1"><span class="text-ink">Setup time:</span> {w.setup}</p>
+          <a href={`/workflows/${w.file}.json`} download class="btn btn-primary mt-5 self-start">Download JSON <span class="arrow">↓</span></a>
+        </article>
+      ))}
+    </div>
+  </section>
+  <section class="container-x pb-12 max-w-3xl">
+    <h2 class="font-display text-2xl font-semibold">How to import</h2>
+    <ol class="mt-4 space-y-2 text-muted list-decimal pl-5">
+      <li>In n8n, create a new workflow.</li>
+      <li>Open the menu (three dots), choose <strong class="text-ink">Import from file</strong> and pick the JSON.</li>
+      <li>Open each node that shows a warning and select your own credential.</li>
+      <li>Replace every <code>YOUR_ID_HERE</code>, <code>YOUR_SHEET_ID</code> and similar placeholders with your own values.</li>
+      <li>Run once with test data before you activate it.</li>
+    </ol>
+    <p class="text-sm text-muted mt-5">All account IDs, API keys and credentials are removed. These files are provided as is, so test them before using them on live customer data.</p>
+  </section>
+  <section class="container-x pb-20">
+    <div class="card text-center !py-10">
+      <h2 class="font-display text-2xl font-semibold">Want it set up and tested for you?</h2>
+      <p class="text-muted mt-2 max-w-xl mx-auto">Book a free 30 minute consultation. I will look at your current process and tell you what is worth automating.</p>
+      <div class="mt-6 flex flex-wrap justify-center gap-3">
+        <a href="/book" class="btn btn-primary">Book a free consultation <span class="arrow">→</span></a>
+        <a href="/packages" class="btn btn-ghost">See packages</a>
+      </div>
+    </div>
+  </section>
+</Base>

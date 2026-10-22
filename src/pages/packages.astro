@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import SectionHead from '../components/SectionHead.astro';
+const tiers = [
+  { name: 'Free audit', tag: 'Free', blurb: 'A 30 minute call where I review your tools and processes and list what is worth automating first.', items: ['Review of your current tools and workflow', 'A short written list of automation opportunities', 'Honest advice, including when you do not need automation'], cta: 'Book a free audit', pop: false },
+  { name: 'Single automation', tag: 'Fixed scope', blurb: 'One workflow built, tested and handed over. A good fit for a missed-call text-back, lead routing or a content pipeline.', items: ['One n8n, Make.com or GoHighLevel build', 'Error alerts so you know when something fails', 'Short handover doc and a walkthrough video'], cta: 'Get a quote', pop: true },
+  { name: 'Full system', tag: 'Custom', blurb: 'Several connected workflows, often with an AI agent or voice agent, built in stages with milestones.', items: ['Scoping call and written plan', 'Milestone-based build and testing', 'Training for your team and 30 days of support'], cta: 'Get a quote', pop: false },
+  { name: 'Monthly support', tag: 'Retainer', blurb: 'Ongoing changes, monitoring and new automations once your system is live.', items: ['Fixes and small changes', 'Monitoring and error review', 'Priority replies'], cta: 'Ask about support', pop: false },
+];
+---
+<Base title="Packages" description="Free audit, single automation builds, full systems and monthly support. Every project gets a custom quote after a free call.">
+  <section class="container-x pt-36 pb-16">
+    <SectionHead h1 eyebrow="Packages" title="Ways to work together" sub="Every project is scoped on a free call, so the quote matches your actual workflow. Fixed-price projects are split into milestones." />
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      {tiers.map((t, i) => (
+        <article class:list={['card reveal flex flex-col', t.pop && '!border-brand']} style={`--d:${i * 60}ms`}>
+          <span class="tag self-start">{t.tag}</span>
+          <h2 class="text-xl font-semibold mt-3">{t.name}</h2>
+          <p class="text-muted text-sm mt-2">{t.blurb}</p>
+          <ul class="mt-4 space-y-2 text-sm text-muted list-disc pl-4 flex-1">{t.items.map((x) => <li>{x}</li>)}</ul>
+          <a href="/book" class:list={['btn mt-6', t.pop ? 'btn-primary' : 'btn-ghost']}>{t.cta}</a>
+        </article>
+      ))}
+    </div>
+    <div class="mt-10 grid gap-4 md:grid-cols-3">
+      <div class="card"><h3 class="font-semibold">How a project runs</h3><p class="text-sm text-muted mt-2">We agree the scope on a call, I send a written plan, build in milestones and test with your real data before handover.</p></div>
+      <div class="card"><h3 class="font-semibold">What I need from you</h3><p class="text-sm text-muted mt-2">Access to the tools involved, one person who can answer questions, and examples of the work being automated.</p></div>
+      <div class="card"><h3 class="font-semibold">Not sure where to start?</h3><p class="text-sm text-muted mt-2">Try the <a class="text-link underline underline-offset-4" href="/scorecard">automation scorecard</a> or grab a <a class="text-link underline underline-offset-4" href="/free-workflows">free workflow</a>.</p></div>
+    </div>
+  </section>
+</Base>

@@ -16,6 +16,17 @@ const more = [
   { file: 'woocommerce-support-agent.png', caption: 'n8n: AI support agent that looks up WooCommerce orders and DHL tracking' },
   { file: 'woocommerce-post-sales-chatbot.png', caption: 'n8n: post-sales chatbot with a policy knowledge base and human hand-off on Telegram' },
   { file: 'ai-sales-researcher.png', caption: 'n8n: AI company researcher that fills a Google Sheet with research on each account' },
+  { file: 'n8n-news-to-blog-engine.png', caption: 'n8n: daily news ingestion, relevance scoring, research and SEO writing, then a WordPress draft with an AI cover image' },
+  { file: 'blog-generator-perplexity.png', caption: 'n8n: Google Sheets topic to a researched, cited blog post with internal links, slug, meta description and cover image' },
+  { file: 'lead-scoring-website-form.png', caption: 'n8n: a form lead is scored on budget, revenue, team size and keywords scraped from their website' },
+  { file: 'multi-format-document-analyzer.png', caption: 'n8n: documents dropped in Drive are read, analysed by five AI extractors, summarised in a Google Doc and emailed' },
+  { file: 'best-player-whatsapp-stripe.png', caption: 'n8n: WhatsApp group organiser with Stripe payment links, confirmations and AI team formation' },
+  { file: 'circle-community-moderation.png', caption: 'n8n: course purchases add members to the right Circle spaces, and a 24/7 check removes rule-breaking posts with a Telegram alert' },
+  { file: 'make-invoice-email-analysis.png', caption: 'Make.com: invoice emails are routed by attachment type, analysed by OpenAI and logged in Smartsheet and Google Docs' },
+  { file: 'make-publer-promotion.jpg', caption: 'Make.com: one post is promoted on Twitter, Facebook, Pinterest and LinkedIn through Publer and logged in Google Sheets' },
+  { file: 'make-social-media-blueprint.jpg', caption: 'Make.com: social media blueprint that writes, illustrates and publishes to WordPress, LinkedIn and Sheets' },
+  { file: 'make-social-multi-platform.png', caption: 'Make.com: a webhook brief becomes tailored posts for Facebook, Instagram, X, Tumblr, Pinterest and LinkedIn' },
+  { file: 'make-mail-automation.jpg', caption: 'Make.com: inbox automation that classifies incoming mail and routes each type to AI replies, alerts and Telegram' },
 ];
 
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
