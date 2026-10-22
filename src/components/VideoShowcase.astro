@@ -1,19 +1,13 @@
 ---
 import { videos } from '../data/videos';
+import LoomFacade from './LoomFacade.astro';
 const { limit = videos.length, heading = true } = Astro.props as { limit?: number; heading?: boolean };
 const list = videos.slice(0, limit);
 ---
 <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
   {list.map((v, i) => (
     <article class="card reveal !p-0 overflow-hidden flex flex-col" style={`--d:${i * 60}ms`}>
-      <div class="video-frame relative w-full bg-surface2" style="aspect-ratio:16/9" data-embed={`https://www.loom.com/embed/${v.id}?autoplay=true&hide_owner=true`} data-title={v.title}>
-        <button type="button" class="video-play absolute inset-0 w-full h-full grid place-items-center group cursor-pointer" aria-label={`Play video: ${v.title}`} style="background: radial-gradient(70% 90% at 30% 20%, var(--glow), transparent 70%), linear-gradient(135deg, var(--surface2), var(--surface))">
-          <span class="absolute left-4 top-3 text-[11px] font-mono text-muted">{v.tool}</span>
-          <span class="w-16 h-16 rounded-full grid place-items-center bg-brand text-brandink shadow-[0_10px_40px_-8px_var(--glow)] transition-transform group-hover:scale-110">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
-          </span>
-        </button>
-      </div>
+      <LoomFacade id={v.id} title={v.title} tool={v.tool} />
       <div class="p-5 flex flex-col flex-1">
         <h3 class="font-semibold leading-snug">{v.title}</h3>
         <p class="text-xs text-link mt-1">Client: {v.client}</p>
@@ -23,13 +17,3 @@ const list = videos.slice(0, limit);
     </article>
   ))}
 </div>
-<script>
-  document.querySelectorAll<HTMLElement>('.video-frame').forEach((f) => {
-    f.querySelector('.video-play')?.addEventListener('click', () => {
-      const ifr = document.createElement('iframe');
-      ifr.src = f.dataset.embed!; ifr.title = f.dataset.title || 'Video'; ifr.allowFullscreen = true; ifr.allow = 'autoplay; fullscreen';
-      ifr.className = 'absolute inset-0 h-full w-full'; ifr.style.border = '0';
-      f.innerHTML = ''; f.appendChild(ifr);
-    });
-  });
-</script>

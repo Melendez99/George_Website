@@ -1,0 +1,25 @@
+---
+// Click-to-load Loom player that shows the video's own thumbnail first.
+const { id, title, tool = '' } = Astro.props as { id: string; title: string; tool?: string };
+const thumb = `https://cdn.loom.com/sessions/thumbnails/${id}-with-play.gif`;
+---
+<div class="video-frame relative w-full overflow-hidden bg-surface2" style="aspect-ratio:16/9" data-embed={`https://www.loom.com/embed/${id}?autoplay=true&hide_owner=true`} data-title={title}>
+  <button type="button" class="video-play absolute inset-0 w-full h-full grid place-items-center group cursor-pointer" aria-label={`Play video: ${title}`} style="background: radial-gradient(70% 90% at 30% 20%, var(--glow), transparent 70%), linear-gradient(135deg, var(--surface2), var(--surface))">
+    <img src={thumb} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()" />
+    {tool && <span class="absolute left-3 top-3 z-10 rounded bg-black/55 px-2 py-0.5 text-[11px] font-mono text-white">{tool}</span>}
+    <span class="relative z-10 w-16 h-16 rounded-full grid place-items-center bg-brand text-brandink shadow-[0_10px_40px_-8px_var(--glow)] transition-transform group-hover:scale-110">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
+    </span>
+  </button>
+</div>
+<script>
+  document.querySelectorAll<HTMLElement>('.video-frame').forEach((f) => {
+    if (f.dataset.bound) return; f.dataset.bound = '1';
+    f.querySelector('.video-play')?.addEventListener('click', () => {
+      const ifr = document.createElement('iframe');
+      ifr.src = f.dataset.embed!; ifr.title = f.dataset.title || 'Video'; ifr.allowFullscreen = true; ifr.allow = 'autoplay; fullscreen';
+      ifr.className = 'absolute inset-0 h-full w-full'; ifr.style.border = '0';
+      f.innerHTML = ''; f.appendChild(ifr);
+    });
+  });
+</script>
