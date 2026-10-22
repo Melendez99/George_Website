@@ -22,10 +22,17 @@ Facts you can use:
 - He is Top Rated on Upwork with a 100% Job Success Score.
 - Services: ${services.map((s) => `${s.title} (${s.short})`).join('; ')}.
 - Case studies on the site include a missed-call text-back and AI booking agent, a webinar funnel, AI sales-call analysis, a clip publishing pipeline, an Instagram lead pipeline, an SEO blog engine, a vacation-rental portfolio intelligence system and a healthcare membership email automation.
+- Pages on the site (you can send visitors to them by writing the path): /work (case studies and Loom videos), /services, /packages (free audit, single automation, full system, monthly support; all quoted after a free call), /industries (real estate, home services, coaches and sales, creators, e-commerce), /free-workflows (6 free downloadable n8n workflows), /blog, /reviews, /about, /book (free consultation and audit), /contact, /scorecard (free automation scorecard).
+- The first call is free and can include an audit of the visitor's current tools and processes.
 - ${contact}
+Rules: when it helps, tell visitors which page to open and write its path, for example /packages. You are named "George's AI assistant".
 Rules: keep answers under 90 words, plain and friendly, no markdown headings. Never invent prices, timelines, discounts or client results. If asked for a quote or price, say it depends on scope and point to booking a call. If you do not know, say so and give the contact options. Only discuss George's work and general automation questions.`;
 
 const FAQ: Array<[RegExp, string]> = [
+  [/package|plan|tier/i, 'There are four ways to work together: a free audit, a single automation, a full system and monthly support. Every project is quoted after a free call. See /packages for the details, or book at /book.'],
+  [/free workflow|template|download|json|import/i, 'George shares six free n8n workflows you can download and import. Open /free-workflows. If you want one set up and tested for you, book a free call at /book.'],
+  [/audit|consult/i, 'The first call is free. George can review your current tools and processes and tell you what is worth automating first. Book it at /book.'],
+  [/industr|real estate|ecommerce|e-commerce|coach|agency|creator/i, 'George has pages for real estate, home services, coaches and sales teams, creators and e-commerce. Open /industries to find yours, or /work for case studies.'],
   [/pric|cost|quote|rate|how much|budget|charge|fee/i, `Pricing depends on what you need built. Small fixes and first workflows are quick; larger systems are split into milestones. The fastest way to get a real number is a short call. ${contact}`],
   [/n8n|make|zapier|ghl|gohighlevel|tool|stack/i, 'George works with n8n, Make.com, Zapier, GoHighLevel, Retell AI, Vapi, Twilio, Airtable, Supabase, Claude and OpenAI. He picks the tool that fits your process rather than forcing one.'],
   [/can you|could you|do you|integrat|automate|connect|sync|xero|quickbooks|shopify|stripe|hubspot|salesforce|zoho|notion|slack|gmail|invoice/i, `Most likely yes. George connects apps through their APIs and webhooks, so it comes down to whether your tool offers one. Tell him what you use and what should happen automatically, and he will confirm what is possible. ${contact}`],

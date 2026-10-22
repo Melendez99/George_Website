@@ -1,27 +1,32 @@
 ---
 ---
 <div id="chat-root" class="fixed bottom-4 left-4 md:left-auto md:right-6 md:bottom-6 z-50">
-  <button id="chat-open" type="button" class="btn btn-primary !rounded-full !px-4 shadow-xl" aria-expanded="false" aria-controls="chat-panel">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-    <span class="hidden sm:inline">Ask the AI assistant</span><span class="sm:hidden">Chat</span>
+  <button id="chat-open" type="button" class="flex items-center gap-2.5 rounded-full bg-brand text-brandink pl-1.5 pr-4 py-1.5 font-semibold text-sm shadow-xl transition-transform hover:scale-[1.03]" aria-expanded="false" aria-controls="chat-panel">
+    <img src="/images/george-avatar.webp" alt="" width="40" height="40" class="h-10 w-10 rounded-full object-cover ring-2 ring-white/70" />
+    <span class="hidden sm:inline">Ask George's AI assistant</span><span class="sm:hidden">Ask George's AI</span>
   </button>
-  <section id="chat-panel" hidden class="fixed inset-x-3 bottom-20 md:inset-x-auto md:right-6 md:bottom-24 md:w-[380px] max-h-[75vh] flex flex-col rounded-2xl border border-line bg-bg shadow-2xl overflow-hidden" aria-label="AI assistant chat">
+  <section id="chat-panel" hidden class="fixed inset-x-3 bottom-20 md:inset-x-auto md:right-6 md:bottom-24 md:w-[380px] max-h-[75vh] flex flex-col rounded-2xl border border-line bg-bg shadow-2xl overflow-hidden" aria-label="George's AI assistant chat">
     <header class="flex items-center justify-between gap-3 px-4 py-3 border-b border-line bg-surface">
-      <div>
-        <p class="font-semibold text-sm">Ask about George's work</p>
-        <p class="text-[11px] text-muted">AI assistant, not a person. <a class="underline" href="/privacy">Privacy</a></p>
+      <div class="flex items-center gap-3">
+        <img src="/images/george-avatar.webp" alt="" width="40" height="40" class="h-10 w-10 rounded-full object-cover ring-2 ring-brand" />
+        <div>
+          <p class="font-semibold text-sm">George's AI assistant</p>
+          <p class="text-[11px] text-muted">An AI guide, not George himself. <a class="underline" href="/privacy">Privacy</a></p>
+        </div>
       </div>
       <button id="chat-close" type="button" class="text-muted hover:text-ink p-1" aria-label="Close chat">✕</button>
     </header>
     <div id="chat-log" class="flex-1 overflow-y-auto px-4 py-3 space-y-3 text-sm" aria-live="polite"></div>
     <div id="chat-chips" class="px-4 pb-2 flex flex-wrap gap-2"></div>
     <form id="chat-form" class="flex gap-2 p-3 border-t border-line bg-surface">
-      <input id="chat-input" type="text" maxlength="500" autocomplete="off" placeholder="Type your question" class="flex-1 rounded-xl border border-line bg-bg px-3 py-2 text-sm outline-none focus:border-brand" aria-label="Your message" />
+      <input id="chat-input" type="text" maxlength="500" autocomplete="off" placeholder="Ask a question or where to go" class="flex-1 rounded-xl border border-line bg-bg px-3 py-2 text-sm outline-none focus:border-brand" aria-label="Your message" />
       <button class="btn btn-primary !py-2 !px-4 text-sm" type="submit">Send</button>
     </form>
   </section>
 </div>
 <script>
+  type Msg = { role: 'user' | 'assistant'; content: string };
+  type Chip = { label: string; ask?: string; href?: string };
   const root = document.getElementById('chat-root')!;
   const panel = document.getElementById('chat-panel') as HTMLElement;
   const openBtn = document.getElementById('chat-open') as HTMLButtonElement;
@@ -29,44 +34,93 @@
   const chips = document.getElementById('chat-chips')!;
   const form = document.getElementById('chat-form') as HTMLFormElement;
   const input = document.getElementById('chat-input') as HTMLInputElement;
-  const history: { role: 'user' | 'assistant'; content: string }[] = [];
+  const history: Msg[] = [];
   let busy = false;
+
+  // Where the assistant can send people. Keep in sync with the pages on the site.
+  const ROUTES = ['/work', '/services', '/packages', '/industries', '/free-workflows', '/blog', '/reviews', '/about', '/contact', '/book', '/scorecard', '/privacy'];
+  const routeRe = new RegExp(`(?<![\\w/])(${ROUTES.concat(['/industries/[a-z-]+', '/services/[a-z0-9-]+', '/work/[a-z0-9-]+', '/blog/[a-z0-9-]+']).sort((a, b) => b.length - a.length).join('|')})(?![\\w/-])`, 'g');
+
+  const store = {
+    get(): { h: Msg[]; open: boolean } | null { try { return JSON.parse(sessionStorage.getItem('gai') || 'null'); } catch { return null; } },
+    set() { try { sessionStorage.setItem('gai', JSON.stringify({ h: history.slice(-12), open: !panel.hidden })); } catch {} },
+  };
 
   const linkify = (el: HTMLElement, text: string) => {
     text.split(/(https?:\/\/[^\s)]+)/g).forEach((raw) => {
-      const tail = /^https?:\/\//.test(raw) ? (raw.match(/[.,;:!?]+$/)?.[0] ?? '') : '';
+      const isUrl = /^https?:\/\//.test(raw);
+      const tail = isUrl ? (raw.match(/[.,;:!?]+$/)?.[0] ?? '') : '';
       const part = tail ? raw.slice(0, -tail.length) : raw;
-      if (/^https?:\/\//.test(part)) { const a = document.createElement('a'); a.href = part; a.textContent = part.replace(/^https?:\/\//, ''); a.target = '_blank'; a.rel = 'noopener'; a.className = 'underline text-link'; el.appendChild(a); if (tail) el.appendChild(document.createTextNode(tail)); }
-      else el.appendChild(document.createTextNode(part));
+      if (isUrl) {
+        const a = document.createElement('a'); a.href = part; a.textContent = part.replace(/^https?:\/\//, ''); a.target = '_blank'; a.rel = 'noopener'; a.className = 'underline text-link'; el.appendChild(a); if (tail) el.appendChild(document.createTextNode(tail));
+      } else {
+        let last = 0;
+        for (const m of part.matchAll(routeRe)) {
+          el.appendChild(document.createTextNode(part.slice(last, m.index)));
+          const a = document.createElement('a'); a.href = m[0]; a.textContent = m[0]; a.className = 'underline text-link font-medium'; el.appendChild(a);
+          last = (m.index ?? 0) + m[0].length;
+        }
+        el.appendChild(document.createTextNode(part.slice(last)));
+      }
     });
   };
-  const add = (role: 'user' | 'assistant', text: string) => {
+  const add = (role: Msg['role'], text: string) => {
     const b = document.createElement('div');
     b.className = role === 'user' ? 'ml-8 rounded-2xl rounded-br-sm bg-brand text-brandink px-3 py-2 w-fit max-w-[85%] ml-auto' : 'mr-8 rounded-2xl rounded-bl-sm bg-surface2 px-3 py-2 w-fit max-w-[90%] whitespace-pre-line';
     linkify(b, text); log.appendChild(b); log.scrollTop = log.scrollHeight; return b;
   };
+
+  const pageChips = (): { hello: string; chips: Chip[] } => {
+    const p = location.pathname.replace(/\/$/, '') || '/';
+    const go = (label: string, href: string): Chip => ({ label: `Go to ${label}`, href });
+    if (p === '/') return { hello: "Hi, I'm George's AI assistant. I can show you around. What are you looking for?", chips: [{ label: 'What do you build?', ask: 'What do you build?' }, go('the work', '/work'), go('packages', '/packages'), go('free workflows', '/free-workflows'), go('book a call', '/book')] };
+    if (p.startsWith('/work')) return { hello: "You're looking at George's case studies. Tell me your industry and I'll point you to the closest one.", chips: [{ label: 'I run a real estate business', ask: 'Which case study fits a real estate business?' }, { label: 'I want lead follow-up', ask: 'Which work shows lead follow-up automation?' }, go('industries', '/industries'), go('book a call', '/book')] };
+    if (p.startsWith('/services')) return { hello: "These are the services. Not sure which one fits? Tell me what you want automated.", chips: [{ label: 'Help me choose', ask: 'Help me choose the right service for my business' }, go('packages', '/packages'), go('book a free audit', '/book')] };
+    if (p.startsWith('/packages')) return { hello: "Every project is quoted after a free call. I can explain how the packages differ.", chips: [{ label: 'Which package fits me?', ask: 'Which package should I pick?' }, { label: 'What is the free audit?', ask: 'What happens in the free audit?' }, go('book a free audit', '/book')] };
+    if (p.startsWith('/free-workflows')) return { hello: "These are free n8n workflows you can import. Want help picking one or setting it up?", chips: [{ label: 'How do I import one?', ask: 'How do I import an n8n workflow JSON?' }, { label: 'Can you set it up for me?', ask: 'Can George set up a workflow for me?' }, go('book a call', '/book')] };
+    if (p.startsWith('/industries')) return { hello: "These pages show what George builds for each type of business. Is yours listed?", chips: [{ label: 'My industry is not listed', ask: 'My industry is not listed. Can George still help?' }, go('the work', '/work'), go('book a call', '/book')] };
+    if (p.startsWith('/blog')) return { hello: "Looking for something specific on n8n, Make.com or AI agents? Ask me and I'll point you to a post.", chips: [{ label: 'n8n or Make.com?', ask: 'Should I use n8n or Make.com?' }, go('free workflows', '/free-workflows'), go('book a call', '/book')] };
+    if (p.startsWith('/book') || p.startsWith('/contact')) return { hello: "Ready to talk? The first call is free. I can answer questions before you book.", chips: [{ label: 'What should I prepare?', ask: 'What should I prepare for the call?' }, { label: 'How long is the call?', ask: 'How long is the free call and what happens on it?' }] };
+    return { hello: "Hi, I'm George's AI assistant. Ask me about his work, or where to find something on this site.", chips: [{ label: 'What do you build?', ask: 'What do you build?' }, go('the work', '/work'), go('packages', '/packages'), go('book a call', '/book')] };
+  };
+  const showChips = (list: Chip[]) => {
+    chips.innerHTML = '';
+    list.forEach((c) => {
+      const b = document.createElement(c.href ? 'a' : 'button') as HTMLElement;
+      b.textContent = c.label; b.className = 'tag cursor-pointer hover:!border-brand';
+      if (c.href) { (b as HTMLAnchorElement).href = c.href; b.addEventListener('click', () => store.set()); }
+      else { (b as HTMLButtonElement).type = 'button'; b.addEventListener('click', () => send(c.ask!)); }
+      chips.appendChild(b);
+    });
+  };
+  const greet = () => { const g = pageChips(); add('assistant', g.hello); showChips(g.chips); };
+
   const toggle = (show: boolean) => {
     panel.hidden = !show; openBtn.setAttribute('aria-expanded', String(show));
     if (show) { if (!log.childElementCount) greet(); input.focus(); }
-  };
-  const greet = () => {
-    add('assistant', "Hi, I'm an AI assistant for George's site. Ask about his services, tools or past work.");
-    ['What do you build?', 'How does pricing work?', 'Can you automate my missed calls?', 'How do I get started?'].forEach((q) => {
-      const c = document.createElement('button'); c.type = 'button'; c.textContent = q; c.className = 'tag cursor-pointer hover:!border-brand'; c.addEventListener('click', () => send(q)); chips.appendChild(c);
-    });
+    store.set();
   };
   async function send(text: string) {
     text = text.trim(); if (!text || busy) return;
     busy = true; chips.innerHTML = ''; add('user', text); history.push({ role: 'user', content: text }); input.value = '';
     const wait = add('assistant', 'Thinking...');
     try {
-      const r = await fetch('/api/chat', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ messages: history }) });
+      const r = await fetch('/api/chat', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ messages: history, page: location.pathname }) });
       const d = await r.json(); wait.textContent = ''; linkify(wait, d.reply || 'Sorry, something went wrong.'); history.push({ role: 'assistant', content: d.reply || '' });
     } catch { wait.textContent = 'I could not reach the server. You can email melodygeorge99@gmail.com instead.'; }
-    busy = false; log.scrollTop = log.scrollHeight;
+    busy = false; log.scrollTop = log.scrollHeight; store.set();
   }
+
+  // Restore the conversation after moving to another page. The panel only opens by itself if the visitor left it open.
+  const saved = store.get();
+  if (saved?.h?.length) {
+    saved.h.forEach((m) => { history.push(m); add(m.role, m.content); });
+    if (saved.open) { panel.hidden = false; openBtn.setAttribute('aria-expanded', 'true'); }
+  } else if (saved?.open) { toggle(true); }
+
   openBtn.addEventListener('click', () => toggle(panel.hidden));
   document.getElementById('chat-close')!.addEventListener('click', () => toggle(false));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden) toggle(false); });
   form.addEventListener('submit', (e) => { e.preventDefault(); send(input.value); });
+  log.addEventListener('click', (e) => { if ((e.target as HTMLElement).closest('a[href^="/"]')) store.set(); });
 </script>
