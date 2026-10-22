@@ -7,6 +7,7 @@ export async function GET(context: APIContext) {
     title: 'GeorgeTheDeveloper blog',
     description: 'Practical notes on n8n, Make.com, GoHighLevel and AI agents.',
     site: context.site!,
+    stylesheet: '/rss-styles.xsl',
     items: posts.map((p) => ({ title: p.data.title, description: p.data.description, pubDate: p.data.date, link: `/blog/${p.id}/` })),
   });
 }

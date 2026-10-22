@@ -8,6 +8,7 @@ const posts = (await getCollection('blog', (p) => !p.data.draft)).sort((a, b) =>
 <Base title="Blog" description="Practical notes on n8n, Make.com, GoHighLevel, AI agents and automation for small businesses.">
   <section class="container-x pt-36 pb-16">
     <SectionHead h1 eyebrow="Blog" title="Notes on automation" sub="Practical write-ups from real builds." />
+    <p class="-mt-8 mb-8 text-sm text-muted">Follow along: <a class="text-link underline underline-offset-4" href="/rss.xml">subscribe with RSS</a></p>
     <div class="grid gap-4 md:grid-cols-2">
       {posts.map((p, i) => (
         <a href={`/blog/${p.id}`} class="card reveal block group" style={`--d:${i * 60}ms`}>
