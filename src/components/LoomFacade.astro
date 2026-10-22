@@ -1,11 +1,22 @@
 ---
 // Click-to-load Loom player that shows the video's own thumbnail first.
 const { id, title, tool = '' } = Astro.props as { id: string; title: string; tool?: string };
-const thumb = `https://cdn.loom.com/sessions/thumbnails/${id}-with-play.gif`;
+// Loom's thumbnail URL contains a hash, so ask Loom's oEmbed endpoint for it at build time.
+const g = globalThis as any;
+g.__loomThumbs ??= new Map<string, string | null>();
+if (!g.__loomThumbs.has(id)) {
+  let t: string | null = null;
+  try {
+    const r = await fetch(`https://www.loom.com/v1/oembed?url=${encodeURIComponent(`https://www.loom.com/share/${id}`)}`, { signal: AbortSignal.timeout(8000) });
+    if (r.ok) t = ((await r.json()) as any).thumbnail_url ?? null;
+  } catch {}
+  g.__loomThumbs.set(id, t);
+}
+const thumb: string | null = g.__loomThumbs.get(id);
 ---
 <div class="video-frame relative w-full overflow-hidden bg-surface2" style="aspect-ratio:16/9" data-embed={`https://www.loom.com/embed/${id}?autoplay=true&hide_owner=true`} data-title={title}>
   <button type="button" class="video-play absolute inset-0 w-full h-full grid place-items-center group cursor-pointer" aria-label={`Play video: ${title}`} style="background: radial-gradient(70% 90% at 30% 20%, var(--glow), transparent 70%), linear-gradient(135deg, var(--surface2), var(--surface))">
-    <img src={thumb} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()" />
+    {thumb && <img src={thumb} alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" class="absolute inset-0 h-full w-full object-cover" onerror="this.remove()" />}
     {tool && <span class="absolute left-3 top-3 z-10 rounded bg-black/55 px-2 py-0.5 text-[11px] font-mono text-white">{tool}</span>}
     <span class="relative z-10 w-16 h-16 rounded-full grid place-items-center bg-brand text-brandink shadow-[0_10px_40px_-8px_var(--glow)] transition-transform group-hover:scale-110">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z" /></svg>
