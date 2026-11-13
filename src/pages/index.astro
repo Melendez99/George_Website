@@ -5,6 +5,7 @@ import Hero from '../components/Hero.astro';
 import SectionHead from '../components/SectionHead.astro';
 import WorkCard from '../components/WorkCard.astro';
 import IntroVideo from '../components/IntroVideo.astro';
+import Viewport3D from '../components/Viewport3D.astro';
 import VideoShowcase from '../components/VideoShowcase.astro';
 import Icon from '../components/Icon.astro';
 import { Image } from 'astro:assets';
@@ -19,12 +20,12 @@ const stack = ['n8n', 'Make.com', 'GoHighLevel', 'Zapier', 'Retell AI', 'Vapi', 
 const introVideoLd = {
   '@context': 'https://schema.org',
   '@type': 'VideoObject',
-  name: 'George Melody: AI automation developer intro',
-  description: 'A 55-second introduction to George Melody, an AI automation developer who builds n8n, Make.com, GoHighLevel and voice agent systems.',
-  thumbnailUrl: new URL('/video/george-intro-poster.webp', Astro.site).href,
-  contentUrl: new URL('/video/george-intro.mp4', Astro.site).href,
+  name: 'George Melody: AI automation showreel',
+  description: 'A 65-second silent showreel of AI automation systems George Melody built with n8n, Make.com, Claude, Twilio and Supabase, plus client reviews.',
+  thumbnailUrl: new URL('/video/george-reel-poster.webp', Astro.site).href,
+  contentUrl: new URL('/video/george-reel.mp4', Astro.site).href,
   uploadDate: '2026-10-21',
-  duration: 'PT55S',
+  duration: 'PT1M5S',
 };
 ---
 <Base jsonLd={[introVideoLd]}>
@@ -60,6 +61,8 @@ const introVideoLd = {
       <div class="reveal mt-8"><a href="/work" class="btn btn-ghost">All projects <span class="arrow">→</span></a></div>
     </section>
   )}
+
+  <Viewport3D />
 
   <section class="container-x py-16" id="videos">
     <SectionHead eyebrow="Watch" title="See the systems running" sub="Short walkthroughs of real builds, recorded on my screen. Press play on any of them." />

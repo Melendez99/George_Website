@@ -1,0 +1,145 @@
+---
+import SectionHead from './SectionHead.astro';
+---
+<section class="container-x py-16" aria-labelledby="vp-title">
+  <SectionHead eyebrow="Drag to orbit · move to push" title="Workflow viewport" sub="A small 3D toy. The network is how I think about automation: nodes that connect and pass work along." />
+  <div class="reveal relative overflow-hidden rounded-3xl border border-line bg-surface" data-viewport>
+    <div class="absolute inset-x-0 top-0 z-10 flex flex-wrap items-center justify-between gap-2 p-3 md:p-4">
+      <div class="flex rounded-full border border-line bg-bg/70 p-1 backdrop-blur" role="group" aria-label="Shape">
+        <button type="button" data-shape="network" class="vp-btn on">Network</button>
+        <button type="button" data-shape="donut" class="vp-btn">Donut</button>
+        <button type="button" data-shape="cube" class="vp-btn">Cube</button>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="flex rounded-full border border-line bg-bg/70 p-1 backdrop-blur" role="group" aria-label="Style">
+          <button type="button" data-style="wire" class="vp-btn on">Wire</button>
+          <button type="button" data-style="points" class="vp-btn">Points</button>
+        </div>
+        <button type="button" data-explode class="btn btn-primary !py-2 !px-4 text-sm">Explode</button>
+      </div>
+    </div>
+    <canvas class="block w-full h-[24rem] md:h-[30rem] touch-pan-y cursor-grab" aria-label="Interactive 3D wireframe. Drag to rotate." role="img"></canvas>
+    <p class="absolute bottom-3 left-4 text-xs text-muted" data-vp-info>Network · 0 nodes</p>
+  </div>
+</section>
+
+<style>
+  .vp-btn { padding: .4rem .85rem; border-radius: 999px; font-size: .78rem; color: var(--muted); transition: background .2s, color .2s; }
+  .vp-btn:hover { color: var(--text); }
+  .vp-btn.on { background: var(--text); color: var(--bg); }
+</style>
+
+<script>
+  type V = [number, number, number];
+  const box = document.querySelector<HTMLElement>('[data-viewport]');
+  const cv = box?.querySelector('canvas');
+  const ctx = cv?.getContext('2d');
+  if (box && cv && ctx) {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const info = box.querySelector('[data-vp-info]')!;
+    let pts: V[] = [], edges: [number, number][] = [], shape = 'network', style = 'wire';
+    let ry = 0.6, rx = 0.35, vy = reduce ? 0 : 0.004, vx = 0, drag = false, lx = 0, ly = 0;
+    let explode = 0, explodeT = 0, mx = -999, my = -999, visible = false, raf = 0, W = 0, H = 0;
+
+    const build = (kind: string) => {
+      pts = []; edges = [];
+      if (kind === 'network') {
+        const n = 64, ga = Math.PI * (3 - Math.sqrt(5));
+        for (let i = 0; i < n; i++) { const y = 1 - (i / (n - 1)) * 2, r = Math.sqrt(1 - y * y), t = ga * i; pts.push([Math.cos(t) * r, y, Math.sin(t) * r]); }
+        const seen = new Set<string>();
+        pts.forEach((p, i) => {
+          pts.map((q, j) => [j, (p[0]-q[0])**2 + (p[1]-q[1])**2 + (p[2]-q[2])**2] as [number, number]).filter(([j]) => j !== i).sort((a, b) => a[1] - b[1]).slice(0, 3).forEach(([j]) => {
+            const k = i < j ? i + '-' + j : j + '-' + i; if (!seen.has(k)) { seen.add(k); edges.push([i, j]); }
+          });
+        });
+      } else if (kind === 'donut') {
+        const U = 28, Vn = 14;
+        for (let u = 0; u < U; u++) for (let v = 0; v < Vn; v++) {
+          const a = (u / U) * 6.2832, b = (v / Vn) * 6.2832, R = 0.72, r = 0.3;
+          pts.push([(R + r * Math.cos(b)) * Math.cos(a), r * Math.sin(b), (R + r * Math.cos(b)) * Math.sin(a)]);
+        }
+        for (let u = 0; u < U; u++) for (let v = 0; v < Vn; v++) { edges.push([u * Vn + v, u * Vn + (v + 1) % Vn]); edges.push([u * Vn + v, ((u + 1) % U) * Vn + v]); }
+      } else {
+        const N = 5, idx = (x: number, y: number, z: number) => x * N * N + y * N + z;
+        for (let x = 0; x < N; x++) for (let y = 0; y < N; y++) for (let z = 0; z < N; z++) pts.push([(x / (N - 1) - .5) * 1.5, (y / (N - 1) - .5) * 1.5, (z / (N - 1) - .5) * 1.5]);
+        for (let x = 0; x < N; x++) for (let y = 0; y < N; y++) for (let z = 0; z < N; z++) {
+          const edge = [x, y, z].filter((c) => c === 0 || c === N - 1).length;
+          if (x < N - 1 && edge >= 2) edges.push([idx(x, y, z), idx(x + 1, y, z)]);
+          if (y < N - 1 && edge >= 2) edges.push([idx(x, y, z), idx(x, y + 1, z)]);
+          if (z < N - 1 && edge >= 2) edges.push([idx(x, y, z), idx(x, y, z + 1)]);
+        }
+        const used = [...new Set(edges.flat())].sort((a, b) => a - b), map = new Map(used.map((o, n) => [o, n]));
+        pts = used.map((o) => pts[o]); edges = edges.map(([a, b]) => [map.get(a)!, map.get(b)!] as [number, number]);
+      }
+      const label = kind[0].toUpperCase() + kind.slice(1);
+      info.textContent = `${label} · ${pts.length} nodes · ${edges.length} links`;
+    };
+
+    const resize = () => {
+      const dpr = Math.min(devicePixelRatio || 1, 2), r = cv.getBoundingClientRect();
+      W = r.width; H = r.height; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    const css = (n: string) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+    const frame = () => {
+      raf = 0;
+      if (!drag) { ry += vy; rx += vx; vx *= 0.95; if (!reduce) vy += (0.004 - vy) * 0.02; }
+      explode += (explodeT - explode) * 0.08;
+      if (explodeT > 0 && explode > 0.97) explodeT = 0;
+      const cy = Math.cos(ry), sy = Math.sin(ry), cx = Math.cos(rx), sx = Math.sin(rx);
+      const scale = Math.min(W, H) * 0.4, f = 3.2;
+      const fg = css('--text'), accent = css('--primary');
+      const proj = pts.map((p) => {
+        const k = 1 + explode * 0.9;
+        let x = p[0] * k, y = p[1] * k, z = p[2] * k;
+        let t = x * cy + z * sy; z = -x * sy + z * cy; x = t;
+        t = y * cx - z * sx; z = y * sx + z * cx; y = t;
+        const s = f / (f + z + 1.2);
+        return { x: W / 2 + x * scale * s, y: H / 2 + y * scale * s, z, s };
+      });
+      ctx.clearRect(0, 0, W, H);
+      if (style === 'wire') {
+        ctx.lineWidth = 1; ctx.strokeStyle = fg;
+        for (const [a, b] of edges) {
+          const A = proj[a], B = proj[b], d = (A.z + B.z) / 2;
+          ctx.globalAlpha = Math.max(0.08, Math.min(0.75, 0.45 - d * 0.3));
+          ctx.beginPath(); ctx.moveTo(A.x, A.y); ctx.lineTo(B.x, B.y); ctx.stroke();
+        }
+      }
+      for (const P of proj) {
+        const near = Math.hypot(P.x - mx, P.y - my) < 70;
+        ctx.globalAlpha = Math.max(0.25, Math.min(1, 0.7 - P.z * 0.35));
+        ctx.fillStyle = near ? accent : fg;
+        ctx.beginPath(); ctx.arc(P.x, P.y, (style === 'points' ? 2.6 : 1.9) * P.s * (near ? 1.8 : 1.4), 0, 6.283); ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      if (visible && !reduce) raf = requestAnimationFrame(frame);
+    };
+    const kick = () => { if (!raf) raf = requestAnimationFrame(frame); };
+
+    cv.addEventListener('pointerdown', (e) => { drag = true; lx = e.clientX; ly = e.clientY; cv.setPointerCapture(e.pointerId); cv.style.cursor = 'grabbing'; });
+    cv.addEventListener('pointermove', (e) => {
+      const r = cv.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top;
+      if (drag) { vy = (e.clientX - lx) * 0.006; vx = (e.clientY - ly) * 0.006; ry += vy; rx += vx; lx = e.clientX; ly = e.clientY; }
+      if (reduce) kick();
+    });
+    const up = () => { drag = false; cv.style.cursor = 'grab'; };
+    cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+    cv.addEventListener('pointerleave', () => { mx = my = -999; });
+
+    box.querySelectorAll<HTMLButtonElement>('[data-shape]').forEach((b) => b.addEventListener('click', () => {
+      box.querySelectorAll('[data-shape]').forEach((x) => x.classList.remove('on')); b.classList.add('on');
+      shape = b.dataset.shape!; build(shape); kick();
+    }));
+    box.querySelectorAll<HTMLButtonElement>('[data-style]').forEach((b) => b.addEventListener('click', () => {
+      box.querySelectorAll('[data-style]').forEach((x) => x.classList.remove('on')); b.classList.add('on');
+      style = b.dataset.style!; kick();
+    }));
+    box.querySelector('[data-explode]')?.addEventListener('click', () => { explodeT = 1; explode = Math.max(explode, 0.02); kick(); });
+
+    build(shape); resize();
+    addEventListener('resize', () => { resize(); kick(); });
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible) kick(); }).observe(box);
+    frame();
+  }
+</script>
