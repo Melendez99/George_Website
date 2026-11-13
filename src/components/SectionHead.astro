@@ -1,9 +1,14 @@
 ---
 const { eyebrow, title, sub, h1 = false } = Astro.props;
 const H = h1 ? 'h1' : 'h2';
+const words = String(title).split(' ');
+const last = words.pop();
+const head = words.join(' ');
 ---
-<div class="reveal max-w-2xl mb-10">
-  <p class="eyebrow">{eyebrow}</p>
-  <H class="text-3xl md:text-4xl font-bold mt-2">{title}</H>
-  {sub && <p class="text-muted mt-3">{sub}</p>}
+<div class="reveal mb-10 md:mb-12">
+  <div class="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
+    <H class="max-w-[16ch] md:max-w-none">{head} <em>{last}</em></H>
+    <p class="eyebrow pb-2">{eyebrow}</p>
+  </div>
+  {sub && <p class="text-muted mt-5 max-w-2xl">{sub}</p>}
 </div>

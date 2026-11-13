@@ -58,7 +58,7 @@ const graph = Astro.url.pathname === '/' ? [person, business, ...jsonLd] : jsonL
     {noindex && <meta name="robots" content="noindex" />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="sitemap" href="/sitemap-index.xml" />
-    <meta name="theme-color" content="#0a0f1c" />
+    <meta name="theme-color" content="#0b0b0b" />
 
     <meta property="og:site_name" content={SITE.name} />
     <meta property="og:type" content={type} />
@@ -94,6 +94,7 @@ const graph = Astro.url.pathname === '/' ? [person, business, ...jsonLd] : jsonL
     </main>
     <Footer />
     <ChatWidget />
+    <div id="cursor" aria-hidden="true"></div>
     <Analytics />
     <SpeedInsights />
 
@@ -145,14 +146,25 @@ const graph = Astro.url.pathname === '/' ? [person, business, ...jsonLd] : jsonL
       }), { threshold: 0.6 });
       counters.forEach((c) => cio.observe(c));
 
-      // Cursor spotlight on cards
-      document.querySelectorAll<HTMLElement>('.card').forEach((c) =>
-        c.addEventListener('pointermove', (e) => {
-          const r = c.getBoundingClientRect();
-          c.style.setProperty('--mx', e.clientX - r.left + 'px');
-          c.style.setProperty('--my', e.clientY - r.top + 'px');
-        }),
-      );
+      // Cursor ring (mouse only)
+      if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce) {
+        const ring = document.getElementById('cursor');
+        if (ring) {
+          let x = 0, y = 0, tx = 0, ty = 0, raf = 0;
+          const loop = () => { x += (tx - x) * 0.22; y += (ty - y) * 0.22; ring.style.transform = `translate3d(${x}px,${y}px,0)`; raf = requestAnimationFrame(loop); };
+          addEventListener('pointermove', (e) => { tx = e.clientX; ty = e.clientY; if (!ring.classList.contains('on')) { x = tx; y = ty; ring.classList.add('on'); raf = requestAnimationFrame(loop); } }, { passive: true });
+          document.documentElement.addEventListener('pointerleave', () => ring.classList.remove('on'));
+          document.addEventListener('pointerover', (e) => ring.classList.toggle('big', !!(e.target as Element).closest('a,button,summary,[role=button]')));
+        }
+      }
+
+      // Lagos clock
+      const clock = document.getElementById('lagos-time');
+      if (clock) {
+        const fmt = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Africa/Lagos' });
+        const tick = () => { clock.textContent = fmt.format(new Date()); };
+        tick(); setInterval(tick, 30000);
+      }
     </script>
   </body>
 </html>

@@ -2,42 +2,49 @@
 import { SITE } from '../config';
 const year = new Date().getFullYear();
 ---
-<footer class="border-t border-line mt-24">
+<footer class="mt-24">
+  <section class="container-x border-t border-line pt-16 pb-14" aria-label="Start a project">
+    <p class="eyebrow mb-4">Got a process that eats your week?</p>
+    <a href="/book" class="group block font-display font-extrabold uppercase leading-[.92] tracking-tight text-[clamp(3rem,13vw,10rem)]">Let's work <span class="inline-block transition-transform duration-300 group-hover:translate-x-2 group-hover:-translate-y-2">↗</span></a>
+  </section>
   <div class="container-x py-12 grid gap-8 md:grid-cols-[1.4fr_1fr_1fr]">
     <div>
-      <p class="font-display font-bold text-lg">George<span class="grad-text">TheDeveloper</span></p>
+      <p class="font-display font-extrabold text-xl">George<em class="font-normal">TheDeveloper</em></p>
       <p class="text-muted text-sm mt-3 max-w-sm">AI automation systems for businesses that want to stop doing repeat work by hand. Based in {SITE.location}, working worldwide.</p>
       <p class="mt-4 inline-flex items-center gap-2 text-sm"><span class="dot-live"></span> Taking on new projects</p>
     </div>
     <div>
       <p class="eyebrow mb-3">Explore</p>
       <ul class="space-y-2 text-sm text-muted">
-        <li><a class="hover:text-link" href="/work">Work</a></li>
-        <li><a class="hover:text-link" href="/services">Services</a></li>
-        <li><a class="hover:text-link" href="/packages">Packages</a></li>
-        <li><a class="hover:text-link" href="/industries">Industries</a></li>
-        <li><a class="hover:text-link" href="/free-workflows">Free workflows</a></li>
-        <li><a class="hover:text-link" href="/reviews">Reviews</a></li>
-        <li><a class="hover:text-link" href="/blog">Blog</a></li>
-        <li><a class="hover:text-link" href="/rss.xml">RSS</a></li>
-        <li><a class="hover:text-link" href="/about">About</a></li>
-        <li><a class="hover:text-link" href="/scorecard">Free scorecard</a></li>
-        <li><a class="hover:text-link" href="/book">Book a call</a></li>
-        <li><a class="hover:text-link" href="/contact">Contact</a></li>
+        <li><a class="hover:text-ink" href="/work">Work</a></li>
+        <li><a class="hover:text-ink" href="/services">Services</a></li>
+        <li><a class="hover:text-ink" href="/packages">Packages</a></li>
+        <li><a class="hover:text-ink" href="/industries">Industries</a></li>
+        <li><a class="hover:text-ink" href="/free-workflows">Free workflows</a></li>
+        <li><a class="hover:text-ink" href="/reviews">Reviews</a></li>
+        <li><a class="hover:text-ink" href="/blog">Blog</a></li>
+        <li><a class="hover:text-ink" href="/rss.xml">RSS</a></li>
+        <li><a class="hover:text-ink" href="/about">About</a></li>
+        <li><a class="hover:text-ink" href="/scorecard">Free scorecard</a></li>
+        <li><a class="hover:text-ink" href="/book">Book a call</a></li>
+        <li><a class="hover:text-ink" href="/contact">Contact</a></li>
       </ul>
     </div>
     <div>
       <p class="eyebrow mb-3">Find me</p>
       <ul class="space-y-2 text-sm text-muted">
-        <li><a class="hover:text-link" rel="me noopener" target="_blank" href={SITE.links.upwork}>Upwork</a></li>
-        <li><a class="hover:text-link" rel="me noopener" target="_blank" href={SITE.links.linkedin}>LinkedIn</a></li>
-        <li><a class="hover:text-link" rel="me noopener" target="_blank" href={SITE.links.contra}>Contra</a></li>
-        <li><a class="hover:text-link" rel="me noopener" target="_blank" href={SITE.links.github}>GitHub</a></li>
-        <li><a class="hover:text-link" rel="me noopener" target="_blank" href={SITE.links.guild}>The Developers Guild</a></li>
+        <li><a class="hover:text-ink" rel="me noopener" target="_blank" href={SITE.links.upwork}>Upwork</a></li>
+        <li><a class="hover:text-ink" rel="me noopener" target="_blank" href={SITE.links.linkedin}>LinkedIn</a></li>
+        <li><a class="hover:text-ink" rel="me noopener" target="_blank" href={SITE.links.contra}>Contra</a></li>
+        <li><a class="hover:text-ink" rel="me noopener" target="_blank" href={SITE.links.github}>GitHub</a></li>
+        <li><a class="hover:text-ink" rel="me noopener" target="_blank" href={SITE.links.guild}>The Developers Guild</a></li>
       </ul>
     </div>
   </div>
   <div class="border-t border-line">
-    <p class="container-x py-5 text-xs text-muted">© {year} {SITE.person}. All rights reserved. · <a class="hover:text-link underline underline-offset-4" href="/privacy">Privacy</a></p>
+    <div class="container-x py-5 text-xs text-muted flex flex-wrap items-center justify-between gap-2">
+      <p>© {year} {SITE.person}. All rights reserved. · <a class="hover:text-ink underline underline-offset-4" href="/privacy">Privacy</a></p>
+      <p>Lagos, Nigeria · <span id="lagos-time">--:--</span> (UTC+1)</p>
+    </div>
   </div>
 </footer>

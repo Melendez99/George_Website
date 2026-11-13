@@ -41,8 +41,8 @@ const introVideoLd = {
         <a href={`/services/${s.slug}`} class="card reveal group" style={`--d:${i * 70}ms`}>
           <Image src={s.image} alt={`${s.title} illustration`} widths={[480, 800, 1200]} sizes="(min-width: 768px) 33vw, 100vw" class="-mx-6 -mt-6 mb-5 w-[calc(100%+3rem)] max-w-none aspect-[2/1] object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 shrink-0 rounded-xl grid place-items-center bg-surface2 text-link"><Icon name={s.icon} /></div>
-            <h3 class="text-xl font-semibold group-hover:text-link transition-colors">{s.title}</h3>
+            <div class="w-10 h-10 shrink-0 rounded-full grid place-items-center border border-line text-ink"><Icon name={s.icon} /></div>
+            <h3 class="text-2xl group-hover:text-link transition-colors">{s.title}</h3>
           </div>
           <p class="text-muted text-sm mt-3">{s.short}</p>
           <p class="mt-4 text-sm text-link inline-flex items-center gap-1">Learn more <span class="transition-transform group-hover:translate-x-1">→</span></p>
@@ -67,9 +67,12 @@ const introVideoLd = {
     <div class="reveal mt-8"><a href="/work#videos" class="btn btn-ghost">All {7} video walkthroughs <span class="arrow">→</span></a></div>
   </section>
 
-  <section class="py-12 overflow-hidden" aria-label="Tools I work with">
-    <div class="marquee">
-      {[...stack, ...stack].map((s) => <span class="font-mono text-sm text-muted whitespace-nowrap border border-line rounded-full px-4 py-2 bg-surface">{s}</span>)}
+  <section class="band my-8" aria-label="Tools I work with">
+    <div class="row" aria-hidden="false">
+      {[...stack.slice(0, 7), ...stack.slice(0, 7)].map((s, i) => <>{i % 2 ? <i>{s}</i> : <span>{s}</span>}<b>✦</b></>)}
+    </div>
+    <div class="row rev" aria-hidden="true">
+      {[...stack.slice(7), ...stack.slice(7), ...stack.slice(7)].map((s, i) => <>{i % 2 ? <span>{s}</span> : <i>{s}</i>}<b>✦</b></>)}
     </div>
   </section>
 
@@ -91,7 +94,7 @@ const introVideoLd = {
           <a href={`/blog/${p.id}`} class="card reveal block group" style={`--d:${i * 80}ms`}>
             {p.data.cover && <img src={p.data.cover} alt={p.data.title} width="1200" height="630" loading="lazy" decoding="async" class="-mx-6 -mt-6 mb-5 w-[calc(100%+3rem)] max-w-none aspect-[1200/630] object-cover" />}
             <p class="text-xs text-muted font-mono">{p.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</p>
-            <h3 class="font-semibold text-lg mt-2 group-hover:text-link transition-colors">{p.data.title}</h3>
+            <h3 class="text-xl mt-2 group-hover:text-link transition-colors">{p.data.title}</h3>
             <p class="text-muted text-sm mt-2">{p.data.description}</p>
           </a>
         ))}
@@ -103,7 +106,7 @@ const introVideoLd = {
     <a href="/scorecard" class="reveal card block group md:flex items-center justify-between gap-6 !p-8">
       <div>
         <p class="eyebrow">Free tool</p>
-        <h2 class="text-2xl font-bold mt-1">How automatable is your business?</h2>
+        <h2 class="mt-2 !text-3xl md:!text-4xl">How automatable is <em>your business?</em></h2>
         <p class="text-muted mt-2">Answer 10 quick questions and get a score plus the first three things to automate. No sign-up.</p>
       </div>
       <span class="btn btn-primary mt-5 md:mt-0 shrink-0">Take the scorecard <span class="arrow">→</span></span>
@@ -111,9 +114,8 @@ const introVideoLd = {
   </section>
 
   <section class="container-x py-16">
-    <div class="reveal card !p-10 md:!p-14 text-center relative">
-      <div class="absolute inset-0 -z-0 opacity-60" style="background: radial-gradient(60% 80% at 50% 0%, var(--glow), transparent 70%)"></div>
-      <h2 class="text-3xl md:text-4xl font-bold">Got a process that eats your week?</h2>
+    <div class="reveal card !p-10 md:!p-16 text-center relative">
+      <h2>Got a process that eats <em>your week?</em></h2>
       <p class="text-muted mt-3 max-w-xl mx-auto">Tell me what is slowing you down. I will tell you what can be automated and what it would take.</p>
       <div class="mt-7 flex flex-wrap gap-3 justify-center">
         <a href={SITE.bookUrl} target="_blank" rel="noopener" class="btn btn-primary">Book a call <span class="arrow">→</span></a>

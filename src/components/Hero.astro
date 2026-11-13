@@ -3,51 +3,49 @@ import { Image } from 'astro:assets';
 import { SITE } from '../config';
 import george from '../assets/george.png';
 ---
-<section class="relative isolate overflow-hidden pt-36 pb-24 md:pt-44 md:pb-32">
-  <div class="hero-glow"></div>
-  <canvas id="particles" class="absolute inset-0 -z-10 w-full h-full" aria-hidden="true"></canvas>
-  <div class="absolute inset-x-0 bottom-0 h-40 -z-10 bg-gradient-to-t from-bg to-transparent"></div>
+<section class="relative pt-28 md:pt-32">
+  <div class="container-x">
+    <div class="reveal flex items-center justify-between gap-4 border-b border-line pb-4 eyebrow">
+      <span>Top Rated on Upwork</span>
+      <span class="inline-flex items-center gap-2"><span class="dot-live"></span> Available for new projects</span>
+    </div>
 
-  <div class="container-x grid lg:grid-cols-[1.15fr_.85fr] gap-12 items-center">
-    <div>
-      <div class="reveal">
-        <p class="inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-3 py-1.5 text-xs font-mono text-muted">
-          <span class="dot-live"></span> Available for new projects
-        </p>
+    <div class="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-12 items-center pt-10 md:pt-14">
+      <div>
+        <h1 class="reveal">
+          I build AI automation that <em>runs your business</em> while you sleep.
+        </h1>
       </div>
-      <h1 class="reveal mt-6 text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.05]" style="--d:80ms">
-        I build AI automation that <span class="grad-text">runs your business</span> while you sleep.
-      </h1>
-      <p class="reveal mt-6 text-lg text-muted max-w-xl" style="--d:160ms">
+      <div class="reveal relative w-36 h-36 sm:w-44 sm:h-44 lg:w-64 lg:h-64 shrink-0 order-first lg:order-none" style="--d:120ms">
+        <svg class="ring-text absolute inset-0 w-full h-full" viewBox="0 0 200 200" aria-hidden="true">
+          <defs><path id="ringpath" d="M100,100 m-86,0 a86,86 0 1,1 172,0 a86,86 0 1,1 -172,0" /></defs>
+          <text fill="currentColor" font-size="12" class="font-sans uppercase"><textPath href="#ringpath" textLength="530" lengthAdjust="spacing">AI automation developer · n8n · Make · Voice agents ·</textPath></text>
+        </svg>
+        <Image src={george} alt="George Melody, AI automation developer" widths={[200, 400]} sizes="(min-width: 1024px) 200px, 140px" loading="eager" class="absolute inset-[16%] w-[68%] h-[68%] rounded-full object-cover" />
+      </div>
+    </div>
+
+    <div class="reveal mt-10 md:mt-14 grid md:grid-cols-[1.2fr_1fr] gap-8 items-end" style="--d:160ms">
+      <p class="text-muted max-w-xl">
         Hi, I'm George. I connect your tools, calls and leads into systems that work on their own, using
         <span id="typed" class="text-ink font-medium" data-words={JSON.stringify(SITE.roles)}>{SITE.roles[0]}</span><span class="caret" aria-hidden="true"></span>
       </p>
-      <div class="reveal mt-8 flex flex-wrap gap-3" style="--d:240ms">
+      <div class="flex flex-wrap gap-3 md:justify-end">
         <a href="/work" class="btn btn-primary">See my work <span class="arrow">→</span></a>
         <a href={SITE.bookUrl} target="_blank" rel="noopener" class="btn btn-ghost">Book a call</a>
       </div>
     </div>
 
-    <!-- Portrait -->
-    <div class="reveal relative mx-auto w-full max-w-[19rem] sm:max-w-[22rem] lg:max-w-[27rem]" style="--d:300ms">
-      <div class="relative aspect-square">
-        <div class="absolute -inset-5 rounded-[3rem] bg-gradient-to-br from-brand/40 to-[#7c5cff]/30 blur-3xl" aria-hidden="true"></div>
-        <Image src={george} alt="George Melody, AI automation developer" widths={[320, 440, 880]} sizes="(min-width: 1024px) 432px, (min-width: 640px) 352px, 304px" loading="eager" class="relative h-full w-full rounded-[2rem] object-cover ring-2 ring-brand/60 shadow-[0_30px_70px_-25px_var(--glow)]" />
-        <span class="absolute -left-3 top-8 sm:-left-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface/90 backdrop-blur px-3.5 py-2 text-xs font-mono shadow-lg"><span class="dot-live"></span> Top Rated on Upwork</span>
-        <span class="absolute -right-3 bottom-10 sm:-right-6 inline-flex items-center gap-2 rounded-full border border-line bg-surface/90 backdrop-blur px-3.5 py-2 text-xs font-mono shadow-lg"><span class="text-mint">&#10003;</span> 100% Job Success</span>
-      </div>
+    <div class="mt-14 grid grid-cols-1 sm:grid-cols-3 border-y border-line">
+      {SITE.stats.map((s, i) => (
+        <div class="reveal px-0 sm:px-7 py-7 sm:first:pl-0 sm:border-l sm:first:border-l-0 border-line max-sm:border-t max-sm:first:border-t-0" style={`--d:${i * 90}ms`}>
+          <p class="font-display text-3xl md:text-4xl lg:text-5xl font-extrabold">
+            {s.value !== undefined ? <span data-count={s.value} data-suffix={s.suffix ?? ''}>0{s.suffix}</span> : s.text}
+          </p>
+          <p class="text-xs text-muted mt-2">{s.label}</p>
+        </div>
+      ))}
     </div>
-  </div>
-
-  <div class="container-x mt-16 grid grid-cols-1 sm:grid-cols-3 gap-4">
-    {SITE.stats.map((s, i) => (
-      <div class="reveal card text-center !py-6" style={`--d:${i * 90}ms`}>
-        <p class="font-display text-3xl font-bold grad-text">
-          {s.value !== undefined ? <span data-count={s.value} data-suffix={s.suffix ?? ''}>0{s.suffix}</span> : s.text}
-        </p>
-        <p class="text-sm text-muted mt-1">{s.label}</p>
-      </div>
-    ))}
   </div>
 </section>
 
@@ -68,47 +66,5 @@ import george from '../assets/george.png';
       setTimeout(step, del ? 35 : 70);
     };
     typed.textContent = ''; step();
-  }
-
-  // Particle network (canvas, pauses offscreen and for reduced motion)
-  const canvas = document.getElementById('particles') as HTMLCanvasElement | null;
-  const ctx = canvas?.getContext('2d');
-  if (canvas && ctx) {
-    let w = 0, h = 0, dpr = 1, raf = 0, visible = true;
-    const mouse = { x: -999, y: -999 };
-    type P = { x: number; y: number; vx: number; vy: number };
-    let pts: P[] = [];
-    const color = () => getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#38b6ff';
-
-    const resize = () => {
-      dpr = Math.min(devicePixelRatio || 1, 2);
-      const r = canvas.getBoundingClientRect(); w = r.width; h = r.height;
-      canvas.width = w * dpr; canvas.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.round(Math.min(70, (w * h) / 16000));
-      pts = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35 }));
-    };
-    const draw = () => {
-      ctx.clearRect(0, 0, w, h);
-      const c = color(); const link = 130;
-      for (let i = 0; i < pts.length; i++) {
-        const p = pts[i];
-        if (!reduce) { p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > w) p.vx *= -1; if (p.y < 0 || p.y > h) p.vy *= -1; }
-        const dm = Math.hypot(p.x - mouse.x, p.y - mouse.y);
-        if (dm < 140 && !reduce) { p.x += (p.x - mouse.x) * 0.004; p.y += (p.y - mouse.y) * 0.004; }
-        ctx.globalAlpha = dm < 160 ? .95 : .55; ctx.fillStyle = c;
-        ctx.beginPath(); ctx.arc(p.x, p.y, 1.6, 0, 6.283); ctx.fill();
-        for (let j = i + 1; j < pts.length; j++) {
-          const q = pts[j]; const d = Math.hypot(p.x - q.x, p.y - q.y);
-          if (d < link) { ctx.globalAlpha = (1 - d / link) * (dm < 160 ? .5 : .22); ctx.strokeStyle = c; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke(); }
-        }
-      }
-      ctx.globalAlpha = 1;
-      if (!reduce && visible) raf = requestAnimationFrame(draw);
-    };
-    resize(); draw();
-    addEventListener('resize', () => { resize(); if (reduce) draw(); });
-    canvas.parentElement?.addEventListener('pointermove', (e) => { const r = canvas.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; });
-    canvas.parentElement?.addEventListener('pointerleave', () => { mouse.x = mouse.y = -999; });
-    new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible && !reduce) { cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); } }).observe(canvas);
   }
 </script>
