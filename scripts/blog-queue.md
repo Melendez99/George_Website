@@ -1,0 +1,44 @@
+# Blog topic queue
+Mark `[x]` when published. Format: `- [ ] Title | tag1 | tag2`
+Add new ideas at the bottom if the list runs low (target long-tail searches a small business owner would type).
+
+- [ ] GoHighLevel vs HubSpot for small business | GoHighLevel | HubSpot
+- [ ] How to build an AI receptionist for a small business | AI agents | Voice
+- [ ] n8n self-hosted vs n8n cloud: which to choose | n8n | Hosting
+- [ ] How to automate lead follow-up with n8n | n8n | Leads
+- [ ] AI appointment booking agent with Cal.com and n8n | n8n | Cal.com
+- [ ] What is an AI agent and what can it do for a small business | AI agents | Basics
+- [ ] Zapier vs Make vs n8n: a plain comparison | Automation | Comparison
+- [ ] How to connect WhatsApp to n8n for customer support | n8n | WhatsApp
+- [ ] GoHighLevel workflows every service business should set up | GoHighLevel | Workflows
+- [ ] How to automate invoice processing with AI | Make.com | Invoices
+- [ ] Automate Instagram lead follow-up with AI | Automation | Instagram
+- [ ] How to build a webinar funnel with GoHighLevel and n8n | GoHighLevel | Webinars
+- [ ] How to automate social media posting with Make | Make.com | Social media
+- [ ] RAG chatbot for your business documents: how it works | AI agents | RAG
+- [ ] How to use Airtable as a lightweight CRM with automation | Airtable | CRM
+- [ ] Retell AI vs Vapi: choosing a voice agent platform | Voice agents | Comparison
+- [ ] How to automate client onboarding with n8n | n8n | Onboarding
+- [ ] Error handling in Make scenarios: a practical guide | Make.com | Reliability
+- [ ] How to automate Google Sheets reports with AI | Automation | Reports
+- [ ] AI lead scoring: how to rank leads automatically | AI agents | Lead scoring
+- [ ] How to send review requests automatically after a job | Automation | Reviews
+- [ ] Automating real estate lead follow-up with AI | Real estate | Leads
+- [ ] How to automate email sorting and replies with AI | Automation | Email
+- [ ] Stripe payment automation with n8n: confirmations and receipts | n8n | Stripe
+- [ ] What a free automation audit should cover | Consulting | Audit
+- [ ] n8n webhooks explained for beginners | n8n | Webhooks
+- [ ] How to automate YouTube to Shorts clips | Content | Video
+- [ ] Supabase vs Airtable for automation projects | Supabase | Airtable
+- [ ] How to document an automation so your team can maintain it | Automation | Handover
+- [ ] How much does business automation cost? What affects the price | Automation | Pricing
+- [ ] Claude API vs OpenAI for business automation | AI agents | LLMs
+- [ ] Automating appointment reminders to cut no-shows | Automation | No-shows
+- [ ] How to build an automation scorecard for your business | Automation | Scorecard
+- [ ] Make.com routers and filters explained | Make.com | Basics
+- [ ] How to automate Notion to WordPress publishing | n8n | Notion
+- [ ] AI for e-commerce support: order lookups and returns | E-commerce | Support
+- [ ] How to automate Telegram alerts from your workflows | n8n | Telegram
+- [ ] Webhooks vs APIs: what small business owners need to know | Automation | Basics
+- [ ] Prompt tips for reliable AI agents in n8n | n8n | Prompts
+- [ ] How to automate Google Calendar bookings with AI | AI agents | Calendar
