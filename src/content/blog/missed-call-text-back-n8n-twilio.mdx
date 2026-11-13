@@ -1,0 +1,64 @@
+---
+title: "Missed-call text-back with n8n and Twilio: how it works"
+description: "How missed-call text-back works, what it needs, and how n8n and Twilio turn a missed call into a booked appointment."
+date: 2026-11-13
+tags:
+  - n8n
+  - Twilio
+  - Missed call text back
+  - AI agents
+cover: /images/blog/missed-call-text-back-n8n-twilio/cover.png
+draft: false
+---
+When a customer calls a service business and nobody answers, they rarely leave a voicemail. They call the next company on the list. A missed-call text-back system fixes this by sending a text within seconds of the missed call, so the conversation starts before the customer moves on.
+
+## How missed-call text-back works
+
+1. A call to your business number goes unanswered, or is busy.
+2. Your phone system or Twilio sends an event to a webhook.
+3. A workflow texts the caller: "Sorry we missed you. How can we help?"
+4. The caller replies, and an AI agent or a person carries on the conversation.
+5. The agent checks your calendar and books the appointment.
+
+The first text is the valuable part. Once the caller replies, you are talking to someone who still wants the job done.
+
+## The n8n and Twilio setup I use
+
+![n8n workflow: inbound SMS webhook, an AI agent with calendar tools, and a Twilio SMS reply](/images/blog/missed-call-text-back-n8n-twilio/n8n-sms-ai-booking-agent.webp)
+
+This is one of my builds, shown unedited. It runs in n8n:
+
+- **Inbound SMS webhook:** Twilio sends every incoming text here.
+- **Lookup step:** the workflow finds which business the message belongs to in Airtable, so one workflow can serve many businesses.
+- **AI agent:** it answers in the business's voice and keeps the conversation history in Supabase so it remembers earlier messages.
+- **Calendar tools:** the agent checks Google Calendar availability and creates the booking. When a slot is taken, it suggests another time.
+- **Twilio reply:** the answer goes back to the customer by SMS.
+
+You can read the full write-up and watch the walkthrough in the [missed-call booking case study](/work/missed-call-booking).
+
+## What to decide before you build
+
+- **What the first text says.** Keep it short and in your normal tone. Do not pretend to be a person.
+- **What the agent may do.** Book, answer common questions, collect details. Anything else goes to a human.
+- **Opening hours.** Decide whether the agent books outside working hours.
+- **Consent and rules.** Texting rules depend on your country and your customer's. Check them before you go live, and include a way to stop messages.
+- **Where the data goes.** Leads should land in your CRM or sheet, with a note to your team.
+
+## Does it need an AI agent?
+
+No. The simplest version only sends the first text with a booking link. That already recovers part of the leads you lose today. The AI agent is the next step, when you want the system to handle the back-and-forth and book for you.
+
+## Common questions
+
+**Can this work with my existing phone number?**
+Usually yes. Calls can be forwarded to a Twilio number, or your phone provider can send missed-call events to a webhook. The right route depends on your provider.
+
+**Is it better in n8n or Make?**
+Both can do it. I pick n8n when the flow needs an AI agent with memory and tools. See [n8n vs Make](/blog/n8n-vs-make-which-should-you-pick) for how I decide.
+
+**What does it cost to run?**
+You pay for Twilio messages, your AI model usage and the tool hosting. These are usage-based, so the cost depends on how many calls you miss.
+
+## Want one for your business?
+
+I can look at your current call handling on a free call and tell you whether text-back or a full voice agent fits. [Book a free consultation](/book). If you answer calls with an AI voice instead, read about [AI voice agents for missed calls](/blog/ai-voice-agent-missed-calls).

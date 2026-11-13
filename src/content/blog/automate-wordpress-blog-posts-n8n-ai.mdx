@@ -1,0 +1,64 @@
+---
+title: How to automate WordPress blog posts with n8n and AI
+description: A plain guide to an n8n workflow that researches a topic, writes an SEO post with AI, adds an image and saves a WordPress draft for you to review.
+date: 2026-11-13
+tags:
+  - n8n
+  - WordPress
+  - SEO
+  - AI content
+cover: /images/blog/automate-wordpress-blog-posts-n8n-ai/cover.png
+draft: false
+---
+Most small businesses know a blog helps them get found on Google. Few keep it going, because every post needs research, writing, an image and uploading. An n8n workflow can do most of that and leave you with a draft to review.
+
+## What the workflow does
+
+![n8n workflow that collects news, scores it, researches, writes an SEO article and publishes a draft to WordPress](/images/blog/automate-wordpress-blog-posts-n8n-ai/n8n-wordpress-blog-automation.webp)
+
+This is a blog engine I built in n8n, shown unedited. It runs in stages:
+
+1. **Collect.** A daily run reads RSS feeds from sources you choose and stores the articles.
+2. **Score.** AI rates each article for relevance to your topic.
+3. **Research.** The workflow reads the best articles and summarises them.
+4. **Write.** AI suggests titles, builds an outline and writes the full article, then adds a meta title, meta description and slug.
+5. **Image.** It generates a cover image and uploads it to your media library.
+6. **Publish.** The post is created in WordPress as a draft, and the database marks it as done so it never runs twice.
+
+I built a similar engine for a real estate business that pulls its topics from a Google Sheet. You can see it in the [SEO blog engine case study](/work/real-estate-blog-engine).
+
+## Why drafts, not auto-publish
+
+I save posts as drafts on purpose. AI can get a detail wrong or sound generic. A quick read before you publish keeps your name on accurate content, and search engines reward useful pages, not volume.
+
+## What you need
+
+- A WordPress site with the REST API enabled and an application password
+- An n8n instance, cloud or self-hosted
+- An AI model account, such as OpenAI or Claude
+- A source of topics: an RSS list or a Google Sheet
+- Optional: a Perplexity key for research, and an image generator
+
+## Tips for better SEO results
+
+- Give the workflow one clear topic per post, based on what your customers actually search.
+- Ask for a plain structure: one H1, a few H2s, short paragraphs.
+- Add internal links to your own pages, such as services or case studies.
+- Review the meta description and fix any claim you cannot back up.
+
+## Get a free starting workflow
+
+I share two related workflows you can import into n8n for free: a Notion-to-WordPress blog agent and a Perplexity research and SEO writer. Download them on the [free workflows page](/free-workflows).
+
+## Common questions
+
+**Will Google penalise AI-written posts?**
+Google has said it ranks content on helpfulness, not on how it was written. Review each draft and add real experience so it helps readers.
+
+**Can it post to Yoast or Rank Math fields?**
+Yes. The WordPress API can fill those fields when the plugin exposes them. I did this for the real estate engine.
+
+**Do I need to code?**
+Not for the basics. You import the workflow, connect your accounts and test it.
+
+Want it set up and tested for your site? [Book a free consultation](/book).

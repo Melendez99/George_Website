@@ -1,0 +1,56 @@
+---
+title: "AI sales call analysis in Make: score every call automatically"
+description: How a Make scenario takes sales call transcripts, scores them against your own framework with AI and writes feedback reports for sales leaders.
+date: 2026-11-13
+tags:
+  - Make.com
+  - AI agents
+  - Sales
+  - Claude
+cover: /images/blog/ai-sales-call-analysis-make/cover.png
+draft: false
+---
+Sales managers cannot listen to every recorded call. Calls go unreviewed, and reps get feedback only on the few a manager has time to hear. AI call analysis scores every transcript the same way, so feedback arrives for every call.
+
+## What AI sales call analysis does
+
+You give it a transcript and a scoring framework. It reads the call and rates each part of the conversation, such as discovery questions, objection handling and the close. Then it writes a short report with what went well and what to fix.
+
+## A real Make scenario
+
+![Make scenario that takes call transcripts, scores them in ten sections with AI and creates reports](/images/blog/ai-sales-call-analysis-make/make-sales-call-analysis-scenario.webp)
+
+This is a scenario I built in Make for a sales coaching client, shown unedited. It does this:
+
+1. **Intake.** It picks up new call transcripts automatically.
+2. **Scoring.** It runs each call through ten scoring sections, based on the client's own scoring documents, using Claude.
+3. **Reports.** It writes separate reports for the sales leader and for the adviser who took the call.
+
+The client's own framework drives the scoring, so the feedback sounds like their coaching and not a generic checklist. There is a walkthrough video in the [sales call analysis case study](/work/ai-sales-call-analysis).
+
+## What you need
+
+- Call transcripts from your recording tool (many tools export these)
+- A written scoring framework: what a good call looks like, section by section
+- A Make account and an AI model account
+- A place to store reports, such as Google Drive
+
+## Make the scoring useful
+
+- **Write clear criteria.** "Asked about budget before presenting" is easier to score than "good discovery".
+- **Test on calls you know.** Run calls your team already rated and compare.
+- **Keep a human in the loop.** Use scores to guide coaching conversations, not to replace them.
+- **Mind privacy.** Call recordings contain personal data. Check consent rules and where your AI provider processes data.
+
+## Common questions
+
+**Do I need Make, or can I use n8n?**
+Either works. Make is quick to build visually. See [n8n vs Make](/blog/n8n-vs-make-which-should-you-pick) to decide.
+
+**Does it work for coaching, real estate or insurance calls?**
+Yes, as long as you can describe a good call in writing. The framework is what changes from one business to another.
+
+**Can the reports go to Slack or email?**
+Yes. Reports can go to Drive, email, Slack or your CRM.
+
+Want call analysis for your team? [Book a free consultation](/book), or see [automation for coaches and sales teams](/industries/coaching-and-sales).
