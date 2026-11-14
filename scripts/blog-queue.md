@@ -2,7 +2,7 @@
 Mark `[x]` when published. Format: `- [ ] Title | tag1 | tag2`
 Add new ideas at the bottom if the list runs low (target long-tail searches a small business owner would type).
 
-- [ ] GoHighLevel vs HubSpot for small business | GoHighLevel | HubSpot
+- [x] GoHighLevel vs HubSpot for small business | GoHighLevel | HubSpot
 - [ ] How to build an AI receptionist for a small business | AI agents | Voice
 - [ ] n8n self-hosted vs n8n cloud: which to choose | n8n | Hosting
 - [ ] How to automate lead follow-up with n8n | n8n | Leads
