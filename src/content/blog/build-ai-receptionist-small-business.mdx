@@ -1,0 +1,68 @@
+---
+title: "How to build an AI receptionist for a small business"
+description: A plain guide to building an AI receptionist that answers calls and texts, qualifies callers and books appointments, and what you need before you start.
+date: 2026-11-15
+tags:
+  - AI agents
+  - Voice
+  - Automation
+  - Small business
+cover: /images/blog/build-ai-receptionist-small-business/cover.png
+draft: false
+---
+An AI receptionist is a voice or text agent that answers when your team cannot. It greets the caller, asks your qualifying questions, books a slot in your calendar and sends you a summary. You build it from four parts: a phone number, a voice or chat platform, an automation tool for the logic, and your calendar.
+
+## What an AI receptionist can and cannot do
+
+It handles the repeatable parts of a front desk: answering common questions, collecting a name and job details, checking availability and booking. It should not handle emergencies, complaints, price negotiation or anything that needs judgment. Those go to a person, and the agent should know how to hand off.
+
+## How it works
+
+![Flow diagram of an AI receptionist: call comes in, agent answers, qualifies, checks the calendar, books and notifies your team](/images/blog/build-ai-receptionist-small-business/flow.webp)
+
+1. **The call or text arrives.** Your existing number forwards to the platform when you do not pick up, or always, depending on your setup.
+2. **The agent answers.** A voice platform such as Retell AI, Vapi or ElevenLabs handles speech. For texts, an AI model replies through an SMS or WhatsApp provider.
+3. **It qualifies the caller.** It asks the questions you wrote: job type, location, urgency.
+4. **It checks the calendar.** An automation tool such as n8n or Make looks up free slots in Google Calendar or your booking tool.
+5. **It books and confirms.** The appointment is created and the caller gets a confirmation.
+6. **Your team is told.** A summary goes to your CRM, email or Slack, with a transcript if you want one.
+
+## What you need
+
+- A business phone number that can forward calls
+- A voice or chat platform for the agent
+- An automation tool (n8n or Make) to connect the pieces
+- A calendar or booking tool with clear availability rules
+- A written script: your questions, your services, your opening hours and your handoff rules
+- A place to store leads, such as a CRM or Airtable
+
+## Decisions to make first
+
+**What the agent may promise.** Give it facts you have approved: services, areas, hours. Tell it to say it will check and call back for anything else, so it never guesses a price.
+
+**When it hands off.** Define the cases that go straight to a human, such as emergencies or existing clients with a problem.
+
+**What it says about being an AI.** Say so plainly at the start. Callers accept it when the agent is useful.
+
+**Recording and data.** Calls contain personal data. Check your local rules on call recording, texting consent and data privacy, and where your AI and phone providers process data.
+
+## Test it before it takes real calls
+
+Most failures come from small wiring problems, not the AI. Call it yourself many times. Interrupt it, mumble, go off script, ask for a slot that is taken and ask something it should not answer. Fix each failure, then run it on real traffic with a human reviewing the first week of summaries.
+
+## A cheaper first step
+
+If a full voice agent is more than you need, start with a text reply when a call is missed. I built this for a home-service agency in n8n, with an AI agent that books through Google Calendar. See the [missed-call booking case study](/work/missed-call-booking), or the guide to [missed-call text-back with n8n and Twilio](/blog/missed-call-text-back-n8n-twilio). For the voice side, read [how an AI voice agent stops missed calls](/blog/ai-voice-agent-missed-calls).
+
+## Common questions
+
+**Will callers hang up when they hear an AI?**
+Some will. Many do not mind if the agent is quick, polite and gets the job done. A clear handoff to a person helps.
+
+**Can it work with my existing calendar?**
+Usually yes, if the calendar has an API or a connector in n8n or Make. Google Calendar and similar tools are the easy cases.
+
+**Does it replace a human receptionist?**
+It covers the calls a person cannot take: after hours, busy periods and overflow. A person still handles the complex conversations.
+
+Want an AI receptionist set up for your business? [Book a free consultation](/book).
