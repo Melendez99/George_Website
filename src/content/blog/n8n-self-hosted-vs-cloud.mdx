@@ -1,0 +1,80 @@
+---
+title: "n8n self-hosted vs n8n cloud: which to choose"
+description: A plain comparison of self-hosting n8n and using n8n Cloud, covering setup, upkeep, security, scaling and who each option suits.
+date: 2026-11-16
+tags:
+  - n8n
+  - Hosting
+  - Automation
+cover: /images/blog/n8n-self-hosted-vs-cloud/cover.png
+draft: false
+---
+Pick n8n Cloud if you want to start today and not look after a server. Pick self-hosted if you have someone who can run and update a server, or if you need your data to stay on infrastructure you control. Most small businesses are better off starting on cloud and moving later if they need to.
+
+## What the two options actually are
+
+n8n is the same workflow tool either way. The difference is who runs it. With n8n Cloud, n8n hosts it for you and you log in through a browser. With self-hosting, you install n8n on your own server, a virtual machine or a container platform, and you look after it.
+
+Check n8n's current pricing and licence terms on their website before you decide, because plans and limits change.
+
+## Where each option wins
+
+**n8n Cloud** wins on speed and low effort. Updates, backups, uptime and the web address are handled for you. You can build your first workflow within minutes of signing up.
+
+**Self-hosted** wins on control. You decide where the data lives, how long logs are kept, and how much memory and processing power the instance gets. You can also run it next to your other internal systems, such as a database that is not open to the internet.
+
+## What self-hosting asks of you
+
+Self-hosting is not hard, but it is ongoing work. Someone has to:
+
+- keep n8n and the server operating system updated
+- set up HTTPS and a stable web address so webhooks can reach it
+- take backups of the database and test that they restore
+- watch disk space, memory and failed runs
+- keep credentials and the encryption key safe
+
+If nobody owns these jobs, the instance slowly becomes a risk. An outdated server that handles customer data is worse than a paid plan.
+
+## How to decide
+
+![Flow chart of five steps for choosing between n8n Cloud and self-hosted: name an owner, check data rules, estimate monthly runs, pick a setup, review after a month](/images/blog/n8n-self-hosted-vs-cloud/decision.webp)
+
+1. Write down who will own the setup. If the answer is "nobody in particular", choose cloud.
+2. List the data your workflows touch. If it includes sensitive customer or health information, check your local privacy rules and any contracts that limit where data can be stored.
+3. Estimate how many workflow runs you expect each month and how heavy they are. Check how the cloud plan counts runs against that estimate.
+4. Ask whether you need custom or community nodes, or access to a private network. Some of these are easier on self-hosted.
+5. Choose one, build the first workflow, and review the choice after a month.
+
+## What you need
+
+For n8n Cloud:
+
+- an email address and a payment method
+- accounts and API keys for the tools you want to connect
+
+For self-hosted:
+
+- a server or container host you are comfortable managing
+- a domain name with HTTPS
+- a backup plan and a person responsible for updates
+- the same accounts and API keys as above
+
+## Moving between the two
+
+You are not locked in. Workflows can be exported as files and imported into another n8n instance, so starting on cloud and moving later is realistic. Credentials usually have to be set up again on the new instance, so keep a list of what each workflow connects to. Reliable workflows also need good failure handling on either option, which I cover in [n8n error handling workflows](/blog/n8n-error-handling-workflows).
+
+## FAQ
+
+**Is self-hosted n8n really free?**
+
+The software can be downloaded and run without a licence fee for many uses, but you pay for the server, your time and the risk of running it. Read n8n's licence terms to confirm your use is covered.
+
+**Is n8n Cloud secure enough for business data?**
+
+It is run by the n8n team, so security patches are their job. Whether it fits your data is a question for your own privacy rules and any client contracts, so check them before you move sensitive data.
+
+**Can I switch later?**
+
+Yes. Export your workflows, import them into the new instance, then reconnect credentials and re-test each one before switching traffic.
+
+If you want help choosing a setup for your own workflows, [book a call](/book).
