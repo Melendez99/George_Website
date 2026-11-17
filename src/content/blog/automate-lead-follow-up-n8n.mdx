@@ -1,0 +1,71 @@
+---
+title: "How to automate lead follow-up with n8n"
+description: A step-by-step guide for small businesses to automate lead follow-up with n8n workflow automation, from capture to reminders and handover.
+date: 2026-11-17
+tags:
+  - n8n
+  - Leads
+  - Automation
+cover: /images/blog/automate-lead-follow-up-n8n/cover.png
+draft: false
+---
+You can automate lead follow-up with n8n by building one workflow that catches each new lead, saves it to a list, sends a fast first reply, and then schedules reminders until the lead answers or a person takes over. This guide is for small business owners and the people who run their sales admin.
+
+## Why automate lead follow-up at all?
+
+Automating follow-up means every lead gets a reply and a next step, even when you are busy. Manual follow-up breaks when a form notification is missed, a note is forgotten or a reminder sits in someone's head. A workflow does the same steps every time and records what happened.
+
+It does not replace talking to people. The goal is a quick, accurate first touch, then a clean handover to you.
+
+## How does an n8n lead follow-up workflow work?
+
+n8n workflow automation connects your tools in a chain of steps. Each step is a node, and data moves from one node to the next.
+
+![Flow chart of an n8n lead follow-up workflow: new lead arrives, saved to a list, first reply sent, reminder or handover to a person](/images/blog/automate-lead-follow-up-n8n/flow.webp)
+
+1. A trigger node fires when a lead arrives, for example from a web form, an ad lead form or an inbound email.
+2. A step cleans the data, such as trimming spaces, checking the email format and removing duplicates.
+3. The lead is saved to a table or CRM, with a status such as "new".
+4. A first reply goes out by email or text, using the lead's name and the thing they asked about.
+5. A wait node pauses for a set time, then checks whether the lead replied or booked.
+6. If nothing has happened, a reminder or second message is sent. After a set number of tries the lead is marked "no response" and you are told.
+7. When the lead replies, the workflow stops the sequence and alerts a person.
+
+## What should the first message say?
+
+The first message should be short, say who you are, confirm what the lead asked for, and offer one clear next step such as a booking link. Speed matters more than polish, so send it within minutes. Avoid pretending a person wrote it if a workflow did, and keep the tone plain.
+
+Before you send any automated texts or calls, check the rules where you operate. Many places require consent for marketing messages and have rules on data privacy, so confirm what applies to you.
+
+## How do you stop follow-up when a lead replies?
+
+Store a status field on every lead and check it before each message. When a reply arrives, through a webhook, an email trigger or a booking tool, update the status to "replied" or "booked". Every wait step then checks the status first, and the workflow ends if it has changed. Without this check, people get reminders after they have already answered, which looks careless.
+
+## What do you need to get started?
+
+- An n8n account, either n8n Cloud or a self-hosted instance (see [n8n self-hosted vs n8n cloud](/blog/n8n-self-hosted-vs-cloud))
+- A source of leads, such as a form, ad lead form or inbox
+- A place to store leads, such as Airtable, Google Sheets or your CRM
+- An email or messaging account you are allowed to send from
+- A written follow-up plan: how many messages, how far apart, and who takes over
+- A way to see failures, so build in alerts as covered in [n8n error handling workflows](/blog/n8n-error-handling-workflows)
+
+## Can AI help with lead follow-up?
+
+Yes, with care. An AI model can draft a personal first line from the lead's message, sort leads into hot and cold, or answer simple questions. Keep a person in the loop for pricing, promises and anything sensitive, and test the wording before you let it send. One of my builds, an [Instagram lead pipeline](/work/instagram-lead-pipeline), scores profiles with Claude and writes personalised outreach, and it saves everything to Airtable so the results can be reviewed.
+
+## FAQ
+
+**How soon should an automated follow-up go out?**
+
+As soon as practical, ideally within minutes of the enquiry. There is no single right number, so start fast and adjust based on how your leads respond.
+
+**How many follow-up messages are too many?**
+
+There is no fixed rule. Many businesses use a short sequence of a few messages spaced over days, then stop. Check local rules on marketing messages and always give people a way to opt out.
+
+**Do I need to code to build this in n8n?**
+
+Not for a basic version. You can build the steps above by connecting nodes on a visual canvas. Code helps with unusual data or custom logic, but it is optional.
+
+If you want a lead follow-up workflow built for your business, [book a call](/book).

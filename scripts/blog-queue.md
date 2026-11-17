@@ -5,7 +5,7 @@ Add new ideas at the bottom if the list runs low (target long-tail searches a sm
 - [x] GoHighLevel vs HubSpot for small business | GoHighLevel | HubSpot
 - [x] How to build an AI receptionist for a small business | AI agents | Voice
 - [x] n8n self-hosted vs n8n cloud: which to choose | n8n | Hosting
-- [ ] How to automate lead follow-up with n8n | n8n | Leads
+- [x] How to automate lead follow-up with n8n | n8n | Leads
 - [ ] AI appointment booking agent with Cal.com and n8n | n8n | Cal.com
 - [ ] What is an AI agent and what can it do for a small business | AI agents | Basics
 - [ ] Zapier vs Make vs n8n: a plain comparison | Automation | Comparison
