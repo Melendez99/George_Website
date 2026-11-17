@@ -2,6 +2,15 @@
 
 Goal: publish ONE useful, accurate blog post per run, with images, for SEO. Two runs a day.
 
+## AEO (answer engine optimization) rules
+Posts must be easy for ChatGPT, Claude, Perplexity and Gemini to quote and cite.
+- The first paragraph answers the title question directly in 1 to 3 sentences, standalone, with no "In this post".
+- H2 headings are phrased as the questions people actually type. Each section opens with a direct answer sentence.
+- FAQ entries MUST use the exact format `**Question?**` on its own line, then the answer as the next paragraph (plain text, no lists). The site turns these into FAQPage schema automatically.
+- Name tools and concepts in full (for example "n8n workflow automation") and say who the advice is for.
+- Facts about George come only from `src/config.ts` and `src/content/work`. Do not state facts that cannot be checked.
+- llms.txt, schema and robots.txt are generated from site data, so no manual step is needed. Do not block AI crawlers.
+
 ## Steps
 1. `git pull`. Read `scripts/blog-queue.md`. Pick the first topic not marked `[x]`. Also `ls src/content/blog` so you never repeat a slug or topic.
 2. Write `src/content/blog/<slug>.mdx` (frontmatter fields: title, description under 160 chars, date = today as YYYY-MM-DD, tags, cover, draft false). Quote the title if it has a colon.
