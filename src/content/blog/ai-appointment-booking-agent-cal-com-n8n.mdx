@@ -1,0 +1,69 @@
+---
+title: "AI appointment booking agent with Cal.com and n8n"
+description: How an AI appointment booking agent works with Cal.com and n8n workflow automation, what you need to build one, and where to keep a human involved.
+date: 2026-11-18
+tags:
+  - n8n
+  - Cal.com
+  - AI agents
+cover: /images/blog/ai-appointment-booking-agent-cal-com-n8n/cover.png
+draft: false
+---
+You can build an AI appointment booking agent by connecting an n8n workflow to Cal.com: the agent reads a customer's message, checks open slots in Cal.com, offers times, and creates the booking once the customer picks one. This guide is for small business owners who take bookings by text, email or chat and want fewer back-and-forth messages.
+
+## What does an AI booking agent actually do?
+
+An AI booking agent handles the conversation that leads to a calendar entry. It answers simple questions, asks for the details a booking needs, looks up availability, and confirms the time. Cal.com is an open scheduling tool that holds your event types, working hours and bookings. n8n workflow automation sits in the middle and passes data between the customer's channel, the AI model and Cal.com.
+
+The agent does not replace you. It takes the repetitive scheduling messages so you only deal with the bookings and the exceptions.
+
+## How does the Cal.com and n8n setup work?
+
+The setup is one n8n workflow with an AI agent node that can call tools. Cal.com exposes an API, so n8n can ask for available slots and create bookings.
+
+![Flow chart of an AI booking agent: message arrives, AI agent reads it, Cal.com availability is checked, booking is created and confirmed](/images/blog/ai-appointment-booking-agent-cal-com-n8n/flow.webp)
+
+1. A trigger node receives the customer's message, for example from a web chat, email or a messaging webhook.
+2. The workflow loads the conversation so far, so the agent remembers what was already said.
+3. The AI agent node reads the message and decides what is missing, such as the service, a preferred day or a contact email.
+4. The agent calls a tool that asks Cal.com for available slots for the right event type.
+5. The agent offers two or three times and waits for the customer's choice.
+6. A second tool creates the booking in Cal.com with the customer's name, email and chosen time.
+7. The workflow sends a confirmation message and, if something fails, alerts you.
+
+## What should the agent be allowed to do?
+
+Keep the agent's job narrow: find a time, book it, move it or cancel it. Give it a short written instruction listing the services you offer, your working hours and what to say when it is unsure. For anything else, such as pricing questions, complaints or unusual requests, have it pass the conversation to a person and tell the customer someone will reply. A tight scope is what makes an AI agent reliable.
+
+## How do you avoid double bookings and wrong times?
+
+Let Cal.com be the single source of truth. The agent should never guess availability; it should only offer slots that Cal.com returns, and it should book through the same API. Set the time zone explicitly in the workflow and repeat the time back to the customer, with the time zone, in the confirmation. Also test edge cases before going live: a slot that gets taken mid-conversation, a customer who changes their mind, and a message with no usable date.
+
+## What do you need to get started?
+
+- A Cal.com account with at least one event type, your working hours and a connected calendar
+- A Cal.com API key, stored as a credential in n8n and never pasted into a prompt
+- An n8n account, either cloud or self-hosted (see [n8n self-hosted vs n8n cloud](/blog/n8n-self-hosted-vs-cloud))
+- An AI model account, such as OpenAI or Anthropic Claude, connected to the n8n agent node
+- A channel where customers write to you, such as web chat, email or SMS
+- Error alerts, as described in [n8n error handling workflows](/blog/n8n-error-handling-workflows)
+
+## Is there an example of this in practice?
+
+Yes. One of my builds, the [missed-call text-back and AI booking agent](/work/missed-call-booking), texts a caller back after a missed call and hands the conversation to an AI agent that checks Google Calendar and books the appointment. It uses a different calendar than Cal.com, but the pattern is the same: message in, availability check, booking out.
+
+## FAQ
+
+**Is Cal.com free to use with n8n?**
+
+Cal.com offers free and paid plans, and n8n has a self-hosted option and paid cloud plans. Prices and limits change, so check the current pricing pages for both before you decide.
+
+**Can the AI agent reschedule and cancel bookings too?**
+
+Yes, if you give it tools for those actions and Cal.com's API supports them for your event type. Start with booking only, then add rescheduling once the basic flow is stable.
+
+**Do I need to code to build this?**
+
+Not for a basic version. n8n is a visual builder, and the AI agent node and HTTP request node cover most of the steps. Some coding or expression writing helps when mapping data between nodes.
+
+If you want an AI booking agent built for your business, [book a call](/book).
