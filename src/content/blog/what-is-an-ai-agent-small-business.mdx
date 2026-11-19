@@ -1,0 +1,79 @@
+---
+title: "What is an AI agent and what can it do for a small business?"
+description: An AI agent is software that reads a request, decides what to do and uses tools to do it. Here is what that means for a small business, with limits.
+date: 2026-11-19
+tags:
+  - AI agents
+  - Basics
+cover: /images/blog/what-is-an-ai-agent-small-business/cover.png
+draft: false
+---
+An AI agent is software that takes a goal, decides which steps to follow, and uses connected tools such as your calendar, inbox or CRM to carry them out. For a small business, that means repetitive work like answering common questions, booking appointments and sorting leads can run without someone doing each step by hand. This guide is for owners and managers who keep hearing the term and want a plain explanation.
+
+## What is an AI agent in plain words?
+
+An AI agent is a language model, such as OpenAI's GPT models or Anthropic's Claude, given instructions and a set of tools. The model reads the input and decides the next action. The tools do the actual work: look up a record, send a message, create a calendar entry.
+
+A normal automation follows a fixed path every time. An agent can choose between paths based on what it reads, which helps when the input is messy, such as a customer email written in free text.
+
+## How is an AI agent different from a chatbot or a normal automation?
+
+A chatbot mainly talks. An AI agent talks and acts. A classic automation, built in a tool like n8n workflow automation or Make.com, runs the same steps in the same order. An agent sits inside such a workflow and handles the part that needs judgment, while the workflow handles the reliable plumbing around it.
+
+In practice most useful setups are a mix: fixed steps for anything that must be exact, and an agent only where reading and deciding is needed.
+
+## What can an AI agent do for a small business?
+
+An AI agent can take over repetitive, text-based tasks that follow a pattern. Common examples:
+
+- Answering frequently asked questions from your own documents
+- Qualifying new leads by asking a few questions and saving the answers
+- Booking, moving and cancelling appointments (see [AI appointment booking agent with Cal.com and n8n](/blog/ai-appointment-booking-agent-cal-com-n8n))
+- Answering or returning missed calls, as in [how to build an AI receptionist for a small business](/blog/build-ai-receptionist-small-business)
+- Drafting replies for a person to review before sending
+- Summarising calls or messages and logging them in a CRM
+
+## How does an AI agent work step by step?
+
+![Flow chart of how an AI agent works: input arrives, agent reads it, agent picks a tool, tool runs, result is checked and a person is alerted when unsure](/images/blog/what-is-an-ai-agent-small-business/flow.webp)
+
+1. Something triggers the agent, such as a new message, form entry or missed call.
+2. The agent reads the input along with its written instructions.
+3. It decides what is needed, for example more details or a lookup.
+4. It calls a tool, such as a calendar, spreadsheet, CRM or messaging app.
+5. It reads the result and either continues or replies.
+6. If the request is outside its instructions, it hands over to a person.
+7. The workflow logs what happened so you can review it later.
+
+## What do you need to start?
+
+- One clear task that is repetitive and text-based
+- The tools that task already uses, such as a calendar, CRM or inbox
+- A written description of what the agent may and may not do
+- An automation platform such as n8n or Make.com to connect everything
+- An AI model account with a provider such as OpenAI or Anthropic
+- A person who reviews the agent's output, especially at the start
+
+## What are the limits and risks?
+
+AI agents can be wrong, and they can sound confident when they are. Keep them away from decisions about money, refunds, legal or medical advice unless a person approves each one. Give each agent only the access it needs, test it on real examples before going live, and log every action. If the agent texts, calls or records people, check your local rules on messaging, calls and data privacy first.
+
+## Is there a real example?
+
+Yes. One of my builds, the [RAG knowledge-base agent](/work/rag-knowledge-base-agent), answers questions from documents stored in Google Drive and keeps its knowledge base updated when files are added, changed or deleted. It is a portfolio build, not a client project.
+
+## FAQ
+
+**Do I need to know how to code to use an AI agent?**
+
+Not for a basic one. Visual tools like n8n and Make.com let you connect an AI model to your apps without writing much code. More complex setups often benefit from someone who has built them before.
+
+**Will an AI agent replace my staff?**
+
+It is better thought of as taking over repetitive tasks so people can spend time on work that needs judgment and relationships. Most small businesses keep a person involved for exceptions and approvals.
+
+**How much does an AI agent cost to run?**
+
+It depends on the tools, the AI model you choose and how much volume you handle. Check the current pricing pages of the platforms involved, since prices and limits change.
+
+If you want to know which of your tasks an AI agent could handle, [book a call](/book).
