@@ -9,7 +9,7 @@ Add new ideas at the bottom if the list runs low (target long-tail searches a sm
 - [x] AI appointment booking agent with Cal.com and n8n | n8n | Cal.com
 - [x] What is an AI agent and what can it do for a small business | AI agents | Basics
 - [x] Zapier vs Make vs n8n: a plain comparison | Automation | Comparison
-- [ ] How to connect WhatsApp to n8n for customer support | n8n | WhatsApp
+- [x] How to connect WhatsApp to n8n for customer support | n8n | WhatsApp
 - [ ] GoHighLevel workflows every service business should set up | GoHighLevel | Workflows
 - [ ] How to automate invoice processing with AI | Make.com | Invoices
 - [ ] Automate Instagram lead follow-up with AI | Automation | Instagram

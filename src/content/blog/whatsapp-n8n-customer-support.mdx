@@ -1,0 +1,69 @@
+---
+title: "How to connect WhatsApp to n8n for customer support"
+description: "Connect WhatsApp to n8n workflow automation with the WhatsApp Business Cloud API to answer common questions, log chats and hand off to a human."
+date: 2026-11-21
+tags:
+  - n8n
+  - WhatsApp
+cover: /images/blog/whatsapp-n8n-customer-support/cover.png
+draft: false
+---
+You connect WhatsApp to n8n through the WhatsApp Business Cloud API from Meta: n8n receives each incoming message through a webhook, decides what to do with it, and sends a reply back through the same API. This guide is for small business owners and operations leads who get repeat questions on WhatsApp and want routine ones handled automatically while a person takes the rest.
+
+## Can n8n really handle WhatsApp customer support?
+
+Yes, n8n workflow automation can receive WhatsApp messages, route them and reply, as long as you use the official WhatsApp Business Platform. n8n has WhatsApp Business Cloud nodes for sending messages and a trigger for incoming ones. Check the current n8n documentation for the exact node names and options, because they change between versions.
+
+## Which WhatsApp option should I use?
+
+Use the WhatsApp Business Platform (Cloud API), not an unofficial library that automates a personal or standard Business app account. The official route is built for automated messaging and follows Meta's rules. Unofficial tools can get a number restricted. You will need a Meta business account and a phone number that is registered for the platform.
+
+## How does the workflow receive a message?
+
+The workflow starts with a trigger that listens for incoming WhatsApp messages. Meta sends each message to a webhook URL that n8n provides, so your n8n instance must be reachable from the internet over HTTPS. If you self-host, set up a proper domain first. If you use n8n cloud, the webhook URL is ready for you.
+
+## How should the workflow decide what to reply?
+
+Start with simple rules, then add AI only where rules fall short. A basic version checks the message for keywords such as opening hours, location or order status and replies with an approved answer. A more flexible version passes the message to an AI model with clear instructions and a short list of facts it may use. Whatever you choose, give the customer a clear way to reach a person, and send anything the workflow is unsure about to your team.
+
+## What about the 24-hour messaging window?
+
+WhatsApp limits when a business can send free-form messages. In general, you can reply freely within a set window after the customer last wrote to you, and outside it you need a pre-approved message template. Read Meta's current messaging rules before you design follow-ups, because the details and any fees can change.
+
+## How it works: a basic support flow
+
+1. A customer sends a message to your WhatsApp Business number.
+2. Meta forwards it to the n8n webhook trigger.
+3. n8n checks the message against your rules or passes it to an AI step with your approved facts.
+4. If the question is routine, n8n sends the reply through the WhatsApp node.
+5. If not, n8n alerts a team member and logs the chat in a sheet or CRM for follow-up.
+
+![Flow diagram of five steps for a WhatsApp support automation in n8n: message received, webhook trigger, rules or AI check, reply or human handoff, log the chat](/images/blog/whatsapp-n8n-customer-support/support-flow.webp)
+
+## What you need before you start
+
+* A Meta business account and a WhatsApp Business Platform phone number.
+* An n8n instance, either cloud or self-hosted, reachable over HTTPS.
+* A short list of the questions customers ask most, with approved answers.
+* A place to log chats, such as a Google Sheet or your CRM.
+* A named person who receives handoffs and checks the logs.
+
+## FAQ
+
+**Do I need to write code to connect WhatsApp to n8n?**
+
+Not for a basic setup. The WhatsApp nodes in n8n handle sending and receiving. You will still need to set up the Meta developer account, the webhook and the access token, which takes some care.
+
+**Can the automation reply in any language?**
+
+An AI step can usually reply in the customer's language, but you should test it with real examples and have a speaker of that language review the answers before going live.
+
+**Is it legal to message customers on WhatsApp automatically?**
+
+It depends on where you and your customers are. Rules on consent, data privacy and marketing messages vary, so check your local requirements and Meta's policies, and only message people who have contacted you or agreed to hear from you.
+
+## Where to go next
+
+If you are still choosing a platform, my plain comparison of [Zapier, Make and n8n](/blog/zapier-vs-make-vs-n8n-comparison) explains where n8n fits. For a related build, see how an [AI appointment booking agent with Cal.com and n8n](/blog/ai-appointment-booking-agent-cal-com-n8n) works.
+
+Want WhatsApp support set up properly for your business? [Book a call](/book) and we can map out which questions to automate first.
